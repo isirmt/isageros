@@ -2,9 +2,9 @@
 CC  = g++
 CFLAGS	=
 TARGET  = main
-SRCS	= main.cpp
+SRCS	= main.cpp SceneManager.cpp TitleScene.cpp
 OBJS	= $(SRCS:.cpp=.o)
-INCDIR  = -I../inc
+INCDIR  = -I./inc
 LIBDIR  = 
 LIBS	= -lglut -lGLU -lGL
 
