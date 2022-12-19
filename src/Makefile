@@ -2,7 +2,7 @@
 CC  = g++
 CFLAGS	=
 TARGET  = main
-SRCS	= main.cpp ConvertColor.cpp
+SRCS	= main.cpp
 OBJS	= $(SRCS:.cpp=.o)
 INCDIR  = -I../inc
 LIBDIR  = 
