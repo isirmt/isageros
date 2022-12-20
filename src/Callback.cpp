@@ -4,8 +4,10 @@
 
 void DisplayProc()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
     Scene::SceneManager::GetCurrentScene()->Draw();
+    glutSwapBuffers();
 }
 
 void KeyboardProc(unsigned char key , int x , int y) {

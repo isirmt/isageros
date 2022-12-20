@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <GL/glut.h>
 #include "inc/SceneManager.hpp"
+#include "inc/GLBuilder.hpp"
 // 最初に呼び出すシーン
 #include "inc/TitleScene.hpp"
 #include "inc/ApplicationPreference.hpp"
@@ -16,6 +17,10 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
 	glutCreateWindow("Mini Games");
+
+    GLSYS::GLBuilder::GLSetup();
+    GLSYS::GLBuilder::LightSetup();
+
     // 関数登録
     glutDisplayFunc(DisplayProc);
     glutKeyboardFunc(KeyboardProc);
