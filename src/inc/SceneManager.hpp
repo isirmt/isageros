@@ -6,8 +6,7 @@ namespace Scene
     class SceneManager
     {
     public:
-        static void Update();
-
+        static SceneBase* GetCurrentScene() { return currentScene; }
         static void ChangeScene(SceneBase* _scene);
 
     private:

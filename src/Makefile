@@ -2,7 +2,7 @@
 CC  = g++
 CFLAGS	= -std=c++11
 TARGET  = main
-SRCS	= main.cpp SceneManager.cpp TitleScene.cpp
+SRCS	= $(wildcard *.cpp)
 OBJS	= $(SRCS:.cpp=.o)
 INCDIR  = -I./inc
 LIBDIR  = 

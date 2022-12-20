@@ -2,5 +2,9 @@
 #include <stdio.h>
 
 void Scene::TitleScene::Update(){
-    printf("debug string\n");
+    return;
+}
+
+void Scene::TitleScene::Draw(){
+    // write here.
 }

@@ -1,29 +1,32 @@
 #include <stdio.h>
 #include <GL/glut.h>
-#include "inc/Color255.hpp"
 #include "inc/SceneManager.hpp"
+// 最初に呼び出すシーン
 #include "inc/TitleScene.hpp"
+#include "inc/ApplicationPreference.hpp"
 
-void display(){}
+void DisplayProc(), KeyboardProc(unsigned char key , int x , int y), IdleProc(),
+MouseProc(int button, int state, int x, int y), MotionProc(int x, int y), PassiveMotionProc(int x, int y); 
 
 int main(int argc, char **argv)
 {
-    Color255 col;
-    col = Color255("#2549C4");
-    printf("%f, %f, %f, %f\n", col.r, col.g, col.b, col.a);
-    col = Color255("141414");
-    printf("%f, %f, %f, %f\n", col.r, col.g, col.b, col.a);
-    col = Color255(253, 45, 32, 25);
-    printf("%f, %f, %f, %f\n", col.r, col.g, col.b, col.a);
+    glutInit(&argc , argv);
+	glutInitWindowPosition(100 , 50);
+	glutInitWindowSize((int)ApplicationPreference::windowSize.x , (int)ApplicationPreference::windowSize.y);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+
+	glutCreateWindow("Mini Games");
+    // 関数登録
+    glutDisplayFunc(DisplayProc);
+    glutKeyboardFunc(KeyboardProc);
+    glutIdleFunc(IdleProc);
+    glutMouseFunc(MouseProc);
+    glutMotionFunc(MotionProc);
+    glutPassiveMotionFunc(MotionProc);
 
     Scene::TitleScene *titleScene = new Scene::TitleScene();
     Scene::SceneManager::ChangeScene(titleScene);
 
-    Scene::SceneManager::Update();
-
-    glutInit(&argc, argv);
-    glutCreateWindow(argv[0]);
-    glutDisplayFunc(display);
     glutMainLoop();
 
     return 0;
