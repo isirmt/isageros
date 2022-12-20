@@ -1,6 +1,6 @@
 # $ make と実行
 CC  = g++
-CFLAGS	=
+CFLAGS	= -std=c++11
 TARGET  = main
 SRCS	= main.cpp SceneManager.cpp TitleScene.cpp
 OBJS	= $(SRCS:.cpp=.o)
