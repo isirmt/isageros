@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.hpp"
+#include <GL/glut.h>
 
 namespace Scene
 {
@@ -7,7 +8,7 @@ namespace Scene
         : public SceneBase
     {
     public:
-        TitleScene() {}
+        TitleScene() {deg = 0.f;}
         ~TitleScene() {}
 
         void Update() override;
@@ -17,5 +18,7 @@ namespace Scene
         void MotionProc(int x, int y) override {}
         void PassiveMotionProc(int x, int y) override {}
         void SpecialFuncProc(int key, int x, int y) override {}
+        private:
+        float deg;
     };
 }
