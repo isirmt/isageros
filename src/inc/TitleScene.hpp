@@ -1,13 +1,14 @@
 #pragma once
 #include <GL/glut.h>
 
-#include "SceneBase.hpp"
 #include "Color255.hpp"
+#include "SceneBase.hpp"
+#include "SphereObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
  public:
-  TitleScene() { deg = 0.f; }
+  TitleScene();
   ~TitleScene() {}
 
   void Update() override;
@@ -21,5 +22,6 @@ class TitleScene : public SceneBase {
  private:
   float deg;
   Color255 boxAmbient;
+  Obj::Sphere sphere;
 };
-}
+}  // namespace Scene

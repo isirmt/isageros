@@ -2,9 +2,19 @@
 
 void draw_cube(float *a, float *d, float *s);
 
+Scene::TitleScene::TitleScene() {
+  deg = 0.f;
+  sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(0.0, 0.0, 0.0),
+                       PosVec(0.0, -.4, 0.0));
+  sphere.SetHasGravity(true);
+  sphere.SetAmbient(Color255(150, 235, 80));
+  sphere.SetDiffuse(Color255(255 * .3, 255 * .3, 255 * .3));
+  sphere.SetSpecular(Color255(0, 0, 0, 255));
+}
+
 void Scene::TitleScene::Update() {
   deg += .1f;
-  return;
+  sphere.Update();
 }
 
 void Scene::TitleScene::Draw() {
@@ -30,4 +40,6 @@ void Scene::TitleScene::Draw() {
   specular[3] = 1.0;
   draw_cube(ambient, diffuse, specular);
   glPopMatrix();
+
+  sphere.Draw();
 }

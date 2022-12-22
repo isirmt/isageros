@@ -1,8 +1,9 @@
 #pragma once
+#include <unistd.h>
+
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <unistd.h>
 
 template <class T>
 class DataStore {
