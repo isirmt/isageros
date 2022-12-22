@@ -7,9 +7,9 @@
 namespace Obj {
 class Object3D {
  public:
-  Object3D() : hasGravity(false){};
+  Object3D(){};
   Object3D(PosVec _r, PosVec _v = PosVec(), PosVec _a = PosVec())
-      : r(_r), v(_v), a(_a), hasGravity(false), dt(.1){};
+      : r(_r), v(_v), a(_a), dt(0){};
   ~Object3D(){};
 
   virtual void Update() = 0;
@@ -22,17 +22,13 @@ class Object3D {
   // 0~127
   void SetShininess(float _shininess) { shininess[0] = _shininess; }
 
-  void SetHasGravity(bool _flag) { hasGravity = _flag; }
-
  protected:
   PosVec r;
   PosVec v;
   PosVec a;
 
   float t;
-  int tn;
   double dt;  // need timedelta
-  bool hasGravity;
 
   Color255 ambient;
   Color255 diffuse;

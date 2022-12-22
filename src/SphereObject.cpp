@@ -9,18 +9,16 @@ Obj::Sphere::Sphere(PosVec _r, PosVec _v, PosVec _a)
 Obj::Sphere::~Sphere() {}
 
 void Obj::Sphere::Update() {
-  if (hasGravity) {
-    t = dt * double(tn);
+  dt = .1;  // time delta
+  t += dt;
 
-    v.x += a.x * dt;
-    v.y += a.y * dt;
-    v.z += a.z * dt;
+  v.x += a.x * dt;
+  v.y += a.y * dt;
+  v.z += a.z * dt;
 
-    r.x += v.x * dt;
-    r.y += v.y * dt;
-    r.z += v.z * dt;
-    tn++;
-  }
+  r.x += v.x * dt;
+  r.y += v.y * dt;
+  r.z += v.z * dt;
 }
 
 void Obj::Sphere::Draw() {
@@ -30,7 +28,7 @@ void Obj::Sphere::Draw() {
   glMaterialfv(GL_FRONT, GL_SPECULAR, specular.set);
   glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
   glTranslated(r.x, r.y, r.z);
-  glScalef(10,10,10);
+  glScalef(10, 10, 10);
   glEnable(GL_NORMALIZE);
   glutSolidSphere(4.0, 20, 20);
   glPopMatrix();
