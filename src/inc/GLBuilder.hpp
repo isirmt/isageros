@@ -1,13 +1,11 @@
 #pragma once
+#include <GL/gl.h>
 #include <GL/glut.h>
-#include<GL/gl.h>
 
-namespace GLSYS
-{
-    class GLBuilder
-    {
-    public:
-        static void GLSetup();
-        static void LightSetup();
-    };
-}
+namespace GLSYS {
+class GLBuilder {
+ public:
+  static void GLSetup();
+  static void LightSetup();
+};
+}  // namespace GLSYS

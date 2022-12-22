@@ -1,3 +1,5 @@
 src/*.o
 src/main
 .vscode
+*.out
+*.dat
