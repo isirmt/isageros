@@ -9,11 +9,21 @@ Scene::TitleScene::TitleScene() {
   sphere.SetAmbient(Color255(150, 235, 80));
   sphere.SetDiffuse(Color255(255 * .3, 255 * .3, 255 * .3));
   sphere.SetSpecular(Color255(255, 255, 255, 255));
+  sphere.SetScale(PosVec(10, 10, 10));
+
+  cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(5.0, 7, 0.0),
+                       PosVec(1.0, -.9, 0.0));
+  cube.SetAmbient(Color255(100, 75, 80));
+  cube.SetDiffuse(Color255(255 * .3, 255 * .3, 255 * .3));
+  cube.SetSpecular(Color255(255, 255, 255, 255));
+  cube.SetScale(PosVec(10, 10, 10));
+  cube.SetRotate(30, PosVec(.5, .7, 0));
 }
 
 void Scene::TitleScene::Update() {
   deg += .1f;
   sphere.Update();
+  cube.Update();
 }
 
 void Scene::TitleScene::Draw() {
@@ -41,4 +51,5 @@ void Scene::TitleScene::Draw() {
   glPopMatrix();
 
   sphere.Draw();
+  cube.Draw();
 }

@@ -4,6 +4,7 @@
 #include "Color255.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
+#include "CubeObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
@@ -23,5 +24,6 @@ class TitleScene : public SceneBase {
   float deg;
   Color255 boxAmbient;
   Obj::Sphere sphere;
+  Obj::Cube cube;
 };
 }  // namespace Scene
