@@ -1,6 +1,7 @@
-#include "inc/CubeObject.hpp"
+#include "CubeObject.hpp"
 
-#include "inc/Color255.hpp"
+#include "Color255.hpp"
+#include "Camera.hpp"
 
 Obj::Cube::Cube() {}
 Obj::Cube::Cube(PosVec _r, PosVec _v, PosVec _a)
@@ -9,7 +10,7 @@ Obj::Cube::Cube(PosVec _r, PosVec _v, PosVec _a)
 Obj::Cube::~Cube() {}
 
 void Obj::Cube::Update() {
-  dt = .1;  // time delta
+  dt = Time::DeltaTime();
   t += dt;
 
   v.x += a.x * dt;

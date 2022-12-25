@@ -3,6 +3,7 @@
 
 #include "Color255.hpp"
 #include "PositionVector.hpp"
+#include "Time.hpp"
 
 namespace Obj {
 class Object3D {
@@ -12,6 +13,7 @@ class Object3D {
       : r(_r),
         v(_v),
         a(_a),
+        t(0),
         dt(0),
         scale(1.f, 1.f, 1.f),
         deg(0.f),
@@ -38,6 +40,18 @@ class Object3D {
     deg = _deg;
     rotScale = _rotScale;
   }
+
+  Color255 GetAmbient() { return ambient; }
+  Color255 GetDiffuse() { return diffuse; }
+  Color255 GetSpecular() { return specular; }
+  Color255 GetEmission() { return emission; }
+  float GetShininess() { return shininess[0]; }
+  PosVec GetScale() { return scale; }
+  PosVec GetPosition() { return r; }
+  PosVec GetVelocity() { return v; }
+  PosVec GetAcceleration() { return a; }
+  float GetRotateDegree() { return deg; }
+  PosVec GetRotateScale() { return rotScale; }
 
  protected:
   PosVec r;

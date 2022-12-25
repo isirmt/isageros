@@ -1,10 +1,12 @@
 #pragma once
 #include <GL/glut.h>
 
+#include "ApplicationPreference.hpp"
+#include "Camera.hpp"
 #include "Color255.hpp"
+#include "CubeObject.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
-#include "CubeObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
@@ -25,5 +27,6 @@ class TitleScene : public SceneBase {
   Color255 boxAmbient;
   Obj::Sphere sphere;
   Obj::Cube cube;
+  Obj::Cube centerCube;
 };
 }  // namespace Scene

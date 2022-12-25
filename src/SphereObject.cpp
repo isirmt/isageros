@@ -1,6 +1,6 @@
-#include "inc/SphereObject.hpp"
+#include "SphereObject.hpp"
 
-#include "inc/Color255.hpp"
+#include "Color255.hpp"
 
 Obj::Sphere::Sphere() {}
 Obj::Sphere::Sphere(PosVec _r, PosVec _v, PosVec _a)
@@ -9,7 +9,7 @@ Obj::Sphere::Sphere(PosVec _r, PosVec _v, PosVec _a)
 Obj::Sphere::~Sphere() {}
 
 void Obj::Sphere::Update() {
-  dt = .1;  // time delta
+  dt = Time::DeltaTime();
   t += dt;
 
   v.x += a.x * dt;

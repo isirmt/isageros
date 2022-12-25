@@ -1,55 +1,49 @@
-#include "inc/TitleScene.hpp"
-
-void draw_cube(float *a, float *d, float *s);
+#include "TitleScene.hpp"
 
 Scene::TitleScene::TitleScene() {
+  Camera::SetActive(true);
+  Camera::SetAsPerspective(ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y, 70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0,1,0));
+  
   deg = 0.f;
-  sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(1.0, 10, 0.0),
-                       PosVec(0.0, -.4, 0.0));
+  sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(50, 200, 0.0),
+                       PosVec(0.0, -300, 0.0));
   sphere.SetAmbient(Color255(150, 235, 80));
-  sphere.SetDiffuse(Color255(255 * .3, 255 * .3, 255 * .3));
+  sphere.SetDiffuse(Color255(.5f, .5f, .5f));
   sphere.SetSpecular(Color255(255, 255, 255, 255));
+  sphere.SetShininess(20);
   sphere.SetScale(PosVec(10, 10, 10));
 
-  cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(5.0, 7, 0.0),
-                       PosVec(1.0, -.9, 0.0));
+  cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(500, 7, 0.0),
+                   PosVec(0, -300, 0.0));
   cube.SetAmbient(Color255(100, 75, 80));
-  cube.SetDiffuse(Color255(255 * .3, 255 * .3, 255 * .3));
+  cube.SetDiffuse(Color255(.3f, .3f, .3f));
   cube.SetSpecular(Color255(255, 255, 255, 255));
   cube.SetScale(PosVec(10, 10, 10));
+  cube.SetShininess(20);
   cube.SetRotate(30, PosVec(.5, .7, 0));
+
+  centerCube = Obj::Cube(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
+  centerCube.SetAmbient(Color255(114, 235, 209));
+  centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
+  centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
+  centerCube.SetScale(PosVec(10, 10, 10));
+  centerCube.SetShininess(20);
+  centerCube.SetRotate(deg, PosVec(1.0, 0, 0.0));
 }
 
 void Scene::TitleScene::Update() {
-  deg += .1f;
+  deg += 360 * Time::DeltaTime();
+  if (deg > 360) deg -= 360;
+
+  centerCube.SetRotate(deg, centerCube.GetRotateScale());
+
   sphere.Update();
   cube.Update();
+  centerCube.Update();
 }
 
 void Scene::TitleScene::Draw() {
-  // write here.
-  float ambient[4], diffuse[4], specular[4];
-  glPushMatrix();
-  glTranslatef(0.0, 5., 0.0);
-  glRotatef(deg, 1.0, 0.7, 0.0);
-  glScalef(12, 10, 12);
-  glEnable(GL_NORMALIZE);
-  boxAmbient = Color255(114, 235, 209);
-  ambient[0] = boxAmbient.r;
-  ambient[1] = boxAmbient.g;
-  ambient[2] = boxAmbient.b;
-  ambient[3] = boxAmbient.a;
-  diffuse[0] = .3;
-  diffuse[1] = .3;
-  diffuse[2] = .3;
-  diffuse[3] = .3;
-  specular[0] = 1.0;
-  specular[1] = 1.0;
-  specular[2] = 1.0;
-  specular[3] = 1.0;
-  draw_cube(ambient, diffuse, specular);
-  glPopMatrix();
-
   sphere.Draw();
   cube.Draw();
+  centerCube.Draw();
 }

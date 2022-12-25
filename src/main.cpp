@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <GL/glut.h>
-#include "inc/SceneManager.hpp"
-#include "inc/GLBuilder.hpp"
+#include "SceneManager.hpp"
+#include "GLBuilder.hpp"
 // 最初に呼び出すシーン
-#include "inc/TitleScene.hpp"
-#include "inc/ApplicationPreference.hpp"
+#include "TitleScene.hpp"
+#include "ApplicationPreference.hpp"
+#include "ApplicationBuilder.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key , int x , int y), IdleProc(),
 MouseProc(int button, int state, int x, int y), MotionProc(int x, int y), PassiveMotionProc(int x, int y); 
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
 
     GLSYS::GLBuilder::GLSetup();
     GLSYS::GLBuilder::LightSetup();
+    GLSYS::ApplicationBuilder::Initialize();
 
     // 関数登録
     glutDisplayFunc(DisplayProc);

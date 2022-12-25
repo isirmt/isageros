@@ -1,15 +1,15 @@
-#include "inc/GLBuilder.hpp"
+#include "GLBuilder.hpp"
 
-#include "inc/ApplicationPreference.hpp"
+#include "ApplicationPreference.hpp"
 
 void GLSYS::GLBuilder::GLSetup() {
   glClearColor(ApplicationPreference::defaultWorldColor.r,
                ApplicationPreference::defaultWorldColor.g,
                ApplicationPreference::defaultWorldColor.b, 0.0);
   printf("%f", ApplicationPreference::defaultWorldColor.r);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(-800, 800.0, -450.0, 450.0, -800.0, 800.0);
+  // glMatrixMode(GL_PROJECTION);
+  // glLoadIdentity();
+  // glOrtho(-800, 800.0, -450.0, 450.0, -800.0, 800.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   glEnable(GL_DEPTH_TEST);
@@ -28,4 +28,5 @@ void GLSYS::GLBuilder::LightSetup() {
 
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
+  glEnable(GL_DEPTH_TEST);
 }
