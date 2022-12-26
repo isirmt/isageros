@@ -2,8 +2,9 @@
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
-  Camera::SetAsPerspective(ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y, 70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0,1,0));
-  
+  Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0, 1, 0));
   deg = 0.f;
   sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(50, 200, 0.0),
                        PosVec(0.0, -300, 0.0));
@@ -28,7 +29,7 @@ Scene::TitleScene::TitleScene() {
   centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
   centerCube.SetScale(PosVec(10, 10, 10));
   centerCube.SetShininess(20);
-  centerCube.SetRotate(deg, PosVec(1.0, 0, 0.0));
+  centerCube.SetRotate(deg, PosVec(.5, 1, .5));
 }
 
 void Scene::TitleScene::Update() {

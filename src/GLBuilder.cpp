@@ -1,7 +1,5 @@
 #include "GLBuilder.hpp"
 
-#include "ApplicationPreference.hpp"
-
 void GLSYS::GLBuilder::GLSetup() {
   glClearColor(ApplicationPreference::defaultWorldColor.r,
                ApplicationPreference::defaultWorldColor.g,
@@ -16,17 +14,19 @@ void GLSYS::GLBuilder::GLSetup() {
 }
 
 void GLSYS::GLBuilder::LightSetup() {
-  float ambient[] = {0.5, 0.5, 0.5, 1.0};
-  float diffuse[] = {0.7, 0.7, 0.7, 1.0};
-  float specular[] = {1.0, 1.0, 1.0, 1.0};
-  float position[] = {-100.0, 50.0, 100.0, 1.0};
+  Scene::LightManager::SetActiveLighting(true);
+  Scene::LightManager::Set(
+      GL_LIGHT0, PosVec(-100, 50, 100), Color255(0.5f, 0.5f, 0.5f, 1.0f),
+      Color255(0.7f, 0.7f, 0.7f, 1.0f), Color255(1.f, 1.f, 1.f, 1.f));
+  Scene::LightManager::SetActive(GL_LIGHT0, true);
 
-  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-  glLightfv(GL_LIGHT0, GL_POSITION, position);
+  // glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+  // glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+  // glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+  // glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
+  // glEnable(GL_LIGHTING);
+  // glEnable(GL_LIGHT0);
   glEnable(GL_DEPTH_TEST);
+  // glEnable(GL_COLOR_MATERIAL);
 }

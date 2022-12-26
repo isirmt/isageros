@@ -12,8 +12,9 @@ class Camera {
   static void SetActive(bool _isActive = true) { isActive = _isActive; }
 
   static void SetAsPerspective(float _wph, float _fov, float _near, float _far,
-                        PosVec _pos = PosVec(), PosVec _lookAt = PosVec(),
-                        PosVec _vec = PosVec()) {
+                               PosVec _pos = PosVec(),
+                               PosVec _lookAt = PosVec(),
+                               PosVec _vec = PosVec()) {
     wph = _wph;
     fov = _fov;
     near = _near;
@@ -46,6 +47,7 @@ class Camera {
   }
 
   static void UpdateCamera() {
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (isPerspective) {
       gluPerspective(fov, wph, near, far);
@@ -54,6 +56,8 @@ class Camera {
     } else {
       glOrtho(from.x, to.x, from.y, to.y, from.z, to.z);
     }
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
   }
 
  private:

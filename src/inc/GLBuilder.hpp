@@ -2,6 +2,9 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
+#include "ApplicationPreference.hpp"
+#include "LightManager.hpp"
+
 namespace GLSYS {
 class GLBuilder {
  public:
