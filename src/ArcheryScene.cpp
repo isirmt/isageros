@@ -19,5 +19,5 @@ void ArcheryScene::GameScene::KeyboardProc(unsigned char key, int x, int y){
 namespace ArcheryScene{
     class yumi{
         
-    }
+    };
 }
