@@ -5,6 +5,7 @@
 // 最初に呼び出すシーン
 #include "inc/TitleScene.hpp"
 #include "inc/ApplicationPreference.hpp"
+#include "inc/ArcheryScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key , int x , int y), IdleProc(),
 MouseProc(int button, int state, int x, int y), MotionProc(int x, int y), PassiveMotionProc(int x, int y); 
@@ -29,8 +30,8 @@ int main(int argc, char **argv)
     glutMotionFunc(MotionProc);
     glutPassiveMotionFunc(MotionProc);
 
-    Scene::TitleScene *titleScene = new Scene::TitleScene();
-    Scene::SceneManager::ChangeScene(titleScene);
+    ArcheryScene::GameScene *gameScene = new ArcheryScene::GameScene();
+    Scene::SceneManager::ChangeScene(gameScene);
 
     glutMainLoop();
 
