@@ -6,6 +6,7 @@
 #include "TitleScene.hpp"
 #include "ApplicationPreference.hpp"
 #include "ApplicationBuilder.hpp"
+#include "ArcheryScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key , int x , int y), IdleProc(),
 MouseProc(int button, int state, int x, int y), MotionProc(int x, int y), PassiveMotionProc(int x, int y); 
