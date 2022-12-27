@@ -1,7 +1,10 @@
 #pragma once
 #include <GL/glut.h>
 
+#include "ApplicationPreference.hpp"
+#include "Camera.hpp"
 #include "Color255.hpp"
+#include "CubeObject.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
 
@@ -23,5 +26,7 @@ class TitleScene : public SceneBase {
   float deg;
   Color255 boxAmbient;
   Obj::Sphere sphere;
+  Obj::Cube cube;
+  Obj::Cube centerCube;
 };
 }  // namespace Scene

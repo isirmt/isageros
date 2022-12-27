@@ -1,6 +1,6 @@
-#include "inc/SceneManager.hpp"
+#include "SceneManager.hpp"
 
-#include "inc/SceneBase.hpp"
+#include "SceneBase.hpp"
 
 Scene::SceneBase* Scene::SceneManager::currentScene = nullptr;
 

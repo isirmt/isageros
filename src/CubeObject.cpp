@@ -1,14 +1,15 @@
-#include "SphereObject.hpp"
+#include "CubeObject.hpp"
 
 #include "Color255.hpp"
+#include "Camera.hpp"
 
-Obj::Sphere::Sphere() {}
-Obj::Sphere::Sphere(PosVec _r, PosVec _v, PosVec _a)
+Obj::Cube::Cube() {}
+Obj::Cube::Cube(PosVec _r, PosVec _v, PosVec _a)
     : Object3D::Object3D(_r, _v, _a) {}
 
-Obj::Sphere::~Sphere() {}
+Obj::Cube::~Cube() {}
 
-void Obj::Sphere::Update() {
+void Obj::Cube::Update() {
   dt = Time::DeltaTime();
   t += dt;
 
@@ -21,7 +22,7 @@ void Obj::Sphere::Update() {
   r.z += v.z * dt;
 }
 
-void Obj::Sphere::Draw() {
+void Obj::Cube::Draw() {
   glPushMatrix();
   glMaterialfv(GL_FRONT, GL_AMBIENT, ambient.set);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse.set);
@@ -31,6 +32,6 @@ void Obj::Sphere::Draw() {
   glRotatef(deg, rotScale.x, rotScale.y, rotScale.z);
   glScalef(scale.x, scale.y, scale.z);
   glEnable(GL_NORMALIZE);
-  glutSolidSphere(4.0, 20, 20);
+  glutSolidCube(10);
   glPopMatrix();
 }
