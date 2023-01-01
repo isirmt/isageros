@@ -7,6 +7,12 @@
 #include "CubeObject.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
+#include "ConeObject.hpp"
+#include "DodecahedronObject.hpp"
+#include "IcosahedronObject.hpp"
+#include "SphereObject.hpp"
+#include "TeapotObject.hpp"
+#include "TorusObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
@@ -27,6 +33,6 @@ class TitleScene : public SceneBase {
   Color255 boxAmbient;
   Obj::Sphere sphere;
   Obj::Cube cube;
-  Obj::Cube centerCube;
+  Obj::Torus centerCube;
 };
 }  // namespace Scene

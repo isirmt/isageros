@@ -23,7 +23,7 @@ Scene::TitleScene::TitleScene() {
   cube.SetShininess(20);
   cube.SetRotate(30, PosVec(.5, .7, 0));
 
-  centerCube = Obj::Cube(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
+  centerCube = Obj::Torus(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
   centerCube.SetAmbient(Color255(114, 235, 209));
   centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
   centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));

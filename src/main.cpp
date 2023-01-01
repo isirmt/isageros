@@ -32,8 +32,10 @@ int main(int argc, char **argv)
     glutMotionFunc(MotionProc);
     glutPassiveMotionFunc(MotionProc);
 
-    ArcheryScene::GameScene *gameScene = new ArcheryScene::GameScene();
-    Scene::SceneManager::ChangeScene(gameScene);
+    //ArcheryScene::GameScene *gameScene = new ArcheryScene::GameScene();
+    //Scene::SceneManager::ChangeScene(gameScene);
+    Scene::TitleScene *titleScene = new Scene::TitleScene();
+    Scene::SceneManager::ChangeScene(titleScene);
 
     glutMainLoop();
 
