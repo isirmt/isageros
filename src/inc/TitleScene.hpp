@@ -7,6 +7,7 @@
 #include "CubeObject.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
+#include "ObjFileObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
@@ -27,6 +28,6 @@ class TitleScene : public SceneBase {
   Color255 boxAmbient;
   Obj::Sphere sphere;
   Obj::Cube cube;
-  Obj::Cube centerCube;
+  Obj::ObjFile centerCube;
 };
 }  // namespace Scene

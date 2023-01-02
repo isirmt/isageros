@@ -11,11 +11,15 @@ struct Color255 {
   int bInt;
   int aInt;
 
-  float r;
-  float g;
-  float b;
-  float a;
-  GLfloat set[4];
+  union {
+    struct {
+      float r;
+      float g;
+      float b;
+      float a;
+    };
+    float set[4];
+  };
   Color255() : rInt(0), gInt(0), bInt(0), aInt(255) { CalcFloat(); }
   Color255(int _grayScale)  // グレースケール(0~255)
       : rInt(_grayScale), gInt(_grayScale), bInt(_grayScale), aInt(255) {
@@ -37,7 +41,8 @@ struct Color255 {
       : r(_r), g(_g), b(_b), a(1.f) {
     CalcInt();
   }
-  Color255(float _r, float _g, float _b, float _a)  // (r, g, b, alpha) each (0~255)
+  Color255(float _r, float _g, float _b,
+           float _a)  // (r, g, b, alpha) each (0~255)
       : r(_r), g(_g), b(_b), a(_a) {
     CalcInt();
   }
@@ -87,10 +92,6 @@ struct Color255 {
     g = (double)gInt / 255.;
     b = (double)bInt / 255.;
     a = (double)aInt / 255.;
-    set[0] = r;
-    set[1] = g;
-    set[2] = b;
-    set[3] = a;
   }
 
   void CalcInt() {
@@ -98,10 +99,34 @@ struct Color255 {
     gInt = (int)(g * 255.f);
     bInt = (int)(b * 255.f);
     aInt = (int)(a * 255.f);
-    set[0] = r;
-    set[1] = g;
-    set[2] = b;
-    set[3] = a;
+  }
+
+  Color255 operator*(float v) {
+    Color255 res = Color255(r * v, g * v, b * v, a * v);
+    CalcInt();
+    return res;
+  }
+  Color255 operator/(float v) {
+    float vInv = 1.0f / v;
+    Color255 res = Color255(r * vInv, g * vInv, b * vInv, a * vInv);
+    CalcInt();
+    return res;
+  }
+
+  operator float *() { return (float *)&r; }
+  operator const float *() { return (const float *)&r; }
+
+  Color255 &operator=(const Color255 &color255) {
+    r = color255.r;
+    g = color255.g;
+    b = color255.b;
+    a = color255.a;
+    rInt = color255.rInt;
+    gInt = color255.gInt;
+    bInt = color255.bInt;
+    aInt = color255.aInt;
+
+    return (*this);
   }
 
  private:
