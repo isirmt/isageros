@@ -9,4 +9,7 @@ class ApplicationPreference {
   static const std::string applicationName;
   static const PosVec windowSize;
   static const Color255 defaultWorldColor;
+
+  static constexpr int ObjectBufferLength = 1024;
+  static constexpr int ObjectNameLength = 256;
 };
