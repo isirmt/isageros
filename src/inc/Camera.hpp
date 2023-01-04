@@ -46,6 +46,10 @@ class Camera {
     UpdateCamera();
   }
 
+  static void SetPerspectiveMode(bool _isPerspective) {
+    isPerspective = _isPerspective;
+  }
+
   static void UpdateCamera() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

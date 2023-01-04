@@ -2,9 +2,14 @@
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
+  Camera::SetAsOrtho(PosVec(0, 0, -.1f),
+                     PosVec(ApplicationPreference::windowSize.x,
+                            ApplicationPreference::windowSize.y, .1f));
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       30, 1, 99999, PosVec(0, 0, 2500), PosVec(0, 0, 0), PosVec(0, 1, 0));
+  Camera::SetPerspectiveMode(true);
+  Camera::UpdateCamera();
   deg = 0.f;
   sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(50, 200, 0.0),
                        PosVec(0.0, -300, 0.0));
@@ -31,9 +36,17 @@ Scene::TitleScene::TitleScene() {
   centerCube.SetScale(PosVec(10, 10, 10));
   centerCube.SetShininess(20);
   centerCube.SetRotate(deg, PosVec(.5, 1, .5));
+
+  button = Obj::ButtonObject(PosVec(0, 0), PosVec(300, 500), true, true);
+  button.SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
+                       Color255(200, 50, 50), Color255(100, 100, 100));
+  button.SetOutlineColor(Color255(35, 57, 40), 5.f);
+  button.SetInnerAnimation(.2f);
 }
 
 void Scene::TitleScene::Update() {
+  button.Collide();
+
   deg += 360 * Time::DeltaTime();
   if (deg > 360) deg -= 360;
 
@@ -42,10 +55,29 @@ void Scene::TitleScene::Update() {
   sphere.Update();
   cube.Update();
   centerCube.Update();
+
+  button.Update();
 }
 
 void Scene::TitleScene::Draw() {
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHTING);
+
+  Camera::SetPerspectiveMode(true);
+  Camera::UpdateCamera();
+
+  glPushMatrix();
   sphere.Draw();
   cube.Draw();
   centerCube.Draw();
+  glPopMatrix();
+
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_LIGHTING);
+
+  Camera::SetPerspectiveMode(false);
+  Camera::UpdateCamera();
+  // ここに2D
+
+  button.Draw();
 }
