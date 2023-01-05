@@ -1,6 +1,7 @@
 #pragma once
 #include "Time.hpp"
 #include "ObjectLoader.hpp"
+#include "MouseInput.hpp"
 
 namespace GLSYS {
 class ApplicationBuilder {

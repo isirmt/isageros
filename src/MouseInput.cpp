@@ -3,8 +3,16 @@
 PosVec Input::MouseInput::mouse = PosVec();
 PosVec Input::MouseInput::mouseWin = PosVec();
 MouseClickType Input::MouseInput::mouseClickType = MouseClickType();
-int Input::MouseInput::mouseInputs = 0;
+MouseClickType Input::MouseInput::mouseFirstQueue = MouseClickType();
 float Input::MouseInput::wheelRot = 0;
+
+void Input::MouseInput::Update() {
+  UpdateClick(&mouseClickType.left, &mouseFirstQueue.left);
+  UpdateClick(&mouseClickType.right, &mouseFirstQueue.right);
+  UpdateClick(&mouseClickType.middle, &mouseFirstQueue.middle);
+
+  // wheelRot
+}
 
 int Input::MouseInput::GetClick(int _button) {
   switch (_button)  // MOUSE_INPUT_XX
@@ -21,16 +29,16 @@ int Input::MouseInput::GetClick(int _button) {
   return -1;
 }
 
-void Input::MouseInput::UpdateClick(int* _value, int _andValue) {
-  if ((mouseInputs & _andValue) != 0) {
-    if (*_value >= PressFrame::FIRST) {
-      *_value = PressFrame::MUCH;
-    } else {
-      *_value = PressFrame::FIRST;
-    }
-  } else {
-    if (*_value == PressFrame::MUCH) *_value = PressFrame::RELEASE;
+void Input::MouseInput::UpdateClick(int* _value, int* _andValue) {
+  if (*_value >= PressFrame::FIRST) {
+    *_value = PressFrame::MUCH;
+  }
+  if (*_andValue == PressFrame::FIRST) {
+    *_value = PressFrame::FIRST;
+    *_andValue = PressFrame::ZERO;
+  } else if (*_andValue == PressFrame::RELEASE) {
     *_value = PressFrame::ZERO;
+    *_andValue = PressFrame::ZERO;
   }
 }
 
@@ -41,20 +49,20 @@ void Input::MouseInput::UpdateMouseState(int _button, int _state) {
       state = PressFrame::FIRST;
       break;
     case GLUT_UP:
-      state = PressFrame::ZERO;
+      state = PressFrame::RELEASE;
       break;
     default:
       break;
   }
   switch (_button) {
     case GLUT_LEFT_BUTTON:
-      mouseClickType.left = state;
+      mouseFirstQueue.left = state;
       break;
     case GLUT_RIGHT_BUTTON:
-      mouseClickType.right = state;
+      mouseFirstQueue.right = state;
       break;
     case GLUT_MIDDLE_BUTTON:
-      mouseClickType.middle = state;
+      mouseFirstQueue.middle = state;
       break;
   }
 }

@@ -130,11 +130,9 @@ void Obj::Object2D::CollideMouseAsBox() {
       pos.y - offset.y <= Input::MouseInput::GetMouse().y &&
       pos.y + size.y + offset.y >= Input::MouseInput::GetMouse().y && pFlag) {
     mouseHit = true;
-
     // オブジェクトの重複判定登録処理
 
     // ObjectOverlapping::UpdateObject(guid, enforcedCollision);
-
     if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
       if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST)
         mouseClicked = true;

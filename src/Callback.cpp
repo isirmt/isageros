@@ -29,7 +29,8 @@ void IdleProc() {
 void MouseProc(int button, int state, int x, int y) {
   Scene::SceneManager::GetCurrentScene()->MouseProc(button, state, x, y);
   Input::MouseInput::UpdateMouseState(button, state);
-  Input::MouseInput::SetMousePos(PosVec(x, y));
+  Input::MouseInput::SetMousePos(
+      PosVec(x, ApplicationPreference::windowSize.y - y));
   glutPostRedisplay();
 }
 
@@ -42,6 +43,7 @@ void MotionProc(int x, int y) {
 
 void PassiveMotionProc(int x, int y) {
   Scene::SceneManager::GetCurrentScene()->PassiveMotionProc(x, y);
-  Input::MouseInput::SetMousePos(PosVec(x, y));
+  Input::MouseInput::SetMousePos(
+      PosVec(x, ApplicationPreference::windowSize.y - y));
   glutPostRedisplay();
 }
