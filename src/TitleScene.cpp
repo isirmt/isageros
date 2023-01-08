@@ -4,7 +4,7 @@ Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0, 1, 0));
+      30, 1, 99999, PosVec(0, 0, 2500), PosVec(0, 0, 0), PosVec(0, 1, 0));
   deg = 0.f;
   sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(50, 200, 0.0),
                        PosVec(0.0, -300, 0.0));
@@ -23,7 +23,8 @@ Scene::TitleScene::TitleScene() {
   cube.SetShininess(20);
   cube.SetRotate(30, PosVec(.5, .7, 0));
 
-  centerCube = Obj::Torus(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
+  centerCube = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
+                            "Mesh/forest1.obj");
   centerCube.SetAmbient(Color255(114, 235, 209));
   centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
   centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
