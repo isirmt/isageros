@@ -58,8 +58,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
 
 newmtl blackstone_east
 Ns 250.000000
@@ -68,8 +66,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
 
 newmtl blackstone_end
 Ns 250.000000
@@ -78,8 +74,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
 
 newmtl blackstone_north
 Ns 250.000000
@@ -88,8 +82,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
 
 newmtl blackstone_side
 Ns 250.000000
@@ -98,8 +90,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
 
 newmtl blackstone_south
 Ns 250.000000
@@ -108,8 +98,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
 
 newmtl blackstone_up
 Ns 250.000000
@@ -118,8 +106,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone_top.png
 
 newmtl blackstone_west
 Ns 250.000000
@@ -128,8 +114,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/blackstone.png
 
 newmtl stone_all
 Ns 250.000000
@@ -138,8 +122,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_down
 Ns 250.000000
@@ -148,8 +130,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_east
 Ns 250.000000
@@ -158,8 +138,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_north
 Ns 250.000000
@@ -168,8 +146,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_south
 Ns 250.000000
@@ -178,8 +154,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_up
 Ns 250.000000
@@ -188,8 +162,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl stone_west
 Ns 250.000000
@@ -198,8 +170,6 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
-map_d C:/Users/yuu81/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/stone.png
 
 newmtl torch.emit.001
 Ns 90.000000
@@ -209,7 +179,6 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 1
-map_d D:/Users/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/torch.png
 
 newmtl torch.shaded.001
 Ns 90.000000
@@ -219,7 +188,6 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 1
-map_d D:/Users/AppData/Roaming/Blender Foundation/Blender/3.3/scripts/addons/MCprep_addon/MCprep_resources/resourcepacks/mcprep_default/assets/minecraft/textures/block/torch.png
 
 newmtl tree
 Ns 0.000000

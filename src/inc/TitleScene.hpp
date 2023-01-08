@@ -1,19 +1,10 @@
 #pragma once
 #include <GL/glut.h>
 
-#include "ApplicationPreference.hpp"
-#include "Camera.hpp"
+#include "2DAssets.hpp"
+#include "3DAssets.hpp"
 #include "Color255.hpp"
-#include "CubeObject.hpp"
 #include "SceneBase.hpp"
-#include "SphereObject.hpp"
-#include "ConeObject.hpp"
-#include "DodecahedronObject.hpp"
-#include "IcosahedronObject.hpp"
-#include "SphereObject.hpp"
-#include "TeapotObject.hpp"
-#include "TorusObject.hpp"
-#include "ObjFileObject.hpp"
 
 namespace Scene {
 class TitleScene : public SceneBase {
@@ -35,5 +26,8 @@ class TitleScene : public SceneBase {
   Obj::Sphere sphere;
   Obj::Cube cube;
   Obj::ObjFile centerCube;
+
+  Obj::ButtonObject button;
 };
+
 }  // namespace Scene

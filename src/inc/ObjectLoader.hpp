@@ -89,11 +89,11 @@ class Material {
   }
   Material(char materialName[ApplicationPreference::ObjectNameLength] =
                (char *)"default",
-           Color255 materialColor = Color255(1.0f, 1.0, 1.0, 1.0),
-           Color255 amb = Color255(1.0f, 1.0, 1.0, 1.0),
-           Color255 dif = Color255(1.0f, 1.0, 1.0, 1.0),
-           Color255 spe = Color255(1.0f, 1.0, 1.0, 1.0),
-           Color255 emi = Color255(0.0f, 0.0, 0.0, 0.0), float power = 5.0f)
+           Color255 materialColor = Color255(1.0, 1.0, 1.0, 1.0),
+           Color255 amb = Color255(1.0, 1.0, 1.0, 1.0),
+           Color255 dif = Color255(1.0, 1.0, 1.0, 1.0),
+           Color255 spe = Color255(1.0, 1.0, 1.0, 1.0),
+           Color255 emi = Color255(0.0, 0.0, 0.0, 0.0), float power = 5.0f)
       : color(materialColor),
         ambient(amb),
         diffuse(dif),

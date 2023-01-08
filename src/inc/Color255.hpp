@@ -46,6 +46,15 @@ struct Color255 {
       : r(_r), g(_g), b(_b), a(_a) {
     CalcInt();
   }
+  Color255(double _r, double _g, double _b)  // (r, g, b) each (0~255)
+      : r(_r), g(_g), b(_b), a(1.f) {
+    CalcInt();
+  }
+  Color255(double _r, double _g, double _b,
+           float _a)  // (r, g, b, alpha) each (0~255)
+      : r(_r), g(_g), b(_b), a(_a) {
+    CalcInt();
+  }
   Color255(std::string code)  // ("#00ff00"{or "00ff00"})
       : aInt(255) {
     std::string formalCode = code;

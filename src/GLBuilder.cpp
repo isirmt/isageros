@@ -4,9 +4,12 @@ void GLSYS::GLBuilder::GLSetup() {
   glClearColor(ApplicationPreference::defaultWorldColor.r,
                ApplicationPreference::defaultWorldColor.g,
                ApplicationPreference::defaultWorldColor.b, 0.0);
-  // glMatrixMode(GL_PROJECTION);
-  // glLoadIdentity();
-  // glOrtho(-800, 800.0, -450.0, 450.0, -800.0, 800.0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(-ApplicationPreference::windowSize.x / 2.,
+          ApplicationPreference::windowSize.x / 2.,
+          -ApplicationPreference::windowSize.y / 2.,
+          ApplicationPreference::windowSize.y / 2., -0.1, 0.1);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   glEnable(GL_DEPTH_TEST);
@@ -20,14 +23,6 @@ void GLSYS::GLBuilder::LightSetup() {
   Scene::LightManager::SetActive(GL_LIGHT0, true);
   Scene::LightManager::UpdateLight(GL_LIGHT0);
 
-  // glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-  // glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-  // glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-  // glLightfv(GL_LIGHT0, GL_POSITION, position);
-
-  // glEnable(GL_LIGHTING);
-  // glEnable(GL_LIGHT0);
   glEnable(GL_DEPTH_TEST);
   glShadeModel(GL_SMOOTH);
-  // glEnable(GL_COLOR_MATERIAL);
 }
