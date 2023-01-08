@@ -1,4 +1,10 @@
 #pragma once
+#include "ConeObject.hpp"
 #include "CubeObject.hpp"
+#include "CylinderObject.hpp"
+#include "DodecahedronObject.hpp"
+#include "IcosahedronObject.hpp"
 #include "ObjFileObject.hpp"
 #include "SphereObject.hpp"
+#include "TeapotObject.hpp"
+#include "TorusObject.hpp"

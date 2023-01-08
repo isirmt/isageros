@@ -7,9 +7,9 @@
 // #include "TextObject.h"
 #include <string>
 namespace Obj {
-class ButtonObject : public Object2D {
+class Button : public Object2D {
  public:
-  ButtonObject(PosVec _pos, PosVec _size, bool _enabledFill = true,
+  Button(PosVec _pos, PosVec _size, bool _enabledFill = true,
                bool _enabledOutline = false)
       : Object2D(_pos, _size),
         enabledFill(_enabledFill),
@@ -24,7 +24,7 @@ class ButtonObject : public Object2D {
         clickedOuterColor(0),
         outlineWidth(0) {}
 
-  ButtonObject()
+  Button()
       : Object2D(PosVec(), PosVec()),
         enabledFill(true),
         enabledOutline(false),

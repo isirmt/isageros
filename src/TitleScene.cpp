@@ -35,7 +35,7 @@ Scene::TitleScene::TitleScene() {
   centerCube.SetShininess(20);
   centerCube.SetRotate(deg, PosVec(.5, 1, .5));
 
-  button = Obj::ButtonObject(PosVec(30, 30), PosVec(300, 500), true, true);
+  button = Obj::Button(PosVec(30, 30), PosVec(300, 500), true, true);
   button.SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
                        Color255(200, 50, 50), Color255(100, 100, 100));
   button.SetOutlineColor(Color255(35, 57, 40), 5.f);

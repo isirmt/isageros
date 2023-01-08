@@ -1,8 +1,8 @@
 #include "ButtonObject.hpp"
 
-void Obj::ButtonObject::Collide() { CollideMouseAsBox(); }
+void Obj::Button::Collide() { CollideMouseAsBox(); }
 
-void Obj::ButtonObject::Update() {
+void Obj::Button::Update() {
   //   CheckGUID();
   UpdateEnforcedMouseCollision();
 
@@ -79,7 +79,7 @@ void Obj::ButtonObject::Update() {
   UpdatePointerAnimation();
 }
 
-void Obj::ButtonObject::Draw() {
+void Obj::Button::Draw() {
   if (enabledOutline) {
     glColor4f(outerAnimation.current.r, outerAnimation.current.g,
               outerAnimation.current.b, outerAlphaAnimation.current);
@@ -103,4 +103,4 @@ void Obj::ButtonObject::Draw() {
   }
 }
 
-void Obj::ButtonObject::CollideMouse() {}
+void Obj::Button::CollideMouse() {}
