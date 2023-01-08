@@ -7,6 +7,12 @@
 #include "CubeObject.hpp"
 #include "SceneBase.hpp"
 #include "SphereObject.hpp"
+#include "ConeObject.hpp"
+#include "DodecahedronObject.hpp"
+#include "IcosahedronObject.hpp"
+#include "SphereObject.hpp"
+#include "TeapotObject.hpp"
+#include "TorusObject.hpp"
 #include "ObjFileObject.hpp"
 
 namespace Scene {

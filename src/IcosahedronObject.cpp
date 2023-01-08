@@ -1,15 +1,15 @@
-#include "SphereObject.hpp"
+#include "IcosahedronObject.hpp"
 
 #include "Color255.hpp"
 #include "Camera.hpp"
 
-Obj::Sphere::Sphere() {}
-Obj::Sphere::Sphere(PosVec _r, PosVec _v, PosVec _a)
+Obj::Icosahedron::Icosahedron() {}
+Obj::Icosahedron::Icosahedron(PosVec _r, PosVec _v, PosVec _a)
     : Object3D::Object3D(_r, _v, _a) {}
 
-Obj::Sphere::~Sphere() {}
+Obj::Icosahedron::~Icosahedron() {}
 
-void Obj::Sphere::Update() {
+void Obj::Icosahedron::Update() {
   dt = Time::DeltaTime();
   t += dt;
 
@@ -22,7 +22,7 @@ void Obj::Sphere::Update() {
   r.z += v.z * dt;
 }
 
-void Obj::Sphere::Draw() {
+void Obj::Icosahedron::Draw() {
   glPushMatrix();
   glMaterialfv(GL_FRONT, GL_AMBIENT, ambient.set);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse.set);
@@ -32,6 +32,6 @@ void Obj::Sphere::Draw() {
   glRotatef(deg, rotScale.x, rotScale.y, rotScale.z);
   glScalef(scale.x, scale.y, scale.z);
   glEnable(GL_NORMALIZE);
-  glutSolidSphere(5.,30,30); 
+  glutSolidIcosahedron(); 
   glPopMatrix();
 }
