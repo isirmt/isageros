@@ -2,9 +2,7 @@
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
-  Camera::SetAsOrtho(PosVec(0, 0, -.1f),
-                     PosVec(ApplicationPreference::windowSize.x,
-                            ApplicationPreference::windowSize.y, .1f));
+  SceneBase::SetOrthoCameraWindow();
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       30, 1, 99999, PosVec(0, 0, 2500), PosVec(0, 0, 0), PosVec(0, 1, 0));
@@ -60,9 +58,7 @@ void Scene::TitleScene::Update() {
 }
 
 void Scene::TitleScene::Draw() {
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_LIGHTING);
-
+  SceneBase::Set3DDrawMode();
   Camera::SetPerspectiveMode(true);
   Camera::UpdateCamera();
 
@@ -72,12 +68,9 @@ void Scene::TitleScene::Draw() {
   centerCube.Draw();
   glPopMatrix();
 
-  glDisable(GL_DEPTH_TEST);
-  glDisable(GL_LIGHTING);
-
+  SceneBase::Set2DDrawMode();
   Camera::SetPerspectiveMode(false);
   Camera::UpdateCamera();
-  // ここに2D
 
   button.Draw();
 }

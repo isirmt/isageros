@@ -1,4 +1,6 @@
 #pragma once
+#include "ApplicationPreference.hpp"
+#include "Camera.hpp"
 
 namespace Scene {
 class SceneBase {
@@ -13,5 +15,12 @@ class SceneBase {
   virtual void MotionProc(int x, int y) = 0;
   virtual void PassiveMotionProc(int x, int y) = 0;
   virtual void SpecialFuncProc(int key, int x, int y) = 0;
+
+ protected:
+  void SetOrthoCameraWindow();
+  // カメラ系関数は含まれていない
+  void Set3DDrawMode();
+  // カメラ系関数は含まれていない
+  void Set2DDrawMode();
 };
 }  // namespace Scene

@@ -3,8 +3,6 @@
 
 #include "2DAssets.hpp"
 #include "3DAssets.hpp"
-#include "ApplicationPreference.hpp"
-#include "Camera.hpp"
 #include "Color255.hpp"
 #include "SceneBase.hpp"
 
