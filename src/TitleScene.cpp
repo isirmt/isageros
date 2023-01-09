@@ -28,33 +28,44 @@ Scene::TitleScene::TitleScene() {
 
   centerCube = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
                             "Mesh/forest1.obj");
-  centerCube.SetAmbient(Color255(114, 235, 209));
-  centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
-  centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
-  centerCube.SetScale(PosVec(10, 10, 10));
+  centerCube.SetScale(PosVec(25, 25, 25));
   centerCube.SetShininess(20);
-  centerCube.SetRotate(deg, PosVec(.5, 1, .5));
+  centerCube.SetRotate(deg, PosVec(0, 1, 0));
+
+  character = Obj::ObjFile(PosVec(700, -500, 0.0), PosVec(), PosVec(),
+                            "Mesh/test.obj");
+  character.SetScale(PosVec(17, 17, 17));
+  character.SetShininess(10);
+  character.SetRotate(deg, PosVec(0, 1, 0));
 
   button = Obj::Button(PosVec(30, 30), PosVec(300, 500), true, true);
   button.SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
                        Color255(200, 50, 50), Color255(100, 100, 100));
   button.SetOutlineColor(Color255(35, 57, 40), 5.f);
   button.SetInnerAnimation(.2f);
+
+  rect = Obj::Rectangle(PosVec(700, 200), PosVec(100, 100), true, true);
+  rect.SetInnerColor(Color255(200, 70, 130));
+  rect.SetOutlineColor(Color255(100), 4);
 }
 
 void Scene::TitleScene::Update() {
   button.Collide();
+  rect.Collide();
 
-  deg += 360 * Time::DeltaTime();
+  deg += 150 * Time::DeltaTime();
   if (deg > 360) deg -= 360;
 
   centerCube.SetRotate(deg, centerCube.GetRotateScale());
+  character.SetRotate(deg, centerCube.GetRotateScale());
 
   sphere.Update();
   cube.Update();
   centerCube.Update();
+  character.Update();
 
   button.Update();
+  rect.Update();
 }
 
 void Scene::TitleScene::Draw() {
@@ -65,7 +76,13 @@ void Scene::TitleScene::Draw() {
   glPushMatrix();
   sphere.Draw();
   cube.Draw();
-  centerCube.Draw();
+  {
+    glPushMatrix();
+    glRotatef(30,1,0,0);
+    centerCube.Draw();
+    glPopMatrix();
+  }
+  character.Draw();
   glPopMatrix();
 
   SceneBase::Set2DDrawMode();
@@ -73,4 +90,5 @@ void Scene::TitleScene::Draw() {
   Camera::UpdateCamera();
 
   button.Draw();
+  rect.Draw();
 }
