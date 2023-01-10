@@ -4,7 +4,7 @@ CFLAGS	= -std=c++11 -ggdb -O3
 TARGET  = main
 SRCS	= $(wildcard *.cpp)
 OBJS	= $(SRCS:.cpp=.o)
-INCDIR  = -I./inc
+INCDIR  = -I./inc -I./lib
 LIBDIR  = 
 LIBS	= -lglut -lGLU -lGL
 

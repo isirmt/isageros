@@ -30,6 +30,7 @@ class TitleScene : public SceneBase {
 
   Obj::Button* button;
   Obj::Rectangle* rect;
+  Obj::Text* text;
 };
 
 }  // namespace Scene

@@ -48,8 +48,12 @@ Scene::TitleScene::TitleScene() {
   rect->SetInnerColor(Color255(200, 70, 130));
   rect->SetOutlineColor(Color255(35, 57, 40), 5.f);
 
+  text = new Obj::Text(PosVec(500,500), PosVec(), "こんにちは");
+  text->SetInnerColor(Color255(200, 70, 130));
+
   layer2D.AddObject(button);
   layer2D.AddObject(rect);
+  layer2D.AddObject(text);
 }
 
 void Scene::TitleScene::Update() {
