@@ -38,20 +38,22 @@ Scene::TitleScene::TitleScene() {
   character.SetShininess(10);
   character.SetRotate(deg, PosVec(0, 1, 0));
 
-  button = Obj::Button(PosVec(30, 30), PosVec(300, 500), true, true);
-  button.SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
+  button = new Obj::Button(PosVec(30, 30), PosVec(300, 500), true, true);
+  button->SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
                        Color255(200, 50, 50), Color255(100, 100, 100));
-  button.SetOutlineColor(Color255(35, 57, 40), 5.f);
-  button.SetInnerAnimation(.2f);
+  button->SetOutlineColor(Color255(35, 57, 40), 5.f);
+  button->SetInnerAnimation(.2f);
 
-  rect = Obj::Rectangle(PosVec(700, 200), PosVec(100, 100), true, true);
-  rect.SetInnerColor(Color255(200, 70, 130));
-  rect.SetOutlineColor(Color255(100), 4);
+  rect = new Obj::Rectangle(PosVec(700, 200), PosVec(100, 100), true, true);
+  rect->SetInnerColor(Color255(200, 70, 130));
+  rect->SetOutlineColor(Color255(35, 57, 40), 5.f);
+
+  layer2D.AddObject(button);
+  layer2D.AddObject(rect);
 }
 
 void Scene::TitleScene::Update() {
-  button.Collide();
-  rect.Collide();
+  layer2D.Collide();
 
   deg += 150 * Time::DeltaTime();
   if (deg > 360) deg -= 360;
@@ -64,8 +66,7 @@ void Scene::TitleScene::Update() {
   centerCube.Update();
   character.Update();
 
-  button.Update();
-  rect.Update();
+  layer2D.Update();
 }
 
 void Scene::TitleScene::Draw() {
@@ -89,6 +90,5 @@ void Scene::TitleScene::Draw() {
   Camera::SetPerspectiveMode(false);
   Camera::UpdateCamera();
 
-  button.Draw();
-  rect.Draw();
+  layer2D.Draw();
 }

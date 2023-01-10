@@ -28,8 +28,8 @@ class TitleScene : public SceneBase {
   Obj::ObjFile centerCube;
   Obj::ObjFile character;
 
-  Obj::Button button;
-  Obj::Rectangle rect;
+  Obj::Button* button;
+  Obj::Rectangle* rect;
 };
 
 }  // namespace Scene
