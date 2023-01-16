@@ -1,6 +1,7 @@
 #pragma once
 #include "ApplicationPreference.hpp"
 #include "Camera.hpp"
+#include "ObjectLayer.hpp"
 
 namespace Scene {
 class SceneBase {
@@ -17,6 +18,8 @@ class SceneBase {
   virtual void SpecialFuncProc(int key, int x, int y) = 0;
 
  protected:
+  Obj::ObjectLayer layer2D;
+
   void SetOrthoCameraWindow();
   // カメラ系関数は含まれていない
   void Set3DDrawMode();

@@ -4,6 +4,7 @@
 #include "2DAssets.hpp"
 #include "3DAssets.hpp"
 #include "Color255.hpp"
+#include "LightManager.hpp"
 #include "SceneBase.hpp"
 
 namespace Scene {
@@ -22,12 +23,16 @@ class TitleScene : public SceneBase {
 
  private:
   float deg;
+  float fdeg;
   Color255 boxAmbient;
   Obj::Sphere sphere;
   Obj::Cube cube;
   Obj::ObjFile centerCube;
+  Obj::ObjFile character;
 
-  Obj::Button button;
+  Obj::Button* button;
+  Obj::Rectangle* rect;
+  Obj::Text* text;
 };
 
 }  // namespace Scene
