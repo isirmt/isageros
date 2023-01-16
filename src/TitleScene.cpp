@@ -34,7 +34,7 @@ Scene::TitleScene::TitleScene() {
   centerCube.SetRotate(0, PosVec(0, 1, 0));
 
   character =
-      Obj::ObjFile(PosVec(100, 0, 0.0), PosVec(), PosVec(), "Mesh/test.obj");
+      Obj::ObjFile(PosVec(100, 0, 0.0), PosVec(), PosVec(), "Mesh/chara.obj");
   character.SetScale(PosVec(5, 5, 5));
   character.SetShininess(10);
   character.SetRotate(deg, PosVec(0, 1, 0));
