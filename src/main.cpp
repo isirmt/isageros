@@ -9,6 +9,7 @@
 #include "ArcheryScene.hpp"
 #include "ObjectLoader.hpp"
 #include "TitleScene.hpp"
+#include "ImageLoader.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
@@ -34,6 +35,11 @@ int main(int argc, char **argv) {
   glutMouseFunc(MouseProc);
   glutMotionFunc(MotionProc);
   glutPassiveMotionFunc(MotionProc);
+
+  // ImageData img;
+
+  // ImageLoader imageLoader;
+  // imageLoader.Read("assets/img/a.ppm", img);
 
   ArcheryScene::GameScene *gameScene = new ArcheryScene::GameScene();
   Scene::SceneManager::ChangeScene(gameScene);
