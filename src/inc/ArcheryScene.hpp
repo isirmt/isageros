@@ -3,25 +3,19 @@
 
 #include "SceneBase.hpp"
 
-#include "ApplicationPreference.hpp"
-#include "Camera.hpp"
+#include "2DAssets.hpp"
+#include "3DAssets.hpp"
 #include "Color255.hpp"
-#include "CubeObject.hpp"
+#include "LightManager.hpp"
 #include "SceneBase.hpp"
-#include "SphereObject.hpp"
-#include "ConeObject.hpp"
-#include "DodecahedronObject.hpp"
-#include "IcosahedronObject.hpp"
-#include "SphereObject.hpp"
-#include "TeapotObject.hpp"
-#include "TorusObject.hpp"
 
-namespace ArcheryScene{
-	class GameScene: public Scene::SceneBase {
+
+namespace Scene{
+	class ArcheryScene: public SceneBase {
 		public:
 			//GameScene() {}
-			GameScene();
-			~GameScene() {}
+			ArcheryScene();
+			~ArcheryScene() {}
 		
 			void Update() override;
         	void Draw() override;
@@ -36,6 +30,7 @@ namespace ArcheryScene{
     		Color255 boxAmbient;
   			Obj::Sphere sphere;
   			Obj::Cube cube;
-  			Obj::Torus centerCube;
+  			Obj::Cylinder centerCube;
+  			Obj::Cylinder arrow;
 	};
 }

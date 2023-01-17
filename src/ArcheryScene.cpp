@@ -1,19 +1,27 @@
 #include "inc/ArcheryScene.hpp"
 #include <stdio.h>
 
-ArcheryScene::GameScene::GameScene(){
+Scene::ArcheryScene::ArcheryScene(){
     // Scean::Camera::SetActive(true);
     // Scean::Camera::SetAsPerspective(
     //   ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
     //   70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0, 1, 0));
-    deg = 0.f;
-    sphere = Obj::Sphere(PosVec(-50.0, 350, 20.0), PosVec(50, 200, 0.0),
-                       PosVec(0.0, -300, 0.0));
-    sphere.SetAmbient(Color255(150, 235, 80));
-    sphere.SetDiffuse(Color255(.5f, .5f, .5f));
-    sphere.SetSpecular(Color255(255, 255, 255, 255));
-    sphere.SetShininess(20);
-    sphere.SetScale(PosVec(10, 10, 10));
+    Camera::SetActive(true);
+  	SceneBase::SetOrthoCameraWindow();
+  	Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(0, 0, 2500), PosVec(0, 0, 0), PosVec(0, 1, 0));
+  	Camera::SetPerspectiveMode(true);
+  	Camera::UpdateCamera();
+    deg = 90.f;
+    arrow = Obj::Cylinder(PosVec(0.0, 0.0, 2400.0), PosVec(0.0,0.0,-2000.0),
+                       PosVec(0.0,-98.0,0.0));
+    arrow.SetAmbient(Color255(150, 235, 80));
+    arrow.SetDiffuse(Color255(.5f, .5f, .5f));
+    arrow.SetSpecular(Color255(255, 255, 255, 255));
+    arrow.SetShininess(20);
+    arrow.SetScale(PosVec(2, 15, 2));
+    //arrow.SetRotate(90,PosVec(1,0,0));
 
     cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(500, 7, 0.0),
                    PosVec(0, -300, 0.0));
@@ -24,35 +32,59 @@ ArcheryScene::GameScene::GameScene(){
     cube.SetShininess(20);
     cube.SetRotate(30, PosVec(.5, .7, 0));
 
-    centerCube = Obj::Torus(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
+    centerCube = Obj::Cylinder(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
     centerCube.SetAmbient(Color255(114, 235, 209));
     centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
     centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
-    centerCube.SetScale(PosVec(10, 10, 10));
+    centerCube.SetScale(PosVec(70, 1, 70));
     centerCube.SetShininess(20);
-    centerCube.SetRotate(deg, PosVec(.5, 1, .5));
+    centerCube.SetRotate(90, PosVec(1, 0, 0));
 }
 
-void ArcheryScene::GameScene::Update(){
-    deg += 360 * Time::DeltaTime();
+void Scene::ArcheryScene::Update(){
+    deg -= 10 * Time::DeltaTime();
     if (deg > 360) deg -= 360;
 
-    centerCube.SetRotate(deg, centerCube.GetRotateScale());
-
-    sphere.Update();
+    arrow.SetRotate(deg, PosVec(1,0,0));
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(arrow.GetPosition().x, arrow.GetPosition().y, arrow.GetPosition().z +500), arrow.GetPosition(), PosVec(0,1,0));
+		
+		Camera::UpdateCamera();
+    arrow.Update();
     cube.Update();
     centerCube.Update();
 }
 
-void ArcheryScene::GameScene::Draw(){
+void Scene::ArcheryScene::Draw(){
+		SceneBase::Set3DDrawMode();
+  Camera::SetPerspectiveMode(true);
+  Camera::UpdateCamera();
+
+  glPushMatrix(); // 3D描画
+  arrow.Draw();
+  cube.Draw();
+  {
+    glPushMatrix();
+    centerCube.Draw();
+    glPopMatrix();
+  }
+  //character.Draw();
+  glPopMatrix();
+
+  SceneBase::Set2DDrawMode();
+  Camera::SetPerspectiveMode(false);
+  Camera::UpdateCamera();
+
+  layer2D.Draw(); // 2D描画
     printf("アーチェリーのゲーム画面\n");
 }
 
-void ArcheryScene::GameScene::SpecialFuncProc(int key,int x,int y){
+void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
     printf("押された！\n");
 }
 
-void ArcheryScene::GameScene::KeyboardProc(unsigned char key, int x, int y){
+void Scene::ArcheryScene::KeyboardProc(unsigned char key, int x, int y){
     switch (key){
         case 'x':
             printf("推してる\n");
