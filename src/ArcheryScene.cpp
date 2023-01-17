@@ -10,7 +10,7 @@ Scene::ArcheryScene::ArcheryScene(){
   	SceneBase::SetOrthoCameraWindow();
   	Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(0, 0, 2500), PosVec(0, 0, 0), PosVec(0, 1, 0));
+      30, 1, 99999, PosVec(700, 600, 450), PosVec(0, 0, 0), PosVec(0, 1, 0));
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
@@ -39,6 +39,12 @@ Scene::ArcheryScene::ArcheryScene(){
     centerCube.SetScale(PosVec(70, 1, 70));
     centerCube.SetShininess(20);
     centerCube.SetRotate(90, PosVec(1, 0, 0));
+
+    stage = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
+                            "Mesh/archery_stage.obj");
+    stage.SetScale(PosVec(100, 100, 100));
+    stage.SetShininess(20);
+    stage.SetRotate(0, PosVec(0, 1, 0));
 }
 
 void Scene::ArcheryScene::Update(){
@@ -46,14 +52,15 @@ void Scene::ArcheryScene::Update(){
     if (deg > 360) deg -= 360;
 
     arrow.SetRotate(deg, PosVec(1,0,0));
-    Camera::SetAsPerspective(
-      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(arrow.GetPosition().x, arrow.GetPosition().y, arrow.GetPosition().z +500), arrow.GetPosition(), PosVec(0,1,0));
+    // Camera::SetAsPerspective(
+    //   ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+    //   30, 1, 99999, PosVec(arrow.GetPosition().x, arrow.GetPosition().y, arrow.GetPosition().z +500), arrow.GetPosition(), PosVec(0,1,0));
 		
-		Camera::UpdateCamera();
+	// 	Camera::UpdateCamera();
     arrow.Update();
     cube.Update();
     centerCube.Update();
+    stage.Update();
 }
 
 void Scene::ArcheryScene::Draw(){
@@ -64,6 +71,7 @@ void Scene::ArcheryScene::Draw(){
   glPushMatrix(); // 3D描画
   arrow.Draw();
   cube.Draw();
+  stage.Draw();
   {
     glPushMatrix();
     centerCube.Draw();
@@ -94,10 +102,4 @@ void Scene::ArcheryScene::KeyboardProc(unsigned char key, int x, int y){
             break;
     }
     //printf("推してる\n");
-}
-
-namespace ArcheryScene{
-    class yumi{
-        
-    };
 }
