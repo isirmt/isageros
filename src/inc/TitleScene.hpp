@@ -11,7 +11,12 @@ namespace Scene {
 class TitleScene : public SceneBase {
  public:
   TitleScene();
-  ~TitleScene() {}
+  ~TitleScene() {
+    delete button;
+    delete rect;
+    delete text;
+    delete image;
+  }
 
   void Update() override;
   void Draw() override;
@@ -33,6 +38,9 @@ class TitleScene : public SceneBase {
   Obj::Button* button;
   Obj::Rectangle* rect;
   Obj::Text* text;
+  Obj::Image* image;
+
+  const std::string folderName = "minigames/tabletennis/";
 };
 
 }  // namespace Scene
