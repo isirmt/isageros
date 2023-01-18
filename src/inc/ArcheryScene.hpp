@@ -30,6 +30,7 @@ namespace Scene{
     		Color255 boxAmbient;
   			Obj::Sphere sphere;
   			Obj::Cube cube;
+			Obj::ObjFile stage;
   			Obj::Cylinder centerCube;
   			Obj::Cylinder arrow;
 	};

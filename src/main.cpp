@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
 
   Scene::ArcheryScene *archeryScene = new Scene::ArcheryScene();
   Scene::SceneManager::ChangeScene(archeryScene);
-  Scene::TitleScene *titleScene = new Scene::TitleScene();
-  Scene::SceneManager::ChangeScene(titleScene);
+  //Scene::TitleScene *titleScene = new Scene::TitleScene();
+  //Scene::SceneManager::ChangeScene(titleScene);
 
   glutMainLoop();
 
