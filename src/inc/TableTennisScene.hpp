@@ -6,6 +6,7 @@
 #include "Color255.hpp"
 #include "LightManager.hpp"
 #include "SceneBase.hpp"
+#include "SceneManager.hpp"
 
 namespace Scene {
 class TableTennisScene : public SceneBase {

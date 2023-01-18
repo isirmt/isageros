@@ -31,7 +31,7 @@ Obj::Mesh::Mesh() {
   listID = 0;
 }
 
-Obj::Mesh::~Mesh() {}
+Obj::Mesh::~Mesh() { Release(); }
 
 void Obj::Mesh::Release() {
   // FIXME: pointerの解放は未記述

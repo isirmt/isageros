@@ -1,5 +1,7 @@
 #include "TableTennisScene.hpp"
 
+#include "TitleScene.hpp"
+
 Scene::TableTennisScene::TableTennisScene() {
   Camera::SetActive(true);
   SceneBase::SetOrthoCameraWindow();
@@ -41,7 +43,7 @@ Scene::TableTennisScene::TableTennisScene() {
   character.SetShininess(10);
   character.SetRotate(deg, PosVec(0, 1, 0));
 
-  button = new Obj::Button(PosVec(30, 30), PosVec(200, 200), true, true);
+  button = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
   button->SetInnerColor(Color255(255, 100, 50), Color255(230, 80, 70),
                         Color255(200, 50, 50), Color255(100, 100, 100));
   button->SetOutlineColor(Color255(35, 57, 40), 5.f);
@@ -97,6 +99,12 @@ void Scene::TableTennisScene::Update() {
   cube.Update();
   centerCube.Update();
   character.Update();
+
+  if (button->GetMouseSelected()) {
+    button->SetMouseOff();
+    SceneManager::ChangeScene(new TitleScene());
+    return;
+  }
 
   layer2D.Update();
 }

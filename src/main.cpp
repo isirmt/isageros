@@ -9,6 +9,7 @@
 #include "ArcheryScene.hpp"
 #include "ObjectLoader.hpp"
 #include "TableTennisScene.hpp"
+#include "TitleScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
@@ -39,6 +40,8 @@ int main(int argc, char **argv) {
   Scene::SceneManager::ChangeScene(archeryScene);
   Scene::TableTennisScene *tableTennisScene = new Scene::TableTennisScene();
   Scene::SceneManager::ChangeScene(tableTennisScene);
+  Scene::TitleScene *titleScene = new Scene::TitleScene();
+  Scene::SceneManager::ChangeScene(titleScene);
 
   glutMainLoop();
 
