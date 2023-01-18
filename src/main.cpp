@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
 
   ArcheryScene::GameScene *gameScene = new ArcheryScene::GameScene();
   Scene::SceneManager::ChangeScene(gameScene);
+
   Scene::TitleScene *titleScene = new Scene::TitleScene();
   Scene::SceneManager::ChangeScene(titleScene);
 
