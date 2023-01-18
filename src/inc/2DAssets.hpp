@@ -1,5 +1,7 @@
 #pragma once
 #include "ButtonObject.hpp"
-#include "RectangleObject.hpp"
+#include "ImageObject.hpp"
 #include "LineObject.hpp"
+#include "ObjectAnchor.hpp"
+#include "RectangleObject.hpp"
 #include "TextObject.hpp"

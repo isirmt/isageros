@@ -26,3 +26,11 @@ void GLSYS::GLBuilder::LightSetup() {
   glEnable(GL_DEPTH_TEST);
   glShadeModel(GL_SMOOTH);
 }
+
+void GLSYS::GLBuilder::DrawInitialize() {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glPixelZoom(1, 1);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHTING);
+}

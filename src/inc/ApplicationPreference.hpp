@@ -12,4 +12,7 @@ class ApplicationPreference {
 
   static constexpr int ObjectBufferLength = 1024;
   static constexpr int ObjectNameLength = 256;
+
+  static const std::string imgFilePath;
+  static const std::string modelFilePath;
 };

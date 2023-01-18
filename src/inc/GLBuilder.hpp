@@ -10,5 +10,7 @@ class GLBuilder {
  public:
   static void GLSetup();
   static void LightSetup();
+
+  static void DrawInitialize();
 };
 }  // namespace GLSYS

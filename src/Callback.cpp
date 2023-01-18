@@ -2,12 +2,12 @@
 #include <stdio.h>
 
 #include "ApplicationBuilder.hpp"
+#include "GLBuilder.hpp"
 #include "MouseInput.hpp"
 #include "SceneManager.hpp"
 
 void DisplayProc() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glEnable(GL_DEPTH_TEST);
+  GLSYS::GLBuilder::DrawInitialize();
   glPushMatrix();
   Scene::SceneManager::GetCurrentScene()->Draw();
   glPopMatrix();
