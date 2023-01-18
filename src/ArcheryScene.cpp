@@ -10,7 +10,7 @@ Scene::ArcheryScene::ArcheryScene(){
   	SceneBase::SetOrthoCameraWindow();
   	Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(700, 600, 450), PosVec(0, 0, 0), PosVec(0, 1, 0));
+      30, 1, 99999, PosVec(200, 1000, 0), PosVec(200, 0, 200), PosVec(0, 1, 0));
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
@@ -32,11 +32,11 @@ Scene::ArcheryScene::ArcheryScene(){
     cube.SetShininess(20);
     cube.SetRotate(30, PosVec(.5, .7, 0));
 
-    centerCube = Obj::Cylinder(PosVec(0.0, 5., 0.0), PosVec(), PosVec());
+    centerCube = Obj::Cylinder(PosVec(0.0, 0.0, -200.0), PosVec(), PosVec());
     centerCube.SetAmbient(Color255(114, 235, 209));
     centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
     centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
-    centerCube.SetScale(PosVec(70, 1, 70));
+    centerCube.SetScale(PosVec(50, 1, 50));
     centerCube.SetShininess(20);
     centerCube.SetRotate(90, PosVec(1, 0, 0));
 
@@ -44,7 +44,7 @@ Scene::ArcheryScene::ArcheryScene(){
                             "Mesh/archery_stage.obj");
     stage.SetScale(PosVec(100, 100, 100));
     stage.SetShininess(20);
-    stage.SetRotate(0, PosVec(0, 1, 0));
+    stage.SetRotate(90, PosVec(-1, 0, 0));
 }
 
 void Scene::ArcheryScene::Update(){
@@ -52,13 +52,13 @@ void Scene::ArcheryScene::Update(){
     if (deg > 360) deg -= 360;
 
     arrow.SetRotate(deg, PosVec(1,0,0));
-    // Camera::SetAsPerspective(
-    //   ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-    //   30, 1, 99999, PosVec(arrow.GetPosition().x, arrow.GetPosition().y, arrow.GetPosition().z +500), arrow.GetPosition(), PosVec(0,1,0));
+     Camera::SetAsPerspective(
+       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+       30, 1, 99999, PosVec(0.0, 100.0, 1000.0), centerCube.GetPosition(), PosVec(0,1,0));
 		
-	// 	Camera::UpdateCamera();
+    Camera::UpdateCamera();
     arrow.Update();
-    cube.Update();
+    //cube.Update();
     centerCube.Update();
     stage.Update();
 }
@@ -70,7 +70,7 @@ void Scene::ArcheryScene::Draw(){
 
   glPushMatrix(); // 3D描画
   arrow.Draw();
-  cube.Draw();
+  //cube.Draw();
   stage.Draw();
   {
     glPushMatrix();
@@ -85,7 +85,6 @@ void Scene::ArcheryScene::Draw(){
   Camera::UpdateCamera();
 
   layer2D.Draw(); // 2D描画
-    printf("アーチェリーのゲーム画面\n");
 }
 
 void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
