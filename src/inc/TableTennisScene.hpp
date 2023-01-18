@@ -8,10 +8,10 @@
 #include "SceneBase.hpp"
 
 namespace Scene {
-class TitleScene : public SceneBase {
+class TableTennisScene : public SceneBase {
  public:
-  TitleScene();
-  ~TitleScene() {
+  TableTennisScene();
+  ~TableTennisScene() {
     delete button;
     delete rect;
     delete text;

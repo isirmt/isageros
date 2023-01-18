@@ -1,6 +1,6 @@
-#include "TitleScene.hpp"
+#include "TableTennisScene.hpp"
 
-Scene::TitleScene::TitleScene() {
+Scene::TableTennisScene::TableTennisScene() {
   Camera::SetActive(true);
   SceneBase::SetOrthoCameraWindow();
   Camera::SetAsPerspective(
@@ -77,7 +77,7 @@ Scene::TitleScene::TitleScene() {
   // Scene::LightManager::SetActive(GL_LIGHT1, true);
 }
 
-void Scene::TitleScene::Update() {
+void Scene::TableTennisScene::Update() {
   layer2D.Collide();
 
   deg += fdeg * Time::DeltaTime();
@@ -101,7 +101,7 @@ void Scene::TitleScene::Update() {
   layer2D.Update();
 }
 
-void Scene::TitleScene::Draw() {
+void Scene::TableTennisScene::Draw() {
   SceneBase::Set3DDrawMode();
   Camera::SetPerspectiveMode(true);
   Camera::UpdateCamera();
