@@ -10,12 +10,12 @@
 namespace Scene{
     class BattingScene : public SceneBase {
         public:
-            TitleScene();
-            ~TitleScene(){
-                delete button;
-                delete rect;
-                delete text;
-                delete image;
+            BattingScene();
+            ~BattingScene(){
+                // delete button;
+                // delete rect;
+                // delete text;
+                // delete image;
             }
 
             void Update() override;
@@ -27,6 +27,7 @@ namespace Scene{
             void SpecialFuncProc(int key, int x, int y) override{}
 
         private:
-            const std::string floderName = ""
+            Obj::ObjFile centerCube;
+            const std::string folderName = "minigames/baseball/";
     };
 }
