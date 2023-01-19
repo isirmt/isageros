@@ -48,6 +48,7 @@ class Object3D {
   float GetShininess() { return shininess[0]; }
   PosVec GetScale() { return scale; }
   PosVec GetPosition() { return r; }
+  PosVec* GetPositionPointer() { return &r; }
   PosVec GetVelocity() { return v; }
   PosVec GetAcceleration() { return a; }
   float GetRotateDegree() { return deg; }

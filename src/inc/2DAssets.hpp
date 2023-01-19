@@ -5,3 +5,4 @@
 #include "ObjectAnchor.hpp"
 #include "RectangleObject.hpp"
 #include "TextObject.hpp"
+#include "NullObject.hpp"

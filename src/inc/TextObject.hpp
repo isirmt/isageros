@@ -21,6 +21,10 @@ class Text : public Object2D {
         currentInnerColor(0),
         text() {}
 
+  void SetString(std::string _text) {
+    text = _text;
+  }
+
   // 色有効化無効化
   bool SetEnabledFill(bool _enabled) {
     enabledFill = _enabled;
