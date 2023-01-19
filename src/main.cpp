@@ -8,6 +8,7 @@
 #include "ApplicationPreference.hpp"
 #include "ArcheryScene.hpp"
 #include "ObjectLoader.hpp"
+#include "TableTennisScene.hpp"
 #include "TitleScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
@@ -37,8 +38,10 @@ int main(int argc, char **argv) {
 
   Scene::ArcheryScene *archeryScene = new Scene::ArcheryScene();
   Scene::SceneManager::ChangeScene(archeryScene);
-  //Scene::TitleScene *titleScene = new Scene::TitleScene();
-  //Scene::SceneManager::ChangeScene(titleScene);
+  Scene::TableTennisScene *tableTennisScene = new Scene::TableTennisScene();
+  Scene::SceneManager::ChangeScene(tableTennisScene);
+  Scene::TitleScene *titleScene = new Scene::TitleScene();
+  Scene::SceneManager::ChangeScene(titleScene);
 
   glutMainLoop();
 
