@@ -25,13 +25,13 @@ Scene::TableTennisScene::TableTennisScene() {
                    ApplicationPreference::modelFilePath + "char/chara.obj");
   player.SetScale(PosVec(5, 5, 5));
   player.SetShininess(10);
-  player.SetRotate(90, PosVec(0, 1, 0));
+  player.SetRotate(-90, PosVec(0, 1, 0));
 
   enemy = Obj::ObjFile(PosVec(-130, 0, 0.0), PosVec(), PosVec(),
                        ApplicationPreference::modelFilePath + "char/chara.obj");
   enemy.SetScale(PosVec(5, 5, 5));
   enemy.SetShininess(10);
-  enemy.SetRotate(-90, PosVec(0, 1, 0));
+  enemy.SetRotate(90, PosVec(0, 1, 0));
 
   ball = Obj::Sphere(PosVec(0, 120, 0), PosVec(), PosVec());
   ball.SetScale(PosVec(1, 1, 1));
@@ -106,7 +106,7 @@ void Scene::TableTennisScene::Update() {
     /***************/
     /* カメラ設定 */
     /***************/
-    cameraPos = PosVec(400, 400, 0);
+    cameraPos = PosVec(400, 500, 0);
     cameraDirection = PosVec(-1, 0, 0);
 
     /***************/
