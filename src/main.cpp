@@ -8,6 +8,7 @@
 #include "ApplicationPreference.hpp"
 #include "ArcheryScene.hpp"
 #include "ObjectLoader.hpp"
+#include "TableTennisScene.hpp"
 #include "TitleScene.hpp"
 #include "BattingScene.hpp"
 
@@ -40,6 +41,8 @@ int main(int argc, char **argv) {
   Scene::SceneManager::ChangeScene(archeryScene);
   Scene::BattingScene *battingScene = new Scene::BattingScene();
   Scene::SceneManager::ChangeScene(battingScene);
+  Scene::TableTennisScene *tableTennisScene = new Scene::TableTennisScene();
+  Scene::SceneManager::ChangeScene(tableTennisScene);
   Scene::TitleScene *titleScene = new Scene::TitleScene();
   Scene::SceneManager::ChangeScene(titleScene);
 

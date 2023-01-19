@@ -30,6 +30,9 @@ void Obj::Image::Draw() {
 
   glDrawPixels(imageData.width, imageData.height, GL_RGB, GL_UNSIGNED_BYTE,
                dat);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+  glPixelZoom(1, 1);
+  glRasterPos2f(0, 0);
 }
 
 void Obj::Image::CollideMouse() {}
