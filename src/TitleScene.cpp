@@ -2,6 +2,7 @@
 
 #include "ArcheryScene.hpp"
 #include "TableTennisScene.hpp"
+#include "BattingScene.hpp"
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
@@ -47,6 +48,18 @@ Scene::TitleScene::TitleScene() {
   archeryButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
   archeryButton->SetInnerAnimation(.2f);
 
+  countNum++;
+  battingButton =
+      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
+                          menuButtonOffset.x + menuButtonSize.x,
+                          menuButtonOffset.y +
+                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
+                      menuButtonSize, true, true);
+  battingButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
+                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
+  battingButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
+  battingButton->SetInnerAnimation(.2f);
+
   metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
   metaText->SetInnerColor(Color255(0, 0, 0));
 
@@ -57,6 +70,7 @@ Scene::TitleScene::TitleScene() {
   layer2D.AddObject(background);
   layer2D.AddObject(archeryButton);
   layer2D.AddObject(tennisButton);
+  layer2D.AddObject(battingButton);
   layer2D.AddObject(metaText);
 }
 
@@ -72,6 +86,12 @@ void Scene::TitleScene::Update() {
   if (archeryButton->GetMouseSelected()) {
     archeryButton->SetMouseOff();
     SceneManager::ChangeScene(new ArcheryScene());
+    return;
+  }
+
+  if (battingButton->GetMouseSelected()) {
+    battingButton->SetMouseOff();
+    SceneManager::ChangeScene(new BattingScene());
     return;
   }
 

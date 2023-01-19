@@ -31,6 +31,7 @@ class TitleScene : public SceneBase {
 
   Obj::Button* tennisButton;
   Obj::Button* archeryButton;
+  Obj::Button* battingButton;
 
   Obj::Text* metaText;
 
