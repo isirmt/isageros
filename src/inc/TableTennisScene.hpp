@@ -66,7 +66,7 @@ class TableTennisScene : public SceneBase {
   const float groundLevel = 80;
 
   const float paramG = 350;
-  const float paramE = .95;
+  const float paramE = 1;
 
   float waitingCameraDeg;
 
