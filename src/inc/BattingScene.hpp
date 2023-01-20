@@ -1,11 +1,15 @@
 #pragma once
 #include <GL/glut.h>
 
+#include <iostream>
+
 #include "2DAssets.hpp"
 #include "3DAssets.hpp"
 #include "Color255.hpp"
 #include "LightManager.hpp"
 #include "SceneBase.hpp"
+#include "MouseInput.hpp"
+#include "SceneManager.hpp"
 
 namespace Scene{
     class BattingScene : public SceneBase {
@@ -14,7 +18,7 @@ namespace Scene{
             ~BattingScene(){
                 // delete button;
                 // delete rect;
-                // delete text;
+                delete text;
                 // delete image;
             }
 
@@ -27,7 +31,13 @@ namespace Scene{
             void SpecialFuncProc(int key, int x, int y) override{}
 
         private:
-            Obj::ObjFile centerCube;
+            Obj::ObjFile stage;
+            Obj::Cylinder bat; 
+            Obj::ObjFile player;
+            Obj::Sphere ball;
+            Obj::ObjFile enemy;
+            Obj::Text* text;
             const std::string folderName = "minigames/baseball/";
+            bool flag;
     };
 }
