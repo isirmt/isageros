@@ -3,3 +3,4 @@ src/main
 .vscode
 *.out
 *.dat
+src/saves/*

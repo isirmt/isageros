@@ -1,0 +1,72 @@
+{
+  "stories": [
+    {
+      "chapterName": "序章",
+      "stageName": "kingdom",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "隊長、副隊長、先日の魔物討伐の任務はご苦労であった。急に呼び出して済まない。今回お前たちに重要任務を任せようと思う。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "副隊長",
+          "text": "重要任務？"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "そうだ。最近、裏切り者の元隊長が我が国の兵たちを襲っているらしい。このままでは兵力が落ちてしまう。裏切り者の討伐を命じる。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "隊長",
+          "text": "わかりました。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "副隊長",
+          "text": "元隊長はどこにいるんですか？"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "森の先の洞窟で兵たちの通信が途絶えている。元隊長は相当な手練だ。それに森には危険な魔物もいる。気をつけるのだぞ。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "カエサル王",
+          "text": "兵士専用の食料も持ったか？"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "隊長",
+          "text": "はい。持ちました。それでは、行ってまいります。"
+        }
+      ]
+    },
+    {
+      "chapterName": "第1章",
+      "stageName": "road_K_F",
+      "goto": "tabletennis",
+      "talks": [
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "副隊長",
+          "text": "元隊長の討伐なんて嫌ですね。僕たちの仕事は城の外の魔物を倒すことなのに。"
+        }
+      ]
+    }
+  ]
+}
