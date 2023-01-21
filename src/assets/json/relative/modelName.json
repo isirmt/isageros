@@ -1,0 +1,31 @@
+{
+  "maps": [
+    {
+      "name": "kingdom",
+      "camerax": 1200.0,
+      "cameray": 350.0,
+      "cameraz": 200.0,
+      "lookx": -400.0,
+      "looky": 0.0,
+      "lookz": 0.0
+    },
+    {
+      "name": "forest",
+      "camerax": 1250.0,
+      "cameray": 400.0,
+      "cameraz": 100.0,
+      "lookx": -400.0,
+      "looky": 0.0,
+      "lookz": 0.0
+    },
+    {
+      "name": "road_K_F",
+      "camerax": 700.0,
+      "cameray": 500.0,
+      "cameraz": 200.0,
+      "lookx": 0.0,
+      "looky": 0.0,
+      "lookz": 0.0
+    }
+  ]
+}

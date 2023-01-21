@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 
 #include <iostream>
+#include <map>
 #include <sstream>
 
 #include "2DAssets.hpp"
@@ -10,6 +11,7 @@
 #include "Color255.hpp"
 #include "DataStore.hpp"
 #include "LightManager.hpp"
+#include "MapRelativeData.hpp"
 #include "SceneBase.hpp"
 #include "SceneManager.hpp"
 #include "StoryData.hpp"
@@ -40,16 +42,15 @@ class StoryScene : public SceneBase {
   void SpecialFuncProc(int key, int x, int y) override {}
 
  private:
-
   void StoreChapter();
 
-  picojson::array storyArray; // json内容格納変数
+  picojson::array storyArray;  // json内容格納変数
 
   Story::StoryProgress storyProgress;
 
-  Obj::Mesh* nowStage;
-  Obj::Mesh* nowLeft;
-  Obj::Mesh* nowRight;
+  Obj::ObjFile* nowStage;
+  Obj::ObjFile* nowLeft;
+  Obj::ObjFile* nowRight;
 
   Obj::Button* buttonFrame;
   Obj::Rectangle* speakerFrame;
@@ -57,11 +58,18 @@ class StoryScene : public SceneBase {
   Obj::Text* speakerText;
   Obj::Text* storyText;
 
+  Obj::Button* button;
+
   Story::Chapter* nowChapter;
 
+  std::map<std::string, MapRelative> mapRelatives;
+
   const std::string folderName = "title/";
-  const std::string talksFilePath = "./assets/story/talks.json";
-  const std::string storyProgressFilePath = "./saves/story/progress.json";
+  const std::string talksFilePath = "story/talks.json";
+  const std::string relativeStageFilePath = "relative/modelName.json";
+  const std::string storyProgressFilePath = "story/progress.dat";
+
+  const std::string stageFolderName = "story/";
 };
 
 }  // namespace Scene
