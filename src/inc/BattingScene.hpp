@@ -16,9 +16,11 @@ namespace Scene{
         public:
             BattingScene();
             ~BattingScene(){
-                // delete button;
+                delete backButton;
                 // delete rect;
                 delete text;
+                delete text_2;
+                delete text_3;
                 // delete image;
             }
 
@@ -37,7 +39,15 @@ namespace Scene{
             Obj::Sphere ball;
             Obj::ObjFile enemy;
             Obj::Text* text;
+            Obj::Text* text_2;
+            Obj::Text* text_3;
+            Obj::Button* backButton; 
+            Obj::Button* startButton;
             const std::string folderName = "minigames/baseball/";
             bool flag;
+            bool gameStart;
+            int point = 0;
+            int strike = 0;
+            int high_point = 0;
     };
 }
