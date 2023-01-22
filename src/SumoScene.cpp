@@ -31,6 +31,9 @@ Scene::SumoScene::SumoScene(){
     text = new Obj::Text(PosVec(100.0, 500.0), PosVec(), "Let's Play!");
     text->SetInnerColor(Color255(250, 250, 250));
 
+    text_2 = new Obj::Text(PosVec(100.0, 475.0), PosVec(), "Are you Ready?");
+    text_2->SetInnerColor(Color255(250, 250, 250));
+
     Color255 innerCol;
     innerCol = Color255(255, 100, 50);
     backbutton = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
@@ -46,6 +49,7 @@ Scene::SumoScene::SumoScene(){
     layer2D.AddObject(startbutton);
 
     layer2D.AddObject(text);
+    layer2D.AddObject(text_2);
     layer2D.AddObject(backbutton);
     layer2D.AddObject(startbutton);
 
@@ -62,8 +66,10 @@ void Scene::SumoScene::Update(){
     if(startbutton->GetMouseSelected()){ 
         startbutton->SetMouseOff();
         gamestart = true;
+        clickCount = 0;
         startbutton->SetEnabled(false);
         text->SetString("Now Playing.");
+        text_2->SetString("");
     }
 
     if(gamestart){
@@ -81,16 +87,27 @@ void Scene::SumoScene::Update(){
 
         if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
             pushPower += 10.0;
+            clickCount++;
             player.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
             enemy.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
+        }
 
-            // gamestart = false;
-            // player.SetPosition(PosVec(465, 201.0, -65.0));
-            // enemy.SetPosition(PosVec(-10.0, 200.0, 410.0));
-            // player.SetVelocity(PosVec(0.0, 0.0, 0.0));
-            // enemy.SetVelocity(PosVec(0.0, 0.0, 0.0));
-            // text->SetString("Let's play!");
-            // startbutton->SetEnabled(true);
+        if(enemy.GetPosition().x <= 15.0 && enemy.GetPosition().z >= 385.0 || 
+            player.GetPosition().x >= 440.0 && player.GetPosition().z <= -40.0){
+            gamestart = false;
+            player.SetPosition(PosVec(465, 201.0, -65.0));
+            enemy.SetPosition(PosVec(-10.0, 200.0, 410.0));
+            player.SetVelocity(PosVec(0.0, 0.0, 0.0));
+            enemy.SetVelocity(PosVec(0.0, 0.0, 0.0));
+            text_2->SetString("Click_count : " + std::to_string(clickCount));
+            if(enemy.GetPosition().x <= 15.0 && enemy.GetPosition().z >= 385.0){
+                text->SetString("Winner!!!");
+            }
+
+            if(player.GetPosition().x >= 440.0 && player.GetPosition().z <= -40.0){
+                text->SetString("Lose...");
+            }
+            startbutton->SetEnabled(true);
         }
     }
 

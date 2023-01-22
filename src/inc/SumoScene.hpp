@@ -37,8 +37,10 @@ namespace Scene{
             Obj::Button* backbutton;
             Obj::Button* startbutton;
             Obj::Text* text;
+            Obj::Text* text_2;
             const std::string folderName = "minigames/sumo/";
             bool gamestart;
             float pushPower;
+            int clickCount;
     };
 }
