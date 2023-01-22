@@ -1,4 +1,4 @@
-#include "inc/ArcheryScene.hpp"
+#include "ArcheryScene.hpp"
 #include "TitleScene.hpp"
 #include <stdio.h>
 
@@ -113,7 +113,7 @@ void Scene::ArcheryScene::Draw(){
   layer2D.Draw(); // 2D描画
 }
 
-void Scene::ArcheryScene::MouseProc(int button, int state, int x, int y) {}
+// void Scene::ArcheryScene::MouseProc(int button, int state, int x, int y) {}
 
 // void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
 //     printf("押された！\n");
