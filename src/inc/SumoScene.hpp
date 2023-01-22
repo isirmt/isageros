@@ -39,5 +39,6 @@ namespace Scene{
             Obj::Text* text;
             const std::string folderName = "minigames/sumo/";
             bool gamestart;
+            float pushPower;
     };
 }

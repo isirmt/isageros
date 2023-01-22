@@ -16,13 +16,13 @@ Scene::SumoScene::SumoScene(){
     stage.SetShininess(20);
     stage.SetRotate(45, PosVec(0, 1, 0));
 
-    player = Obj::ObjFile(PosVec(265, 200.0, 135.0), PosVec(), PosVec(), 
+    player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
                 ApplicationPreference::modelFilePath + "char/chara.obj");
     player.SetScale(PosVec(5, 5, 5));
     player.SetShininess(10);
     player.SetRotate(-45, PosVec(0, 1, 0));
 
-    enemy = Obj::ObjFile(PosVec(190.0, 200.0, 210.0), PosVec(), PosVec(), 
+    enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
                 ApplicationPreference::modelFilePath + "char/chara.obj");
     enemy.SetScale(PosVec(5, 5, 5));
     enemy.SetShininess(10);
@@ -48,6 +48,8 @@ Scene::SumoScene::SumoScene(){
     layer2D.AddObject(text);
     layer2D.AddObject(backbutton);
     layer2D.AddObject(startbutton);
+
+    gamestart = false;
 }
 
 void Scene::SumoScene::Update(){
@@ -65,10 +67,30 @@ void Scene::SumoScene::Update(){
     }
 
     if(gamestart){
+        if(player.GetPosition().y > 200.0){
+            player.SetPosition(PosVec(265, 200.0, 135.0));
+            player.SetVelocity(PosVec(-100.0, 0.0, 100.0));
+            enemy.SetPosition(PosVec(190.0, 200.0, 210.0));
+            enemy.SetVelocity(PosVec(100.0, 0.0, -100.0));
+        } 
+        
+        if(player.GetPosition().x < enemy.GetPosition().x + 25.0){
+            player.SetVelocity(PosVec(10.0, 0.0, -10.0));
+            enemy.SetVelocity(PosVec(10.0, 0.0, -10.0));
+        }
+
         if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
-            gamestart = false;
-            startbutton->SetEnabled(true);
-            text->SetString("Let's play!");
+            pushPower += 10.0;
+            player.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
+            enemy.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
+
+            // gamestart = false;
+            // player.SetPosition(PosVec(465, 201.0, -65.0));
+            // enemy.SetPosition(PosVec(-10.0, 200.0, 410.0));
+            // player.SetVelocity(PosVec(0.0, 0.0, 0.0));
+            // enemy.SetVelocity(PosVec(0.0, 0.0, 0.0));
+            // text->SetString("Let's play!");
+            // startbutton->SetEnabled(true);
         }
     }
 
