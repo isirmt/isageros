@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include <sys/stat.h>
 
+#include <cmath>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -44,6 +45,8 @@ class StoryScene : public SceneBase {
  private:
   void StoreChapter();
 
+  void StorySet();
+
   picojson::array storyArray;  // json内容格納変数
 
   Story::StoryProgress storyProgress;
@@ -54,15 +57,24 @@ class StoryScene : public SceneBase {
 
   Obj::Button* buttonFrame;
   Obj::Rectangle* speakerFrame;
+  Obj::Rectangle* chapterFrame;
 
   Obj::Text* speakerText;
   Obj::Text* storyText;
+  Obj::Text* chapterText;
 
   Obj::Button* button;
 
   Story::Chapter* nowChapter;
 
+  int storyIndex;
+
+  float cameraOffset;
+  float dcameraOffset;
+  const float cameraOffsetMax = 50;
+
   std::map<std::string, MapRelative> mapRelatives;
+  std::map<std::string, Obj::ObjFile*> charObjs;
 
   const std::string folderName = "title/";
   const std::string talksFilePath = "story/talks.json";

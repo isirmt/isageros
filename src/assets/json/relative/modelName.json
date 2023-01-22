@@ -7,7 +7,16 @@
       "cameraz": 200.0,
       "lookx": -400.0,
       "looky": 0.0,
-      "lookz": 0.0
+      "lookz": 0.0,
+      "leftPosx": -330.0,
+      "leftPosy": 135.0,
+      "leftPosz": 5.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 50.0,
+      "rightPosy": -19.0,
+      "rightPosz": 5.0,
+      "rightRotatey": -90.0,
+      "charScale": 5.0
     },
     {
       "name": "forest",
@@ -16,7 +25,16 @@
       "cameraz": 100.0,
       "lookx": -400.0,
       "looky": 0.0,
-      "lookz": 0.0
+      "lookz": 0.0,
+      "leftPosx": -250.0,
+      "leftPosy": 0.0,
+      "leftPosz": 0.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 100.0,
+      "rightPosy": 0.0,
+      "rightPosz": 0.0,
+      "rightRotatey": -90.0,
+      "charScale": 7.0
     },
     {
       "name": "road_K_F",
@@ -25,7 +43,16 @@
       "cameraz": 200.0,
       "lookx": 0.0,
       "looky": 0.0,
-      "lookz": 0.0
+      "lookz": 0.0,
+      "leftPosx": 0.0,
+      "leftPosy": 0.0,
+      "leftPosz": 0.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 0.0,
+      "rightPosy": 0.0,
+      "rightPosz": 0.0,
+      "rightRotatey": -90.0,
+      "charScale": 5.0
     }
   ]
 }

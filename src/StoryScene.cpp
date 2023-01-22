@@ -21,7 +21,9 @@ Scene::StoryScene::StoryScene()
 
   Color255 innerCol;
   innerCol = Color255(255, 100, 50);
-  button = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
+  button = new Obj::Button(
+      Obj::Object2DAnchor::AnchorUpperLeft(PosVec(30, 100 + 50)),
+      PosVec(50, 50), true, true);
   button->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
                         innerCol * 0.75);
   button->SetOutlineColor(Color255(35, 57, 40), 5.f);
@@ -118,8 +120,56 @@ Scene::StoryScene::StoryScene()
     posVec.z = static_cast<float>(mapJson["lookz"].get<double>());
     mapRelative.cameraLookAt = posVec;
 
+    posVec.x = static_cast<float>(mapJson["leftPosx"].get<double>());
+    posVec.y = static_cast<float>(mapJson["leftPosy"].get<double>());
+    posVec.z = static_cast<float>(mapJson["leftPosz"].get<double>());
+    mapRelative.leftPos = posVec;
+
+    posVec.x = static_cast<float>(mapJson["rightPosx"].get<double>());
+    posVec.y = static_cast<float>(mapJson["rightPosy"].get<double>());
+    posVec.z = static_cast<float>(mapJson["rightPosz"].get<double>());
+    mapRelative.rightPos = posVec;
+
+    mapRelative.charScale =
+        static_cast<float>(mapJson["charScale"].get<double>());
+    mapRelative.leftRotateY =
+        static_cast<float>(mapJson["leftRotatey"].get<double>());
+    mapRelative.rightRotateY =
+        static_cast<float>(mapJson["rightRotatey"].get<double>());
+
     mapRelatives.insert({mapJson["name"].get<std::string>(), mapRelative});
   }
+
+  innerCol = Color255("#0D0923");
+  buttonFrame = new Obj::Button(
+      PosVec(), PosVec(ApplicationPreference::windowSize.x, 200), true, true);
+  buttonFrame->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
+                             innerCol * 0.75);
+  buttonFrame->SetOutlineColor(Color255(230, 230, 230), 2.f);
+
+  innerCol = Color255("#1B3853");
+  speakerFrame =
+      new Obj::Rectangle(PosVec(40, 175), PosVec(300, 50), true, true);
+  speakerFrame->SetInnerColor(innerCol);
+
+  innerCol = Color255("#1B383C");
+  chapterFrame = new Obj::Rectangle(
+      Obj::Object2DAnchor::AnchorUpperLeft(PosVec(40, 40 + 50)),
+      PosVec(300, 50), true, true);
+  chapterFrame->SetInnerColor(innerCol);
+
+  storyText = new Obj::Text(PosVec(50, 150), PosVec(), "");
+  storyText->SetInnerColor(Color255(255));
+
+  speakerText = new Obj::Text(PosVec(80, 190), PosVec(), "");
+  speakerText->SetInnerColor(Color255(255));
+
+  chapterText = new Obj::Text(
+      Obj::Object2DAnchor::AnchorUpperLeft(PosVec(80, 40 + 30)), PosVec(), "");
+  chapterText->SetInnerColor(Color255(255));
+
+  cameraOffset = 0;
+  dcameraOffset = 20;
 
   ////////////////////////////////
   // 対応チャプター 読込
@@ -127,6 +177,12 @@ Scene::StoryScene::StoryScene()
   StoreChapter();
 
   layer2D.AddObject(button);
+  layer2D.AddObject(buttonFrame);
+  layer2D.AddObject(storyText);
+  layer2D.AddObject(speakerFrame);
+  layer2D.AddObject(speakerText);
+  layer2D.AddObject(chapterFrame);
+  layer2D.AddObject(chapterText);
 }
 
 void Scene::StoryScene::Update() {
@@ -141,6 +197,29 @@ void Scene::StoryScene::Update() {
     SceneManager::ChangeScene(new TitleScene());
     return;
   }
+
+  if (buttonFrame->GetMouseSelected()) {
+    buttonFrame->SetMouseOff();
+    storyIndex++;
+    StorySet();
+  }
+
+  PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
+  PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
+
+  cameraOffset += dcameraOffset * Time::DeltaTime();
+
+  if (std::fabs(cameraOffset) > cameraOffsetMax) {
+    cameraOffset =
+        (std::signbit(cameraOffset) ? -1.f : 1.f) * cameraOffsetMax * .95f;
+    dcameraOffset *= -1.f;
+  }
+
+  cameraPos.z += cameraOffset;
+
+  Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, cameraPos, lookAt, PosVec(0, 1, 0));
 
   layer2D.Update();
 }
@@ -161,6 +240,38 @@ void Scene::StoryScene::Draw() {
   Camera::UpdateCamera();
 
   layer2D.Draw();  // 2D描画
+}
+
+void Scene::StoryScene::StorySet() {
+  if ((size_t)storyIndex < nowChapter->talks.size()) {
+    storyText->SetString(nowChapter->talks[storyIndex].text);
+    speakerText->SetString(nowChapter->talks[storyIndex].speaker);
+
+    nowLeft = charObjs[nowChapter->talks[storyIndex].left];
+    nowLeft->SetPosition(mapRelatives[nowChapter->stageName].leftPos);
+    nowLeft->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
+                             mapRelatives[nowChapter->stageName].charScale,
+                             mapRelatives[nowChapter->stageName].charScale));
+    nowLeft->SetRotate(mapRelatives[nowChapter->stageName].leftRotateY,
+                       PosVec(0, 1, 0));
+    nowRight = charObjs[nowChapter->talks[storyIndex].right];
+    nowRight->SetPosition(mapRelatives[nowChapter->stageName].rightPos);
+    nowRight->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
+                              mapRelatives[nowChapter->stageName].charScale,
+                              mapRelatives[nowChapter->stageName].charScale));
+    nowRight->SetRotate(mapRelatives[nowChapter->stageName].rightRotateY,
+                        PosVec(0, 1, 0));
+
+  } else {
+    DataStore<Story::StoryProgress> progressStore(
+        ApplicationPreference::savesFilePath + storyProgressFilePath);
+
+    storyProgress = progressStore.Read();
+    storyProgress.nowChapter++;
+    progressStore.Write(storyProgress);
+
+    StoreChapter();
+  }
 }
 
 void Scene::StoryScene::StoreChapter() {
@@ -199,6 +310,7 @@ void Scene::StoryScene::StoreChapter() {
                        ApplicationPreference::modelFilePath + stageFolderName +
                            nowChapter->stageName + ".obj");
   nowStage->SetScale(PosVec(100, 100, 100));
+  chapterText->SetString(nowChapter->chapterName);
 
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
   PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
@@ -212,4 +324,29 @@ void Scene::StoryScene::StoreChapter() {
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       30, 1, 99999, cameraPos, lookAt, PosVec(0, 1, 0));
+
+  std::map<std::string, std::string> charSets;
+
+  for (auto& item : nowChapter->talks) {
+    if (charSets.find(item.left) == charSets.end()) {
+      charSets.insert({item.left, ApplicationPreference::modelFilePath +
+                                      "char/" + item.left + ".obj"});
+    }
+
+    if (charSets.find(item.right) == charSets.end()) {
+      charSets.insert({item.right, ApplicationPreference::modelFilePath +
+                                       "char/" + item.right + ".obj"});
+    }
+  }
+
+  for (auto& item : charSets) {
+    Obj::ObjFile* obj =
+        new Obj::ObjFile(PosVec(), PosVec(), PosVec(), item.second);
+
+    obj->SetScale(PosVec(10, 10, 10));
+    charObjs.insert({item.first, obj});
+  }
+
+  storyIndex = 0;
+  StorySet();
 }
