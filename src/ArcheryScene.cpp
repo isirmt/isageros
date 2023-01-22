@@ -1,4 +1,5 @@
 #include "inc/ArcheryScene.hpp"
+#include "TitleScene.hpp"
 #include <stdio.h>
 
 Scene::ArcheryScene::ArcheryScene(){
@@ -51,6 +52,14 @@ Scene::ArcheryScene::ArcheryScene(){
       GL_LIGHT0, PosVec(0, 500, 0), Color255(0.5, 0.5, 0.5, 1.f),
       Color255(1.f, 1.f, 1.f, 1.0f), Color255(0.0f, 0.0f, 0.0f, 1.f));
 
+    Color255 innerCol;
+    innerCol = Color255(255, 100, 50);
+    backbutton = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
+    backbutton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65, innerCol * 0.75);
+    backbutton->SetOutlineColor(Color255(35, 57, 40), 5.f);
+    backbutton->SetInnerAnimation(.2f);
+
+    layer2D.AddObject(backbutton);
 }
 
 void Scene::ArcheryScene::Update(){
@@ -67,6 +76,17 @@ void Scene::ArcheryScene::Update(){
     //cube.Update();
     centerCube.Update();
     stage.Update();
+
+    layer2D.Collide();
+
+    if (backbutton->GetMouseSelected()) {
+        backbutton->SetMouseOff();
+        SceneManager::ChangeScene(new TitleScene());
+        return;
+    }
+
+    layer2D.Update();
+   
 }
 
 void Scene::ArcheryScene::Draw(){
@@ -93,18 +113,20 @@ void Scene::ArcheryScene::Draw(){
   layer2D.Draw(); // 2D描画
 }
 
-void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
-    printf("押された！\n");
-}
+void Scene::ArcheryScene::MouseProc(int button, int state, int x, int y) {}
 
-void Scene::ArcheryScene::KeyboardProc(unsigned char key, int x, int y){
-    switch (key){
-        case 'x':
-            printf("推してる\n");
-            break;
-        case 'y':
-            printf("推してる?\n");
-            break;
-    }
-    //printf("推してる\n");
-}
+// void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
+//     printf("押された！\n");
+// }
+
+// void Scene::ArcheryScene::KeyboardProc(unsigned char key, int x, int y){
+//     switch (key){
+//         case 'x':
+//             printf("推してる\n");
+//             break;
+//         case 'y':
+//             printf("推してる?\n");
+//             break;
+//     }
+//     //printf("推してる\n");
+// }

@@ -33,6 +33,7 @@ namespace Scene{
 			Obj::ObjFile stage;
   			Obj::Cylinder centerCube;
   			Obj::Cylinder arrow;
+			Obj::Button* backbutton;
 
 			const std::string folderName = "minigames/archery/";
 	};
