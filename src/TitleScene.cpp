@@ -4,6 +4,7 @@
 #include "TableTennisScene.hpp"
 #include "BattingScene.hpp"
 #include "StoryScene.hpp"
+#include "SumoScene.hpp"
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
@@ -62,6 +63,18 @@ Scene::TitleScene::TitleScene() {
   battingButton->SetInnerAnimation(.2f);
 
   countNum++;
+  sumoButton =
+      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
+                          menuButtonOffset.x + menuButtonSize.x,
+                          menuButtonOffset.y +
+                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
+                      menuButtonSize, true, true);
+  sumoButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
+                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
+  sumoButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
+  sumoButton->SetInnerAnimation(.2f);
+
+  countNum++;
   storyButton =
       new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
                           menuButtonOffset.x + menuButtonSize.x,
@@ -84,6 +97,7 @@ Scene::TitleScene::TitleScene() {
   layer2D.AddObject(archeryButton);
   layer2D.AddObject(tennisButton);
   layer2D.AddObject(battingButton);
+  layer2D.AddObject(sumoButton);
   layer2D.AddObject(storyButton);
   layer2D.AddObject(metaText);
 }
@@ -106,6 +120,12 @@ void Scene::TitleScene::Update() {
   if (battingButton->GetMouseSelected()) {
     battingButton->SetMouseOff();
     SceneManager::ChangeScene(new BattingScene());
+    return;
+  }
+
+  if (sumoButton->GetMouseSelected()) {
+    sumoButton->SetMouseOff();
+    SceneManager::ChangeScene(new SumoScene());
     return;
   }
 
