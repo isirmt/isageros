@@ -83,7 +83,7 @@ Scene::StoryScene::StoryScene()
   storyArray = obj["stories"].get<picojson::array>();
 
   ////////////////////////////////
-  // picojson conv 読込
+  // picojson relative 読込
   ////////////////////////////////
   fs.open(ApplicationPreference::jsonFilePath + relativeStageFilePath,
           std::ios::binary);
@@ -140,6 +140,52 @@ Scene::StoryScene::StoryScene()
     mapRelatives.insert({mapJson["name"].get<std::string>(), mapRelative});
   }
 
+  ////////////////////////////////
+  // picojson relative 読込
+  ////////////////////////////////
+  fs.open(ApplicationPreference::jsonFilePath + routesFilePath,
+          std::ios::binary);
+
+  if (!fs.is_open()) {
+    return;
+  }
+
+  ss << fs.rdbuf();
+  fs.close();
+
+  ss >> val;
+  err = picojson::get_last_error();
+  if (!err.empty()) {
+    std::cerr << err << std::endl;
+    return;
+  }
+
+  obj = val.get<picojson::object>();  // オブジェクト取得
+  picojson::array routes = obj["routes"].get<picojson::array>();
+
+  for (auto& item : routes) {
+    picojson::object& routeJson = item.get<picojson::object>();
+
+    Story::StoryRoute route;
+    route.from = static_cast<int>(routeJson["from"].get<double>());
+
+    picojson::array tos = routeJson["branch"].get<picojson::array>();
+
+    for (auto& to : tos) {
+      route.tos.emplace_back(
+          static_cast<int>(to.get<picojson::object>()["to"].get<double>()));
+      route.texts.emplace_back(
+          to.get<picojson::object>()["text"].get<std::string>());
+      route.next.emplace_back(
+          static_cast<int>(to.get<picojson::object>()["next"].get<double>()));
+    }
+
+    this->routes.emplace_back(route);
+  }
+
+  ////////////////////////////////
+  // オブジェクト設定
+  ////////////////////////////////
   innerCol = Color255("#0D0923");
   buttonFrame = new Obj::Button(
       PosVec(), PosVec(ApplicationPreference::windowSize.x, 200), true, true);
@@ -174,6 +220,8 @@ Scene::StoryScene::StoryScene()
   ////////////////////////////////
   // 対応チャプター 読込
   ////////////////////////////////
+
+  branchIndex = -1;
   StoreChapter();
 
   layer2D.AddObject(button);
@@ -221,6 +269,38 @@ void Scene::StoryScene::Update() {
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       30, 1, 99999, cameraPos, lookAt, PosVec(0, 1, 0));
 
+  // 分岐処理
+  int cIndex;
+  cIndex = 0;
+  bool bButtonSelected = false;
+  for (auto& item : branchButtons) {
+    if (item->GetMouseSelected()) {
+      item->SetMouseOff();
+      bButtonSelected = true;
+      break;
+    }
+
+    cIndex++;
+  }
+
+  if (bButtonSelected) {
+    branchCIndex = cIndex;
+    for (auto& item : branchButtons) {
+      layer2D.DeleteObject(item);
+      delete item;
+    }
+    branchButtons.clear();
+
+    for (auto& item : branchTexts) {
+      layer2D.DeleteObject(item);
+      delete item;
+    }
+    branchTexts.clear();
+
+    storyProgress.nowChapter = routes[branchIndex].tos[cIndex];
+    StoreChapter();
+  }
+
   layer2D.Update();
 }
 
@@ -263,14 +343,91 @@ void Scene::StoryScene::StorySet() {
                         PosVec(0, 1, 0));
 
   } else {
+    Story::StoryProgress prevStoryProgress = storyProgress;
+
     DataStore<Story::StoryProgress> progressStore(
         ApplicationPreference::savesFilePath + storyProgressFilePath);
 
     storyProgress = progressStore.Read();
-    storyProgress.nowChapter++;
-    progressStore.Write(storyProgress);
 
-    StoreChapter();
+    // 枝がないかを確認
+    bool isHit = false;
+    int routeIndex = 0;
+    for (auto& item : routes) {
+      if (item.from == prevStoryProgress.nowChapter) {
+        isHit = true;
+        break;
+      }
+      routeIndex++;
+    }
+    if (storyProgress.nowChapter == prevStoryProgress.nowChapter)
+      branchIndex = routeIndex;
+
+    std::cout << "previous: " << prevStoryProgress.nowChapter << std::endl;
+    std::cout << "now: " << storyProgress.nowChapter << std::endl;
+    std::cout << "branchIndex: " << branchIndex << std::endl;
+
+    if (!isHit && storyProgress.nowChapter == prevStoryProgress.nowChapter) {
+      if (storyProgress.nowChapter < storyArray.size() - 1)
+        storyProgress.nowChapter++;
+      else {
+        // エンドロール
+      }
+      StoreChapter();
+      progressStore.Write(storyProgress);
+    } else if (isHit) {
+      // 分岐チャプターそのものか
+      if (storyProgress.nowChapter == prevStoryProgress.nowChapter) {
+        // 行ったことあるリストに追加
+        // button setup
+
+        for (auto& item : branchButtons) {
+          layer2D.DeleteObject(item);
+          delete item;
+        }
+        branchButtons.clear();
+        for (auto& item : branchTexts) {
+          layer2D.DeleteObject(item);
+          delete item;
+        }
+        branchTexts.clear();
+
+        int buttonIndex = 0;
+        for (auto& item : routes[routeIndex].tos) {
+          Color255 innerColor;
+          innerColor = Color255("#1B383C");
+          Obj::Button* bButton = new Obj::Button(
+              Obj::Object2DAnchor::AnchorUpperLeft(
+                  PosVec(ApplicationPreference::windowSize.x / 4.f,
+                         150 + 30 + 40 * buttonIndex)),
+              PosVec(ApplicationPreference::windowSize.x / 2.f, 30));
+          bButton->SetInnerColor(innerColor, innerColor * 0.8,
+                                 innerColor * 0.65, innerColor * 0.75);
+          bButton->SetInnerAnimation(.1f);
+          branchButtons.emplace_back(bButton);
+
+          Obj::Text* bText =
+              new Obj::Text(Obj::Object2DAnchor::AnchorUpperLeft(PosVec(
+                                ApplicationPreference::windowSize.x / 4.f + 15,
+                                143 + 30 + 40 * buttonIndex)),
+                            PosVec(), routes[routeIndex].texts[buttonIndex]);
+          bText->SetInnerColor(Color255(250));
+          branchTexts.emplace_back(bText);
+          layer2D.AddObject(bButton);
+          layer2D.AddObject(bText);
+          buttonIndex++;
+        }
+      }
+    } else {
+      std::cout << "branch end" << std::endl;
+      if (routes[branchIndex].next[branchCIndex] != -1) {
+        storyProgress.nowChapter = routes[branchIndex].next[branchCIndex];
+        progressStore.Write(storyProgress);
+        StoreChapter();
+      } else {
+        StorySet();
+      }
+    }
   }
 }
 
