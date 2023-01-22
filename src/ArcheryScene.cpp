@@ -10,7 +10,7 @@ Scene::ArcheryScene::ArcheryScene(){
   	SceneBase::SetOrthoCameraWindow();
   	Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(200, 1000, 0), PosVec(200, 0, 200), PosVec(0, 1, 0));
+      30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 200), PosVec(0, 1, 0));
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
@@ -32,19 +32,25 @@ Scene::ArcheryScene::ArcheryScene(){
     cube.SetShininess(20);
     cube.SetRotate(30, PosVec(.5, .7, 0));
 
-    centerCube = Obj::Cylinder(PosVec(0.0, 0.0, -200.0), PosVec(), PosVec());
+    centerCube = Obj::Cylinder(PosVec(-500.0, 0.0, 0.0), PosVec(), PosVec());
     centerCube.SetAmbient(Color255(114, 235, 209));
     centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
     centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
-    centerCube.SetScale(PosVec(50, 1, 50));
+    centerCube.SetScale(PosVec(10, 1, 10));
     centerCube.SetShininess(20);
     centerCube.SetRotate(90, PosVec(1, 0, 0));
 
-    stage = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
-                            "Mesh/archery_stage.obj");
+    stage = Obj::ObjFile(PosVec(0.0, 0.0, 0.0), PosVec(), PosVec(),
+                            ApplicationPreference::modelFilePath + folderName +
+                                "archery_stage.obj");
     stage.SetScale(PosVec(100, 100, 100));
     stage.SetShininess(20);
-    stage.SetRotate(90, PosVec(-1, 0, 0));
+    stage.SetRotate(90, PosVec(0, 0, 0));
+
+    Scene::LightManager::Set(
+      GL_LIGHT0, PosVec(0, 500, 0), Color255(0.5, 0.5, 0.5, 1.f),
+      Color255(1.f, 1.f, 1.f, 1.0f), Color255(0.0f, 0.0f, 0.0f, 1.f));
+
 }
 
 void Scene::ArcheryScene::Update(){
@@ -54,7 +60,7 @@ void Scene::ArcheryScene::Update(){
     arrow.SetRotate(deg, PosVec(1,0,0));
      Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       30, 1, 99999, PosVec(0.0, 100.0, 1000.0), centerCube.GetPosition(), PosVec(0,1,0));
+       30, 1, 99999, PosVec(1000.0, 100.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
 		
     Camera::UpdateCamera();
     arrow.Update();
