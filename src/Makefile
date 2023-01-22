@@ -1,6 +1,6 @@
 # $ make と実行
 CC  = g++
-CFLAGS	= -std=c++11 -ggdb -O3
+CFLAGS	= -std=c++11 -ggdb -O0
 TARGET  = main
 SRCS	= $(wildcard *.cpp)
 OBJS	= $(SRCS:.cpp=.o)

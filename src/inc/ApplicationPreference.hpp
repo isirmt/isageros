@@ -15,4 +15,6 @@ class ApplicationPreference {
 
   static const std::string imgFilePath;
   static const std::string modelFilePath;
+  static const std::string jsonFilePath;
+  static const std::string savesFilePath;
 };

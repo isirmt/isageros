@@ -1,0 +1,603 @@
+{
+  "stories": [
+    {
+      "chapterName": "悪者を討伐せよ！",
+      "stageName": "kingdom",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "ハムレット隊長、ネイネス副隊長、先日の魔物討伐の任務はご苦労であった。急に呼び出して済まない。今回お前たちに重要任務を任せようと思う。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "重要任務？"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "そうだ。最近、裏切り者の元隊長が我が国の兵たちを襲っているらしい。このままでは兵力が落ちてしまう。裏切り者の討伐を命じる。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "わかりました。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "元隊長はどこにいるんですか？"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "森の先の洞窟で兵たちの通信が途絶えている。元隊長は相当な手練だ。それに森には危険な魔物もいる。気をつけるのだぞ。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "カエサル王",
+          "text": "兵士専用の食料も持ったか？"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "はい。持ちました。それでは、行ってまいります。"
+        }
+      ]
+    },
+    {
+      "chapterName": "酒乱パニック",
+      "stageName": "road_K_F",
+      "goto": "tabletennis",
+      "talks": [
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "元隊長の討伐なんて嫌ですねー。僕たちの仕事は城の外の魔物を倒すことなのに。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "このままでは仲間たちが危険なだけだ。仕方ない。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "そもそもなんで元隊長はこの国を裏切ったんでしょうか。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "さあな。"
+        },
+        {
+          "left": "Leader",
+          "right": "drunken",
+          "speaker": "酔っ払いジジイ",
+          "text": "おーい。兵士さんたち。なに散歩してんだぁー？？"
+        },
+        {
+          "left": "Leader",
+          "right": "drunken",
+          "speaker": "ハムレット隊長",
+          "text": "散歩ではない。今から任務に向かうところだ。"
+        },
+        {
+          "left": "Leader",
+          "right": "drunken",
+          "speaker": "酔っ払いジジイ",
+          "text": "おれぁ金がねぇからよぉー。その兵士しか食べれねえっていう食いもんをくれよぉー。"
+        },
+        {
+          "left": "subLeader",
+          "right": "drunken",
+          "speaker": "ネイネス副隊長",
+          "text": "だめですよー。この食べ物は渡せません。では、僕たちは先を急ぐので。"
+        },
+        {
+          "left": "subLeader",
+          "right": "drunken",
+          "speaker": "酔っ払いジジイ",
+          "text": "うるせえ！ならちからずくで奪ってやる！"
+        },
+        {
+          "left": "subLeader",
+          "right": "drunken",
+          "speaker": "ネイネス副隊長",
+          "text": "うわ！かなり酔ってますね。ここでおとなしくさせましょう！"
+        }
+      ]
+    },
+    {
+      "chapterName": "お仕置き終わり！",
+      "stageName": "road_K_F",
+      "goto": "next",
+      "talks": [
+        
+        {
+          "left": "Leader",
+          "right": "drunken",
+          "speaker": "ハムレット隊長",
+          "text": "食料は自分で稼いだ金で手に入れるんだな。"
+        },
+        {
+          "left": "Leader",
+          "right": "drunken",
+          "speaker": "酔っ払いジジイ",
+          "text": "ずびばせんでしだぁ。"
+        }
+      ]
+    },
+    {
+      "chapterName": "お仕事の時間",
+      "stageName": "forest",
+      "goto": "archery",
+      "talks": [
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "もうすぐ洞窟ですね。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "ああ。この辺りには危険な魔物が棲みついているらしい。慎重に進もう。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "わかってますよー。"
+        },
+        {
+          "left": "subLeader",
+          "right": "monster",
+          "speaker": "魔物",
+          "text": "ぶおぉぉー！！"
+        },
+        {
+          "left": "subLeader",
+          "right": "monster",
+          "speaker": "ネイネス副隊長",
+          "text": "言ったそばから！"
+        },
+        {
+          "left": "Leader",
+          "right": "monster",
+          "speaker": "ハムレット隊長",
+          "text": "気を引き締めろよ。"
+        }
+      ]
+    },
+    {
+      "chapterName": "油断大敵",
+      "stageName": "forest",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "ふう。何とか倒せましたね。"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "ここの魔物はやはり強いな。...ん？"
+        },
+        {
+          "left": "subLeader",
+          "right": "monster",
+          "speaker": "魔物",
+          "text": "ぐぁおぉぉー！！"
+        },
+        {
+          "left": "Leader",
+          "right": "monster",
+          "speaker": "ハムレット隊長",
+          "text": "まだ息があったか！自爆する気だ！逃げろネイネス！"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "ネイネス副隊長",
+          "text": "隊長！！"
+        },
+        {
+          "left": "subLeader",
+          "right": "Leader",
+          "speaker": "魔物",
+          "text": "（ボカーン！）"
+        }
+      ]
+    },
+    {
+      "chapterName": "元隊長登場！",
+      "stageName": "cave",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "はあ。最近、なんでこんなに兵士が襲ってくるんだろう。"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "俺がこんな目に遭ってるのも全部あいつのせいだ。あいつのせいで俺たちは...。"
+        }
+      ]
+    },
+    {
+      "chapterName": "元隊長の過去",
+      "stageName": "kaisoustage",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "formersubLeader",
+          "speaker": "グルトン副隊長",
+          "text": "うわあ。手が...魔物みたいになってるー！ブルータス助けてー！！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "formersubLeader",
+          "speaker": "ブルータス隊長",
+          "text": "グルトン！大丈夫か！？なんで急にこんな手になったんだ？これは城の外にいる魔物たちの手にそっくりじゃないか！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "formersubLeader",
+          "speaker": "グルトン副隊長",
+          "text": "どうしよう！？ブルータス！僕もう死ぬノかな...全身まで広がっテル...助ケテ...死ニタクナイヨ...ブルータ..."
+        }
+      ]
+    },
+    {
+      "chapterName": "王と元隊長の真実",
+      "stageName": "cave",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "（なんであいつだけ魔物になったのか。それは恐らく兵士専用の食料が原因だろう。）"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "（あいつは食いしんぼうだからいつも俺の分の食料まで食べていた。そしてあいつは任務で城の外で急に魔物になって...そして俺の手で...）"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "カエサルを討つには仲間が必要だ。一人で挑んでも返り討ちにされるに決まっている。"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "でも、あの食料の真実を知ってしまうと兵士はその場で魔物になってしまう。カエサルの目論見がばれないようにする為だろう。一体どうしたらいいんだ？"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "？？？",
+          "text": "ボカーン！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "None",
+          "speaker": "ブルータス元隊長",
+          "text": "...何の音だ？"
+        }
+      ]
+    },
+    {
+      "chapterName": "危険な発見",
+      "stageName": "cave2",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "Leader",
+          "speaker": "ブルータス元隊長",
+          "text": "これは...イサゲロス王国の兵士の死体...？"
+        }
+      ]
+    },
+    {
+      "chapterName": "隊長を探せ！",
+      "stageName": "forest",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "subLeader",
+          "right": "None",
+          "speaker": "ネイネス副隊長",
+          "text": "いてて。あれ、なんで僕は倒れてたんだ...？そうだ、僕が油断したせいで隊長が！"
+        }
+      ]
+    },
+    {
+      "chapterName": "邂逅",
+      "stageName": "cave2",
+      "goto": "sumo",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "ブルータス！お前..."
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "違う！これは俺じゃない！俺たちは争うべきじゃないんだ！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "うるさい！裏切り者のお前が殺したに決まっている！それに元々お前を殺すために僕たちはここまで来た！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "それで最近兵士が多いのか...カエサルは俺が真実を知っていることを勘付いていたのか。仕方ない。これ以上説明しても無駄みたいだ。"
+        }
+      ]
+    },
+    {
+      "chapterName": "m[A]nslaughter and suicide",
+      "stageName": "cave2",
+      "goto": "",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "うっ...（バタッ）"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "はぁ。はぁ。どうやって兵士たちに真実を伝えられるんだ？俺はこのまま何も知らない兵士たちを殺し続けるのか。それじゃ魔物と変わらないじゃないか。"
+        },
+        {
+          "left": "None",
+          "right": "None",
+          "speaker": "None",
+          "text": "王の人類魔物化計画に気づいたブルータスは、これからも兵士たちを殺し続けることを恐れ、自害した。"
+        }
+      ]
+    },
+    {
+      "chapterName": "[B]ad kingdom",
+      "stageName": "cave2",
+      "goto": "",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "お前は...何も分かってない...。兵士専用の食料は魔物化する薬物が入っているんだ！"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "それが本当なら兵士から報告があるに決まっているだろう！それに王国内で魔物化したら、食料を食べてない民衆にバレるだけだ。"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "真実を知ったものは魔物になる。お前も、もう長くないだろう...。ただ、王国内で魔物化はしないのだとしたら...。"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "王室の棚に忍ばせた手紙を誰かが読んでくれれば...（バタッ）"
+        },
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "兵士専用の食料は妙だと思ってたけど、まさか...僕の腕が...足が..."
+        },
+        {
+          "left": "None",
+          "right": "None",
+          "speaker": "None",
+          "text": "真実を知ったネイネスも魔物となった。やがて、全ての兵士が魔物になり、国は潰れ、カエサルの計画通り魔物の王国となった。"
+        }
+      ]
+    },
+    {
+      "chapterName": "希望の手紙",
+      "stageName": "kingdom",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "Leader",
+          "right": "subLeader",
+          "speaker": "ハムレット隊長",
+          "text": "この手紙は...。王が人類魔物化計画を企てていて、兵士専用の食料に魔物化の薬物が入っている？"
+        },
+        {
+          "left": "Leader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "確かに兵士専用っていうのは怪しいと思ってましたけど。"
+        },
+        {
+          "left": "Leader",
+          "right": "subLeader",
+          "speaker": "ハムレット隊長",
+          "text": "魔物は繁殖しないことが研究で分かっているにも関わらず、倒しても倒してもキリがないというのは、まさか！"
+        },
+        {
+          "left": "Leader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "本人に確かめてみましょう！"
+        }
+      ]
+    },
+    {
+      "chapterName": "王と話そう",
+      "stageName": "kingdom",
+      "goto": "baseball",
+      "talks": [
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "カエサル王。この手紙の内容は事実でしょうか？"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "カエサル王",
+          "text": "真実を知ってしまったのか。フッフッフ。バレてしまったのなら仕方がないな。ここでお前たちには死んでもらおうか！"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "まさか事実だったとは...。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "ここでけりを付けるぞ！ネイネス！"
+        }
+      ]
+    },
+    {
+      "chapterName": "pea[C]eful world",
+      "stageName": "kingdom",
+      "goto": "",
+      "talks": [
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "もう少しで...。ウッ。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "あと少しなのに...。力がもう...出ない...。"
+        },
+        {
+          "left": "Caesar",
+          "right": "subLeader",
+          "speaker": "カエサル王",
+          "text": "フハハ。あと少しだったなぁ。あと少し力があればこの国の英雄になれたのになぁ！"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "ハムレット隊長",
+          "text": "クソッ！もう限界だ...。"
+        },
+        {
+          "left": "Caesar",
+          "right": "Leader",
+          "speaker": "？？？",
+          "text": "（タタタッ）"
+        },
+        {
+          "left": "Caeser",
+          "right": "formerLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "（ズバッ）"
+        },
+        {
+          "left": "Caeser",
+          "right": "formerLeader",
+          "speaker": "カエサル王",
+          "text": "うっ...なにっ！まさか...ブルータス、お前もか！？"
+        },
+        {
+          "left": "Caeser",
+          "right": "formerLeader",
+          "speaker": "カエサル王",
+          "text": "お前のやっていることはただの逆恨みだブルータス！"
+        },
+        {
+          "left": "Caeser",
+          "right": "formerLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "恨みじゃねえ...おれは魔物になった仲間たちの本懐を遂げる為、今日まで生きてきたんだよ！！（ズババァン！）"
+        },
+        {
+          "left": "Caeser",
+          "right": "formerLeader",
+          "speaker": "カエサル王",
+          "text": "ぐわあああ（バタッ）"
+        },
+        {
+          "left": "Leader",
+          "right": "formerLeader",
+          "speaker": "ハムレット隊長",
+          "text": "ブルータス元隊長！まさか、あの手紙はあなたが！"
+        },
+        {
+          "left": "Leader",
+          "right": "formerLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "ああ。お前たちのような英雄が現れるのをずっと待っていた。"
+        },
+        {
+          "left": "subLeader",
+          "right": "formerLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "今日という日が来るまで待ち続けたあなたが一番の英雄ですよ！"
+        },
+        {
+          "left": "subLeader",
+          "right": "formerLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "さあ、はやくこの真実をみんなに伝えよう！"
+        },
+        {
+          "left": "None",
+          "right": "None",
+          "speaker": "None",
+          "text": "真の悪が消えたイサゲロス王国はブルータスが王位につき、魔物もいなくなり、平和が訪れた。"
+        }
+      ]
+    }
+  ]
+}
