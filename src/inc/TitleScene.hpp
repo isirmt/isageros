@@ -28,9 +28,8 @@ class TitleScene : public SceneBase {
  private:
   Obj::Image* background;
 
-  Obj::Button* modeButton;
-  Obj::Button* sumoButton;
-  Obj::Button* storyButton;
+  Obj::Image* modeButton;
+  Obj::Image* storyButton;
 
   Obj::Text* metaText;
 

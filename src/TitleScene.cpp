@@ -1,9 +1,9 @@
 #include "TitleScene.hpp"
 
-#include "TableTennisScene.hpp"
+#include "GameSelectorScene.hpp"
 #include "StoryScene.hpp"
 #include "SumoScene.hpp"
-#include "GameSelectorScene.hpp"
+#include "TableTennisScene.hpp"
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
@@ -18,48 +18,19 @@ Scene::TitleScene::TitleScene() {
       PosVec(), ApplicationPreference::windowSize,
       ApplicationPreference::imgFilePath + folderName + "titleBack.ppm");
 
-  PosVec menuButtonOffset(50, 50);
-  PosVec menuButtonSize(150, 100);
-  PosVec menuButtonGap(0, 20);
+  PosVec menuButtonSize(500, 75);
   Color255 buttonInnerColor("#40C8C0");
   Color255 buttonOutlineColor(35, 57, 40);
   float buttonOutlineWidth = 2.f;
-  int countNum = 0;
 
-  modeButton =
-      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
-                          menuButtonOffset.x + menuButtonSize.x,
-                          menuButtonOffset.y +
-                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
-                      menuButtonSize, true, true);
-  modeButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
-                              buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  modeButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  modeButton->SetInnerAnimation(.2f);
+  storyButton = new Obj::Image(
+      PosVec(75, 30), menuButtonSize,
+      ApplicationPreference::imgFilePath + folderName + "story.ppm");
 
-  countNum++;
-  sumoButton =
-      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
-                          menuButtonOffset.x + menuButtonSize.x,
-                          menuButtonOffset.y +
-                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
-                      menuButtonSize, true, true);
-  sumoButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
-                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  sumoButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  sumoButton->SetInnerAnimation(.2f);
-
-  countNum++;
-  storyButton =
-      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
-                          menuButtonOffset.x + menuButtonSize.x,
-                          menuButtonOffset.y +
-                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
-                      menuButtonSize, true, true);
-  storyButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
-                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  storyButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  storyButton->SetInnerAnimation(.2f);
+  modeButton = new Obj::Image(
+      Obj::Object2DAnchor::AnchorLowerRight(PosVec(75 + menuButtonSize.x, 30)),
+      menuButtonSize,
+      ApplicationPreference::imgFilePath + folderName + "mini.ppm");
 
   metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
   metaText->SetInnerColor(Color255(0, 0, 0));
@@ -70,7 +41,6 @@ Scene::TitleScene::TitleScene() {
 
   layer2D.AddObject(background);
   layer2D.AddObject(modeButton);
-  layer2D.AddObject(sumoButton);
   layer2D.AddObject(storyButton);
   layer2D.AddObject(metaText);
 }
@@ -81,12 +51,6 @@ void Scene::TitleScene::Update() {
   if (modeButton->GetMouseSelected()) {
     modeButton->SetMouseOff();
     SceneManager::ChangeScene(new GameSelectorScene());
-    return;
-  }
-
-  if (sumoButton->GetMouseSelected()) {
-    sumoButton->SetMouseOff();
-    SceneManager::ChangeScene(new SumoScene());
     return;
   }
 
