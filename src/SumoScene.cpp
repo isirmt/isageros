@@ -66,6 +66,7 @@ void Scene::SumoScene::Update(){
     if(startbutton->GetMouseSelected()){ 
         startbutton->SetMouseOff();
         gamestart = true;
+        pushPower = 0.0;
         clickCount = 0;
         startbutton->SetEnabled(false);
         text->SetString("Now Playing.");
@@ -81,8 +82,8 @@ void Scene::SumoScene::Update(){
         } 
         
         if(player.GetPosition().x < enemy.GetPosition().x + 25.0){
-            player.SetVelocity(PosVec(10.0, 0.0, -10.0));
-            enemy.SetVelocity(PosVec(10.0, 0.0, -10.0));
+            player.SetVelocity(PosVec(20.0, 0.0, -20.0));
+            enemy.SetVelocity(PosVec(20.0, 0.0, -20.0));
         }
 
         if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
@@ -95,18 +96,20 @@ void Scene::SumoScene::Update(){
         if(enemy.GetPosition().x <= 15.0 && enemy.GetPosition().z >= 385.0 || 
             player.GetPosition().x >= 440.0 && player.GetPosition().z <= -40.0){
             gamestart = false;
+            
+            text_2->SetString("Click_count : " + std::to_string(clickCount));
+            if(enemy.GetPosition().x <= 15.0){
+                text->SetString("Winner!!!");
+            }
+            if(player.GetPosition().x >= 440.0){
+                text->SetString("Lose...");
+            }
+
             player.SetPosition(PosVec(465, 201.0, -65.0));
             enemy.SetPosition(PosVec(-10.0, 200.0, 410.0));
             player.SetVelocity(PosVec(0.0, 0.0, 0.0));
             enemy.SetVelocity(PosVec(0.0, 0.0, 0.0));
-            text_2->SetString("Click_count : " + std::to_string(clickCount));
-            if(enemy.GetPosition().x <= 15.0 && enemy.GetPosition().z >= 385.0){
-                text->SetString("Winner!!!");
-            }
 
-            if(player.GetPosition().x >= 440.0 && player.GetPosition().z <= -40.0){
-                text->SetString("Lose...");
-            }
             startbutton->SetEnabled(true);
         }
     }
