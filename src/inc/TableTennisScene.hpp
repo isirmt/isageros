@@ -17,7 +17,7 @@ class TableTennisScene : public SceneBase {
  public:
   TableTennisScene();
   ~TableTennisScene() {
-    delete button;
+    delete backButton;
     delete rect;
     delete text;
     delete image;
@@ -44,7 +44,7 @@ class TableTennisScene : public SceneBase {
 
   Obj::Sphere ball;
 
-  Obj::Button* button;
+  Obj::Button* backButton;
   Obj::Button* startButton;
   Obj::Rectangle* rect;
   Obj::Text* text;
@@ -67,6 +67,8 @@ class TableTennisScene : public SceneBase {
 
   const float paramG = 350;
   const float paramE = 1;
+
+  const int quotaScore = 10;
 
   float waitingCameraDeg;
 

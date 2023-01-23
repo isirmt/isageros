@@ -14,11 +14,12 @@
 #include "LightManager.hpp"
 #include "MapRelativeData.hpp"
 #include "SceneBase.hpp"
+#include "SceneLauncher.hpp"
 #include "SceneManager.hpp"
 #include "StoryData.hpp"
 #include "StoryProgressData.hpp"
-#include "picojson.hpp"
 #include "StoryRouteData.hpp"
+#include "picojson.hpp"
 
 namespace Scene {
 class StoryScene : public SceneBase {

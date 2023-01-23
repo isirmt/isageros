@@ -47,7 +47,7 @@ Scene::StoryScene::StoryScene()
 
   storyProgress = progressStore.Read();
 
-  std::cout << "nowChapter: " << storyProgress.nowChapter << std::endl;
+  // std::cout << "nowChapter: " << storyProgress.nowChapter << std::endl;
 
   // 書き込み方
   // storyProgress.nowChapter++;
@@ -252,6 +252,8 @@ void Scene::StoryScene::Update() {
     StorySet();
   }
 
+  if (mustEscape) return;
+
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
   PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
 
@@ -363,18 +365,24 @@ void Scene::StoryScene::StorySet() {
     if (storyProgress.nowChapter == prevStoryProgress.nowChapter)
       branchIndex = routeIndex;
 
-    std::cout << "previous: " << prevStoryProgress.nowChapter << std::endl;
-    std::cout << "now: " << storyProgress.nowChapter << std::endl;
-    std::cout << "branchIndex: " << branchIndex << std::endl;
-
     if (!isHit && storyProgress.nowChapter == prevStoryProgress.nowChapter) {
-      if (storyProgress.nowChapter < storyArray.size() - 1)
-        storyProgress.nowChapter++;
-      else {
-        // エンドロール
+      if (storyProgress.nowChapter < storyArray.size() - 1) {
+        if (nowChapter->gotoScene == "next") {
+          storyProgress.nowChapter++;
+          StoreChapter();
+          progressStore.Write(storyProgress);
+        } else {
+          SceneManager::ChangeScene(
+              SceneLauncher::LaunchSceneFromStory(nowChapter->gotoScene));
+          mustEscape = true;
+          return;
+        }
+      } else {
+        // タイトルへ戻る
+        SceneManager::ChangeScene(SceneLauncher::LaunchSceneFromStory("title"));
+        mustEscape = true;
+        return;
       }
-      StoreChapter();
-      progressStore.Write(storyProgress);
     } else if (isHit) {
       // 分岐チャプターそのものか
       if (storyProgress.nowChapter == prevStoryProgress.nowChapter) {
@@ -419,7 +427,6 @@ void Scene::StoryScene::StorySet() {
         }
       }
     } else {
-      std::cout << "branch end" << std::endl;
       if (routes[branchIndex].next[branchCIndex] != -1) {
         storyProgress.nowChapter = routes[branchIndex].next[branchCIndex];
         progressStore.Write(storyProgress);
@@ -453,12 +460,12 @@ void Scene::StoryScene::StoreChapter() {
     nowChapter->talks.emplace_back(conv);
   }
 
-  std::cout << "nowChapterName: " << nowChapter->chapterName.c_str()
-            << std::endl;
-  std::cout << "nowStageName: " << nowChapter->stageName.c_str() << std::endl;
-  std::cout << "nowGotoScene: " << nowChapter->gotoScene.c_str() << std::endl;
+  // std::cout << "nowChapterName: " << nowChapter->chapterName.c_str()
+  //           << std::endl;
+  // std::cout << "nowStageName: " << nowChapter->stageName.c_str() << std::endl;
+  // std::cout << "nowGotoScene: " << nowChapter->gotoScene.c_str() << std::endl;
 
-  for (auto& item : nowChapter->talks) std::cout << item.text << std::endl;
+  // for (auto& item : nowChapter->talks) std::cout << item.text << std::endl;
 
   if (nowStage != nullptr) delete nowStage;
 
@@ -472,11 +479,11 @@ void Scene::StoryScene::StoreChapter() {
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
   PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
 
-  std::cout << nowChapter->stageName << std::endl;
-  std::cout << cameraPos.x << "," << cameraPos.y << "," << cameraPos.z << ","
-            << std::endl;
-  std::cout << lookAt.x << "," << lookAt.y << "," << lookAt.z << ","
-            << std::endl;
+  // std::cout << nowChapter->stageName << std::endl;
+  // std::cout << cameraPos.x << "," << cameraPos.y << "," << cameraPos.z << ","
+  //           << std::endl;
+  // std::cout << lookAt.x << "," << lookAt.y << "," << lookAt.z << ","
+  //           << std::endl;
 
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
@@ -506,4 +513,5 @@ void Scene::StoryScene::StoreChapter() {
 
   storyIndex = 0;
   StorySet();
+  if (mustEscape) return;
 }

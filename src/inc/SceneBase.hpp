@@ -2,6 +2,7 @@
 #include "ApplicationPreference.hpp"
 #include "Camera.hpp"
 #include "ObjectLayer.hpp"
+#include "StoryModeManager.hpp"
 
 namespace Scene {
 class SceneBase {
@@ -25,5 +26,7 @@ class SceneBase {
   void Set3DDrawMode();
   // カメラ系関数は含まれていない
   void Set2DDrawMode();
+
+  bool mustEscape = false;
 };
 }  // namespace Scene
