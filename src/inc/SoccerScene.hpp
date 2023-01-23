@@ -1,5 +1,8 @@
 #pragma once
 #include <GL/glut.h>
+#include <stdlib.h>
+#include <time.h>
+
 
 #include <iostream>
 
@@ -17,9 +20,10 @@ namespace Scene{
             SoccerScene();
             ~SoccerScene(){
                 delete backbutton;
+                delete text;
             }
 
-        void Update() override;
+            void Update() override;
             void Draw() override;
             void KeyboardProc(unsigned char key, int x, int y) override{}
             void MouseProc(int button, int state, int x, int y) override{}
@@ -29,5 +33,10 @@ namespace Scene{
 
         private:
             Obj::Button* backbutton;
+            Obj::ObjFile enemy;
+            Obj::Text* text;
+            Obj::ObjFile stage;
+            const std::string folderName = "minigames/soccer/";
+            int ransu;
     };
 }
