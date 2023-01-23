@@ -1,5 +1,6 @@
 #include "SumoScene.hpp"
 #include "TitleScene.hpp"
+#include "StoryScene.hpp"
 
 Scene::SumoScene::SumoScene(){
     Camera::SetActive(true);
@@ -100,9 +101,13 @@ void Scene::SumoScene::Update(){
             text_2->SetString("Click_count : " + std::to_string(clickCount));
             if(enemy.GetPosition().x <= 15.0){
                 text->SetString("Winner!!!");
+                Story::StoryModeManager::SetGameClear(true);
+                Story::StoryModeManager::SavePlusStep();
             }
             if(player.GetPosition().x >= 440.0){
                 text->SetString("Lose...");
+                Story::StoryModeManager::SetGameClear(false);
+                //startbutton->SetEnabled(true);
             }
 
             player.SetPosition(PosVec(465, 201.0, -65.0));
@@ -116,7 +121,12 @@ void Scene::SumoScene::Update(){
 
     if (backbutton->GetMouseSelected()) {
         backbutton->SetMouseOff();
-        SceneManager::ChangeScene(new TitleScene());
+        if (!Story::StoryModeManager::GetGameActive())
+            SceneManager::ChangeScene(new TitleScene());
+        else {
+            Story::StoryModeManager::SetGameActive(false);
+            SceneManager::ChangeScene(new StoryScene());
+        }
         return;
     }
 
