@@ -145,7 +145,7 @@
     {
       "chapterName": "お仕事の時間",
       "stageName": "forest",
-      "goto": "archery",
+      "goto": "next",
       "talks": [
         {
           "left": "subLeader",
@@ -474,7 +474,7 @@
     {
       "chapterName": "王と話そう",
       "stageName": "kingdom",
-      "goto": "baseball",
+      "goto": "batting",
       "talks": [
         {
           "left": "Caesar",
