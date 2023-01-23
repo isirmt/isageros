@@ -5,6 +5,7 @@
 #include "SumoScene.hpp"
 #include "TableTennisScene.hpp"
 #include "TitleScene.hpp"
+#include "SoccerScene.hpp"
 
 Scene::SceneBase* Scene::SceneLauncher::LaunchSceneFromStory(
     std::string _sceneName) {
@@ -23,6 +24,9 @@ Scene::SceneBase* Scene::SceneLauncher::LaunchSceneFromStory(
     Story::StoryModeManager::SetGameActive(true);
   } else if (_sceneName == "title") {
     res = new TitleScene();
+  } else if (_sceneName == "soccer") {
+    res = new SoccerScene();
+    Story::StoryModeManager::SetGameActive(true);
   }
   return res;
 }

@@ -85,6 +85,17 @@ Scene::GameSelectorScene::GameSelectorScene() {
       ApplicationPreference::imgFilePath + folderName + "sumo.ppm");
   gameThumbs.insert({"sumo", iButton});
 
+  horizontalCount = 1;
+  verticalCount = 1;
+  iButton = new Obj::Image(
+      PosVec(selButtonOffset.x +
+                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
+             selButtonOffset.y +
+                 (selButtonSize.y + selButtonGap.y) * verticalCount),
+      selButtonSize,
+      ApplicationPreference::imgFilePath + folderName + "sumo.ppm");
+  gameThumbs.insert({"soccer", iButton});
+
   LightManager::Set(GL_LIGHT0, PosVec(0, 500, 0), Color255(0.5, 0.5, 0.5, 1.f),
                     Color255(1.f, 1.f, 1.f, 1.0f),
                     Color255(0.0f, 0.0f, 0.0f, 1.f));

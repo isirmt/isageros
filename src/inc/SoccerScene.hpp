@@ -29,5 +29,5 @@ namespace Scene{
 
         private:
             Obj::Button* backbutton;
-    }
+    };
 }
