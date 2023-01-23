@@ -22,15 +22,20 @@ Scene::TitleScene::TitleScene() {
   Color255 buttonInnerColor("#40C8C0");
   Color255 buttonOutlineColor(35, 57, 40);
   float buttonOutlineWidth = 2.f;
+  PosVec bpos;
 
+  bpos = PosVec(75, 30);
   storyButton = new Obj::Image(
       PosVec(75, 30), menuButtonSize,
       ApplicationPreference::imgFilePath + folderName + "story.ppm");
+  storyButton->SetTag(std::to_string(bpos.y));
 
+  bpos =
+      Obj::Object2DAnchor::AnchorLowerRight(PosVec(75 + menuButtonSize.x, 30));
   modeButton = new Obj::Image(
-      Obj::Object2DAnchor::AnchorLowerRight(PosVec(75 + menuButtonSize.x, 30)),
-      menuButtonSize,
+      bpos, menuButtonSize,
       ApplicationPreference::imgFilePath + folderName + "mini.ppm");
+  modeButton->SetTag(std::to_string(bpos.y));
 
   metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
   metaText->SetInnerColor(Color255(0, 0, 0));
@@ -58,6 +63,26 @@ void Scene::TitleScene::Update() {
     storyButton->SetMouseOff();
     SceneManager::ChangeScene(new StoryScene());
     return;
+  }
+
+  if (storyButton->GetMouseHit()) {
+    storyButton->ChangeValueWithAnimation(
+        &storyButton->GetVectorPointer(VectorType::POS)->y,
+        std::stof(storyButton->GetTag()) + 5.f, 1.f);
+  } else {
+    storyButton->ChangeValueWithAnimation(
+        &storyButton->GetVectorPointer(VectorType::POS)->y,
+        std::stof(storyButton->GetTag()), 2.f);
+  }
+
+  if (modeButton->GetMouseHit()) {
+    modeButton->ChangeValueWithAnimation(
+        &modeButton->GetVectorPointer(VectorType::POS)->y,
+        std::stof(modeButton->GetTag()) + 5.f, 1.f);
+  } else {
+    modeButton->ChangeValueWithAnimation(
+        &modeButton->GetVectorPointer(VectorType::POS)->y,
+        std::stof(modeButton->GetTag()), 2.f);
   }
 
   layer2D.Update();

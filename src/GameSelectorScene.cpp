@@ -32,10 +32,12 @@ Scene::GameSelectorScene::GameSelectorScene() {
   Obj::Image* iButton;
 
   Color255 innerCol;
+  PosVec bpos;
+
   innerCol = Color255(255, 100, 50);
-  button = new Obj::Button(
-      Obj::Object2DAnchor::AnchorUpperLeft(PosVec(30, 30 + 50)),
-      PosVec(50, 50), true, true);
+  button =
+      new Obj::Button(Obj::Object2DAnchor::AnchorUpperLeft(PosVec(30, 30 + 50)),
+                      PosVec(50, 50), true, true);
   button->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
                         innerCol * 0.75);
   button->SetOutlineColor(Color255(35, 57, 40), 5.f);
@@ -43,57 +45,57 @@ Scene::GameSelectorScene::GameSelectorScene() {
 
   horizontalCount = 0;
   verticalCount = 0;
+  bpos = PosVec(
+      selButtonOffset.x + (selButtonSize.x + selButtonGap.x) * horizontalCount,
+      selButtonOffset.y + (selButtonSize.y + selButtonGap.y) * verticalCount);
   iButton = new Obj::Image(
-      PosVec(selButtonOffset.x +
-                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
-             selButtonOffset.y +
-                 (selButtonSize.y + selButtonGap.y) * verticalCount),
-      selButtonSize,
+      bpos, selButtonSize,
       ApplicationPreference::imgFilePath + folderName + "tabletennis.ppm");
+  iButton->SetTag(std::to_string(bpos.y));
   gameThumbs.insert({"tabletennis", iButton});
 
   horizontalCount = 1;
   verticalCount = 0;
+  bpos = PosVec(
+      selButtonOffset.x + (selButtonSize.x + selButtonGap.x) * horizontalCount,
+      selButtonOffset.y + (selButtonSize.y + selButtonGap.y) * verticalCount);
   iButton = new Obj::Image(
-      PosVec(selButtonOffset.x +
-                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
-             selButtonOffset.y +
-                 (selButtonSize.y + selButtonGap.y) * verticalCount),
-      selButtonSize,
+      bpos, selButtonSize,
       ApplicationPreference::imgFilePath + folderName + "archery.ppm");
+  iButton->SetTag(std::to_string(bpos.y));
   gameThumbs.insert({"archery", iButton});
 
   horizontalCount = 2;
   verticalCount = 0;
+  bpos = PosVec(
+      selButtonOffset.x + (selButtonSize.x + selButtonGap.x) * horizontalCount,
+      selButtonOffset.y + (selButtonSize.y + selButtonGap.y) * verticalCount);
   iButton = new Obj::Image(
-      PosVec(selButtonOffset.x +
-                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
-             selButtonOffset.y +
-                 (selButtonSize.y + selButtonGap.y) * verticalCount),
-      selButtonSize,
+      bpos, selButtonSize,
       ApplicationPreference::imgFilePath + folderName + "batting.ppm");
+  iButton->SetTag(std::to_string(bpos.y));
   gameThumbs.insert({"batting", iButton});
 
   horizontalCount = 0;
   verticalCount = 1;
+  bpos = PosVec(
+      selButtonOffset.x + (selButtonSize.x + selButtonGap.x) * horizontalCount,
+      selButtonOffset.y + (selButtonSize.y + selButtonGap.y) * verticalCount);
   iButton = new Obj::Image(
-      PosVec(selButtonOffset.x +
-                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
-             selButtonOffset.y +
-                 (selButtonSize.y + selButtonGap.y) * verticalCount),
-      selButtonSize,
+      bpos, selButtonSize,
       ApplicationPreference::imgFilePath + folderName + "sumo.ppm");
+  iButton->SetTag(std::to_string(bpos.y));
   gameThumbs.insert({"sumo", iButton});
 
   horizontalCount = 1;
   verticalCount = 1;
+  bpos = PosVec(
+      selButtonOffset.x + (selButtonSize.x + selButtonGap.x) * horizontalCount,
+      selButtonOffset.y + (selButtonSize.y + selButtonGap.y) * verticalCount);
   iButton = new Obj::Image(
-      PosVec(selButtonOffset.x +
-                 (selButtonSize.x + selButtonGap.x) * horizontalCount,
-             selButtonOffset.y +
-                 (selButtonSize.y + selButtonGap.y) * verticalCount),
-      selButtonSize,
-      ApplicationPreference::imgFilePath + folderName + "sumo.ppm");
+      bpos, selButtonSize,
+      ApplicationPreference::imgFilePath + folderName + "soccer.ppm");
+  iButton->SetTag(std::to_string(bpos.y));
   gameThumbs.insert({"soccer", iButton});
 
   LightManager::Set(GL_LIGHT0, PosVec(0, 500, 0), Color255(0.5, 0.5, 0.5, 1.f),
@@ -122,6 +124,15 @@ void Scene::GameSelectorScene::Update() {
           SceneLauncher::LaunchSceneFromStory(item.first));
       Story::StoryModeManager::SetGameActive(false);
       return;
+    }
+    if (item.second->GetMouseHit()) {
+      item.second->ChangeValueWithAnimation(
+          &item.second->GetVectorPointer(VectorType::POS)->y,
+          std::stof(item.second->GetTag()) + 5.f, 1.f);
+    } else {
+      item.second->ChangeValueWithAnimation(
+          &item.second->GetVectorPointer(VectorType::POS)->y,
+          std::stof(item.second->GetTag()), 2.f);
     }
   }
 
