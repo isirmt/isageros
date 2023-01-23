@@ -18,6 +18,7 @@ namespace Scene{
             SumoScene();
             ~SumoScene(){
                 delete backbutton;
+                delete text;
             }
 
             void Update() override;
@@ -31,7 +32,15 @@ namespace Scene{
         private:
             Color255 boxAmbient;
             Obj::ObjFile stage;
+            Obj::ObjFile player;
+            Obj::ObjFile enemy;
             Obj::Button* backbutton;
-            const std::string folderName = "";
+            Obj::Button* startbutton;
+            Obj::Text* text;
+            Obj::Text* text_2;
+            const std::string folderName = "minigames/sumo/";
+            bool gamestart;
+            float pushPower;
+            int clickCount;
     };
 }

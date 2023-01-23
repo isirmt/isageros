@@ -181,6 +181,8 @@ void Scene::BattingScene::Update(){
         SceneManager::ChangeScene(new TitleScene());
         return;
     }
+
+    layer2D.Update();
 }
 
 void Scene::BattingScene::Draw(){
