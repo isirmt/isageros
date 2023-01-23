@@ -49,5 +49,6 @@ namespace Scene{
             int point = 0;
             int strike = 0;
             int high_point = 0;
+            int clearScore = 10;
     };
 }

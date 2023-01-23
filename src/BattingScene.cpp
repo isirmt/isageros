@@ -1,5 +1,6 @@
 #include "BattingScene.hpp"
 
+#include "StoryScene.hpp"
 #include "TitleScene.hpp"
 
 Scene::BattingScene::BattingScene(){
@@ -155,6 +156,14 @@ void Scene::BattingScene::Update(){
                 ball.SetPosition(PosVec(450.0, -50.0, 0.0));
                 ball.SetVelocity(PosVec(0, 0, 0));
 
+                if(point >= clearScore && Story::StoryModeManager::GetGameActive()){
+                    Story::StoryModeManager::SetGameClear(true);
+                    Story::StoryModeManager::SavePlusStep();
+                }
+                else if(Story::StoryModeManager::GetGameActive()){
+                    Story::StoryModeManager::SetGameClear(false);
+                }
+
                 gameStart = false;
                 startButton->SetEnabled(true);
             }
@@ -178,7 +187,13 @@ void Scene::BattingScene::Update(){
 
     if (backButton->GetMouseSelected()) {
         backButton->SetMouseOff();
-        SceneManager::ChangeScene(new TitleScene());
+        if(!Story::StoryModeManager::GetGameActive()){
+            SceneManager::ChangeScene(new TitleScene());
+        }
+        else{
+            Story::StoryModeManager::SetGameActive(false);
+            SceneManager::ChangeScene(new StoryScene());
+        }
         return;
     }
 
