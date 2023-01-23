@@ -15,14 +15,14 @@ Scene::ArcheryScene::ArcheryScene(){
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
-    arrow = Obj::Cylinder(PosVec(0.0, 0.0, 2400.0), PosVec(0.0,0.0,-2000.0),
-                       PosVec(0.0,-98.0,0.0));
+    arrow = Obj::Cylinder(PosVec(15.0, 150, 1450.0), PosVec(0.0,0.0,-2000.0),
+                       PosVec(0.0, -15.0, 100.0));
     arrow.SetAmbient(Color255(150, 235, 80));
     arrow.SetDiffuse(Color255(.5f, .5f, .5f));
     arrow.SetSpecular(Color255(255, 255, 255, 255));
     arrow.SetShininess(20);
     arrow.SetScale(PosVec(2, 15, 2));
-    //arrow.SetRotate(90,PosVec(1,0,0));
+    arrow.SetRotate(90,PosVec(1,0,0));
 
     cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(500, 7, 0.0),
                    PosVec(0, -300, 0.0));
@@ -33,13 +33,13 @@ Scene::ArcheryScene::ArcheryScene(){
     cube.SetShininess(20);
     cube.SetRotate(30, PosVec(.5, .7, 0));
 
-    centerCube = Obj::Cylinder(PosVec(-500.0, 0.0, 0.0), PosVec(), PosVec());
+    centerCube = Obj::Cylinder(PosVec(-800.0, 50.0, 0.0), PosVec(), PosVec());
     centerCube.SetAmbient(Color255(114, 235, 209));
     centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
     centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
-    centerCube.SetScale(PosVec(10, 1, 10));
+    centerCube.SetScale(PosVec(10, 10, 10));
     centerCube.SetShininess(20);
-    centerCube.SetRotate(90, PosVec(1, 0, 0));
+    centerCube.SetRotate(90, PosVec(0, 0, 1));
 
     stage = Obj::ObjFile(PosVec(0.0, 0.0, 0.0), PosVec(), PosVec(),
                             ApplicationPreference::modelFilePath + folderName +
@@ -63,13 +63,13 @@ Scene::ArcheryScene::ArcheryScene(){
 }
 
 void Scene::ArcheryScene::Update(){
-    deg -= 10 * Time::DeltaTime();
+    deg -= 1 * Time::DeltaTime();
     if (deg > 360) deg -= 360;
-
+    //arrow.SetRotate(90, PosVec(0,0,1));
     arrow.SetRotate(deg, PosVec(1,0,0));
      Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       30, 1, 99999, PosVec(1000.0, 100.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+       30, 1, 99999, PosVec(1500.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
 		
     Camera::UpdateCamera();
     arrow.Update();
@@ -95,7 +95,13 @@ void Scene::ArcheryScene::Draw(){
   Camera::UpdateCamera();
 
   glPushMatrix(); // 3D描画
-  arrow.Draw();
+  {
+    glPushMatrix();
+    glRotatef(90, 0,1,0);
+    arrow.Draw();
+    glPopMatrix();
+  }
+  
   //cube.Draw();
   stage.Draw();
   {
