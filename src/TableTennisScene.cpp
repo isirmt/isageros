@@ -1,5 +1,6 @@
 #include "TableTennisScene.hpp"
 
+#include "StoryScene.hpp"
 #include "TitleScene.hpp"
 
 Scene::TableTennisScene::TableTennisScene() {
@@ -41,11 +42,11 @@ Scene::TableTennisScene::TableTennisScene() {
 
   Color255 innerCol;
   innerCol = Color255(255, 100, 50);
-  button = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
-  button->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
-                        innerCol * 0.75);
-  button->SetOutlineColor(Color255(35, 57, 40), 5.f);
-  button->SetInnerAnimation(.2f);
+  backButton = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
+  backButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
+                            innerCol * 0.75);
+  backButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
+  backButton->SetInnerAnimation(.2f);
 
   innerCol = Color255(70, 170, 230);
   startButton =
@@ -75,7 +76,7 @@ Scene::TableTennisScene::TableTennisScene() {
   image->SetEnabled(false);
 
   layer2D.AddObject(null);
-  layer2D.AddObject(button);
+  layer2D.AddObject(backButton);
   layer2D.AddObject(startButton);
   layer2D.AddObject(text);
   layer2D.AddObject(rect);
@@ -129,7 +130,7 @@ void Scene::TableTennisScene::Update() {
                               ball.GetVelocity().z));
       isPlayerTurn = true;
       null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z,
-                                       ball.GetPosition().z, 3.f);
+                                     ball.GetPosition().z, 3.f);
     }
 
     // プレイヤーによる跳ね返り
@@ -192,9 +193,14 @@ void Scene::TableTennisScene::Update() {
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       30, 1, 99999, cameraPos, PosVec(0, 0, 0), cameraDirection);
 
-  if (button->GetMouseSelected()) {
-    button->SetMouseOff();
-    SceneManager::ChangeScene(new TitleScene());
+  if (backButton->GetMouseSelected()) {
+    backButton->SetMouseOff();
+    if (!Story::StoryModeManager::GetGameActive())
+      SceneManager::ChangeScene(new TitleScene());
+    else {
+      Story::StoryModeManager::SetGameActive(false);
+      SceneManager::ChangeScene(new StoryScene());
+    }
     return;
   }
 
@@ -237,7 +243,7 @@ void Scene::TableTennisScene::GameStart() {
   ball.SetAcceleration(PosVec(0, -paramG, 0));
   playerHitBall = 0;
 
-  layer2D.AddObject(image);
+  // layer2D.AddObject(image);
   startButton->SetEnabled(false);
 }
 
@@ -245,6 +251,13 @@ void Scene::TableTennisScene::GameOver() {
   isGameStart = false;
   text->SetString("playerHitBall: " + std::to_string(playerHitBall) +
                   " (GAME OVER)");
+
+  if (playerHitBall >= quotaScore && Story::StoryModeManager::GetGameActive()) {
+    Story::StoryModeManager::SetGameClear(true);
+    Story::StoryModeManager::SavePlusStep();
+  } else if (Story::StoryModeManager::GetGameActive()) {
+    Story::StoryModeManager::SetGameClear(false);
+  }
 
   layer2D.DeleteObject(image);
   startButton->SetEnabled(true);

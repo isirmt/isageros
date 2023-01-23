@@ -13,8 +13,7 @@ class TitleScene : public SceneBase {
   TitleScene();
   ~TitleScene() {
     delete background;
-    delete tennisButton;
-    delete archeryButton;
+    delete modeButton;
     delete metaText;
   }
 
@@ -29,9 +28,7 @@ class TitleScene : public SceneBase {
  private:
   Obj::Image* background;
 
-  Obj::Button* tennisButton;
-  Obj::Button* archeryButton;
-  Obj::Button* battingButton;
+  Obj::Button* modeButton;
   Obj::Button* sumoButton;
   Obj::Button* storyButton;
 

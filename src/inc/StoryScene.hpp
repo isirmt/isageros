@@ -14,9 +14,11 @@
 #include "LightManager.hpp"
 #include "MapRelativeData.hpp"
 #include "SceneBase.hpp"
+#include "SceneLauncher.hpp"
 #include "SceneManager.hpp"
 #include "StoryData.hpp"
 #include "StoryProgressData.hpp"
+#include "StoryRouteData.hpp"
 #include "picojson.hpp"
 
 namespace Scene {
@@ -73,11 +75,20 @@ class StoryScene : public SceneBase {
   float dcameraOffset;
   const float cameraOffsetMax = 50;
 
+  int branchIndex;
+  int branchCIndex;
+
   std::map<std::string, MapRelative> mapRelatives;
   std::map<std::string, Obj::ObjFile*> charObjs;
 
+  std::vector<Story::StoryRoute> routes;
+
+  std::vector<Obj::Button*> branchButtons;
+  std::vector<Obj::Text*> branchTexts;
+
   const std::string folderName = "title/";
   const std::string talksFilePath = "story/talks.json";
+  const std::string routesFilePath = "story/routes.json";
   const std::string relativeStageFilePath = "relative/modelName.json";
   const std::string storyProgressFilePath = "story/progress.dat";
 
