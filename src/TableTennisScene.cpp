@@ -243,7 +243,7 @@ void Scene::TableTennisScene::GameStart() {
   ball.SetAcceleration(PosVec(0, -paramG, 0));
   playerHitBall = 0;
 
-  layer2D.AddObject(image);
+  // layer2D.AddObject(image);
   startButton->SetEnabled(false);
 }
 
@@ -252,7 +252,7 @@ void Scene::TableTennisScene::GameOver() {
   text->SetString("playerHitBall: " + std::to_string(playerHitBall) +
                   " (GAME OVER)");
 
-  if (playerHitBall >= quotaScore || Story::StoryModeManager::GetGameActive()) {
+  if (playerHitBall >= quotaScore && Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(true);
     Story::StoryModeManager::SavePlusStep();
   } else if (Story::StoryModeManager::GetGameActive()) {

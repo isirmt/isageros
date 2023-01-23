@@ -1,10 +1,9 @@
 #include "TitleScene.hpp"
 
-#include "ArcheryScene.hpp"
 #include "TableTennisScene.hpp"
-#include "BattingScene.hpp"
 #include "StoryScene.hpp"
 #include "SumoScene.hpp"
+#include "GameSelectorScene.hpp"
 
 Scene::TitleScene::TitleScene() {
   Camera::SetActive(true);
@@ -27,40 +26,16 @@ Scene::TitleScene::TitleScene() {
   float buttonOutlineWidth = 2.f;
   int countNum = 0;
 
-  tennisButton =
+  modeButton =
       new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
                           menuButtonOffset.x + menuButtonSize.x,
                           menuButtonOffset.y +
                               (menuButtonSize.y + menuButtonGap.y) * countNum)),
                       menuButtonSize, true, true);
-  tennisButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
+  modeButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  tennisButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  tennisButton->SetInnerAnimation(.2f);
-
-  countNum++;
-  archeryButton =
-      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
-                          menuButtonOffset.x + menuButtonSize.x,
-                          menuButtonOffset.y +
-                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
-                      menuButtonSize, true, true);
-  archeryButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
-                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  archeryButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  archeryButton->SetInnerAnimation(.2f);
-
-  countNum++;
-  battingButton =
-      new Obj::Button(Obj::Object2DAnchor::AnchorLowerRight(PosVec(
-                          menuButtonOffset.x + menuButtonSize.x,
-                          menuButtonOffset.y +
-                              (menuButtonSize.y + menuButtonGap.y) * countNum)),
-                      menuButtonSize, true, true);
-  battingButton->SetInnerColor(buttonInnerColor, buttonInnerColor / 1.2,
-                               buttonInnerColor / 1.7, buttonInnerColor / 1.4);
-  battingButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
-  battingButton->SetInnerAnimation(.2f);
+  modeButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
+  modeButton->SetInnerAnimation(.2f);
 
   countNum++;
   sumoButton =
@@ -94,9 +69,7 @@ Scene::TitleScene::TitleScene() {
                     Color255(0.0f, 0.0f, 0.0f, 1.f));
 
   layer2D.AddObject(background);
-  layer2D.AddObject(archeryButton);
-  layer2D.AddObject(tennisButton);
-  layer2D.AddObject(battingButton);
+  layer2D.AddObject(modeButton);
   layer2D.AddObject(sumoButton);
   layer2D.AddObject(storyButton);
   layer2D.AddObject(metaText);
@@ -105,21 +78,9 @@ Scene::TitleScene::TitleScene() {
 void Scene::TitleScene::Update() {
   layer2D.Collide();
 
-  if (tennisButton->GetMouseSelected()) {
-    tennisButton->SetMouseOff();
-    SceneManager::ChangeScene(new TableTennisScene());
-    return;
-  }
-
-  if (archeryButton->GetMouseSelected()) {
-    archeryButton->SetMouseOff();
-    SceneManager::ChangeScene(new ArcheryScene());
-    return;
-  }
-
-  if (battingButton->GetMouseSelected()) {
-    battingButton->SetMouseOff();
-    SceneManager::ChangeScene(new BattingScene());
+  if (modeButton->GetMouseSelected()) {
+    modeButton->SetMouseOff();
+    SceneManager::ChangeScene(new GameSelectorScene());
     return;
   }
 

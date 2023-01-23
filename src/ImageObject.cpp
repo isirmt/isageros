@@ -6,7 +6,7 @@ Obj::Image::Image(PosVec _pos, PosVec _size, std::string _filePath)
   imageLoader.Read(_filePath, imageData);
 }
 
-void Obj::Image::Collide() {}
+void Obj::Image::Collide() { CollideMouseAsBox(); }
 
 void Obj::Image::Update() {
   //   CheckGUID();
