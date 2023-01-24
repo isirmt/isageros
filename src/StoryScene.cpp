@@ -446,14 +446,7 @@ void Scene::StoryScene::StoreChapter() {
 
     nowChapter->talks.emplace_back(conv);
   }
-
-  // std::cout << "nowChapterName: " << nowChapter->chapterName.c_str()
-  //           << std::endl;
-  // std::cout << "nowStageName: " << nowChapter->stageName.c_str() << std::endl;
-  // std::cout << "nowGotoScene: " << nowChapter->gotoScene.c_str() << std::endl;
-
-  // for (auto& item : nowChapter->talks) std::cout << item.text << std::endl;
-
+  
   if (nowStage != nullptr) delete nowStage;
 
   nowStage =
@@ -465,12 +458,6 @@ void Scene::StoryScene::StoreChapter() {
 
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
   PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
-
-  // std::cout << nowChapter->stageName << std::endl;
-  // std::cout << cameraPos.x << "," << cameraPos.y << "," << cameraPos.z << ","
-  //           << std::endl;
-  // std::cout << lookAt.x << "," << lookAt.y << "," << lookAt.z << ","
-  //           << std::endl;
 
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,

@@ -26,6 +26,8 @@ void Obj::Rectangle::Update() {
 }
 
 void Obj::Rectangle::Draw() {
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   if (enabledOutline) {
     glColor4f(outerAnimation.current.r, outerAnimation.current.g,
               outerAnimation.current.b, outerAlphaAnimation.current);
@@ -47,6 +49,7 @@ void Obj::Rectangle::Draw() {
     glVertex2f(pos.x + outlineWidth, pos.y + size.y - outlineWidth);
     glEnd();
   }
+  glDisable(GL_BLEND);
 }
 
 void Obj::Rectangle::CollideMouse() {}

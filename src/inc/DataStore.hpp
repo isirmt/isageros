@@ -27,7 +27,7 @@ DataStore<T>::DataStore(std::string _filePath) : filePath(_filePath) {
     int res = truncate(_filePath.c_str(), sizeof(T));
     fs.open(_filePath, std::ios::binary | std::ios::in | std::ios::out);
   } else {
-    printf("Info: Successed opening \"%s\"\n", filePath.c_str());
+    // printf("Info: Successed opening \"%s\"\n", filePath.c_str());
   }
 }
 

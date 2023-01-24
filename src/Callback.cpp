@@ -15,7 +15,6 @@ void DisplayProc() {
 }
 
 void KeyboardProc(unsigned char key, int x, int y) {
-  printf("Key = %c\n", key);
   Scene::SceneManager::GetCurrentScene()->KeyboardProc(key, x, ApplicationPreference::windowSize.y - y);
   glutPostRedisplay();
 }

@@ -60,6 +60,7 @@ void Scene::SettingScene::Update() {
 
   if (saveStoryResetButton->GetMouseSelected()) {
     saveStoryResetButton->SetMouseOff();
+    saveStoryResetButton->SetEnabled(false);
 
     FILE* fp;
     std::string filepath = ApplicationPreference::savesFilePath +
