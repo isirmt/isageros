@@ -28,9 +28,10 @@ Scene::TableTennisScene::TableTennisScene() {
   player.SetShininess(10);
   player.SetRotate(-90, PosVec(0, 1, 0));
 
-  enemy = Obj::ObjFile(PosVec(-130, 0, 0.0), PosVec(), PosVec(),
-                       ApplicationPreference::modelFilePath + "char/chara.obj");
-  enemy.SetScale(PosVec(5, 5, 5));
+  enemy =
+      Obj::ObjFile(PosVec(-130, 0, 0.0), PosVec(), PosVec(),
+                   ApplicationPreference::modelFilePath + "char/drunken.obj");
+  enemy.SetScale(PosVec(7, 7, 7));
   enemy.SetShininess(10);
   enemy.SetRotate(90, PosVec(0, 1, 0));
 
@@ -42,19 +43,57 @@ Scene::TableTennisScene::TableTennisScene() {
 
   Color255 innerCol;
   innerCol = Color255(255, 100, 50);
-  backButton = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
+
+  // ルール説明画像配置
+  Obj::Image* nImage;
+  // 必要分追加
+  nImage = new Obj::Image(
+      ruleImageOffset, ruleImageSize,
+      ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+  rulePics.emplace_back(nImage);
+  nImage = new Obj::Image(
+      ruleImageOffset, ruleImageSize,
+      ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+  rulePics.emplace_back(nImage);
+
+  innerCol = Color255("7894DA");
+  ruleBack =
+      new Obj::Rectangle(PosVec(ruleImageOffset.x - 5, ruleImageOffset.y - 5),
+                         PosVec(ruleImageSize.x + 10, ruleImageSize.y + 30));
+  ruleBack->SetInnerColor(innerCol);
+
+  ruleText = new Obj::Text(
+      PosVec(ruleImageOffset.x + 5.f, ruleImageOffset.y + ruleImageSize.y + 3),
+      PosVec(),
+      "ルール説明：次へは画像をクリック！・戻る場合は「ルール」ボタン");
+  ruleText->SetInnerColor(Color255(250));
+
+  miniuiImage = new Obj::Image(
+      PosVec(0, 30), PosVec(75, 190),
+      ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
+
+  innerCol = Color255(255, 100, 50);
+  backButton = new Obj::Button(PosVec(30, 30), PosVec(50, 50), true, true);
   backButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
                             innerCol * 0.75);
   backButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
   backButton->SetInnerAnimation(.2f);
 
   innerCol = Color255(70, 170, 230);
-  startButton =
-      new Obj::Button(PosVec(30, 30 + 120), PosVec(150, 100), true, true);
+  startButton = new Obj::Button(PosVec(30, 30 + (50 + 20) * 1), PosVec(50, 50),
+                                true, true);
   startButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
                              innerCol * 0.75);
   startButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
   startButton->SetInnerAnimation(.2f);
+
+  innerCol = Color255(70, 100, 230);
+  ruleButton = new Obj::Button(PosVec(30, 30 + (50 + 20) * 2), PosVec(50, 50),
+                               true, true);
+  ruleButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65,
+                            innerCol * 0.75);
+  ruleButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
+  ruleButton->SetInnerAnimation(.2f);
 
   innerCol = Color255("#57B7F3");
   rect = new Obj::Rectangle(PosVec(0, 0), PosVec(50, 50), true, false);
@@ -65,19 +104,34 @@ Scene::TableTennisScene::TableTennisScene() {
   rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->y,
                                  0.f, 10.f);
 
-  text = new Obj::Text(PosVec(10, 600), PosVec(),
-                       "テーブルテニス 卓球 Table_Tennis\nサンプルテキスト");
+  text = new Obj::Text(PosVec(100 + 10, 35), PosVec(),
+                       "ボタンをクリックして開始：ストーリーノルマ(" +
+                           std::to_string(quotaScore) + ")");
   text->SetInnerColor(Color255(250, 250, 250));
 
-  image = new Obj::Image(
-      Obj::Object2DAnchor::AnchorLowerRight(PosVec(50 + 300, 50)),
-      PosVec(300, 150),
-      ApplicationPreference::imgFilePath + folderName + "sample.ppm");
-  image->SetEnabled(false);
+  innerCol = Color255(70, 70, 230);
+  textBack = new Obj::Rectangle(
+      PosVec(100, 30), PosVec(ApplicationPreference::windowSize.x - 150, 30));
+  textBack->SetInnerColor(innerCol);
+
+  goRect = new Obj::Image(
+      PosVec(ApplicationPreference::windowSize.x / 2.f, -100), PosVec(0, 0),
+      ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+
+  // no layer add
+
+  innerCol = Color255("#57B7F3");
+  quotaImage = new Obj::Image(
+      PosVec(-500, 450), PosVec(150, 100),
+      ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+  // no layer add
 
   layer2D.AddObject(null);
+  layer2D.AddObject(miniuiImage);
   layer2D.AddObject(backButton);
   layer2D.AddObject(startButton);
+  layer2D.AddObject(ruleButton);
+  layer2D.AddObject(textBack);
   layer2D.AddObject(text);
   layer2D.AddObject(rect);
 
@@ -90,6 +144,8 @@ Scene::TableTennisScene::TableTennisScene() {
 
   playerHitBall = 0;
   waitingCameraDeg = 0;
+
+  isShowingRule = false;
 }
 
 void Scene::TableTennisScene::Update() {
@@ -104,6 +160,12 @@ void Scene::TableTennisScene::Update() {
   PosVec cameraDirection;
 
   if (isGameStart) {
+    /***************/
+    /* UI管理 */
+    /***************/
+
+    if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
+
     /***************/
     /* カメラ設定 */
     /***************/
@@ -148,7 +210,7 @@ void Scene::TableTennisScene::Update() {
         null->ChangeValueWithAnimation(&player.GetPositionPointer()->z,
                                        ball.GetPosition().z, 3.f);
         playerHitBall++;
-        text->SetString("playerHitBall: " + std::to_string(playerHitBall));
+        text->SetString("ボールを返した回数: " + std::to_string(playerHitBall));
       }
     }
 
@@ -176,7 +238,7 @@ void Scene::TableTennisScene::Update() {
     // cameraPos = PosVec(700, 600, 450);
     cameraDirection = PosVec(0, 1, 0);
 
-    waitingCameraDeg += 2.f * M_PI * .2 * Time::DeltaTime();
+    waitingCameraDeg += 2.f * M_PI * .05 * Time::DeltaTime();
 
     cameraPos =
         PosVec(500 * cosf(waitingCameraDeg), 600, 500 * sinf(waitingCameraDeg));
@@ -204,10 +266,32 @@ void Scene::TableTennisScene::Update() {
     return;
   }
 
+  if (ruleButton->GetMouseSelected()) {
+    ruleButton->SetMouseOff();
+    isShowingRule = !isShowingRule;
+    SetupCurrentRuleDisplayingMode();
+  }
   if (startButton->GetMouseSelected()) {
     startButton->SetMouseOff();
     GameStart();
   }
+
+  if (isShowingRule) {
+    int i = 0;
+    for (auto& item : rulePics) {
+      if (item->GetMouseSelected()) {
+        item->SetMouseOff();
+        layer2D.DeleteObject(item);
+        if (i == rulePics.size() - 1) {
+          layer2D.AddObject(rulePics[0]);
+        } else {
+          layer2D.AddObject(rulePics[i + 1]);
+        }
+      }
+      i++;
+    }
+  }
+
   if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
     PosVec markSize(50, 50);
     rect->SetPos(PosVec(Input::MouseInput::GetMouse().x - markSize.x / 2.f,
@@ -236,6 +320,23 @@ void Scene::TableTennisScene::Update() {
   layer2D.Update();
 }
 
+void Scene::TableTennisScene::SetupCurrentRuleDisplayingMode() {
+  if (!isShowingRule) {
+    for (auto& item : rulePics) {
+      layer2D.DeleteObject(item);
+    }
+    layer2D.DeleteObject(ruleBack);
+    layer2D.DeleteObject(ruleText);
+  } else {
+    if (rulePics.size() != 0) {
+      layer2D.AddObject(ruleBack);
+      layer2D.AddObject(ruleText);
+      layer2D.AddObject(rulePics[0]);
+    } else
+      isShowingRule = false;
+  }
+}
+
 void Scene::TableTennisScene::GameStart() {
   isGameStart = true;
   ball.SetPosition(PosVec(0, 120, 0));
@@ -243,24 +344,55 @@ void Scene::TableTennisScene::GameStart() {
   ball.SetAcceleration(PosVec(0, -paramG, 0));
   playerHitBall = 0;
 
-  // layer2D.AddObject(image);
+  isShowingRule = false;
+  SetupCurrentRuleDisplayingMode();
+
   startButton->SetEnabled(false);
+  ruleButton->SetEnabled(false);
+
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::POS)->x,
+      ApplicationPreference::windowSize.x / 2.f, .3f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
 }
 
 void Scene::TableTennisScene::GameOver() {
   isGameStart = false;
-  text->SetString("playerHitBall: " + std::to_string(playerHitBall) +
-                  " (GAME OVER)");
 
   if (playerHitBall >= quotaScore && Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(true);
     Story::StoryModeManager::SavePlusStep();
+    layer2D.DeleteObject(quotaImage);
+    layer2D.AddObject(quotaImage);
+    quotaImage->ChangeValueWithAnimation(
+        &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
   } else if (Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(false);
   }
 
-  layer2D.DeleteObject(image);
   startButton->SetEnabled(true);
+  ruleButton->SetEnabled(true);
+
+  layer2D.DeleteObject(goRect);
+  layer2D.AddObject(goRect);
+
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::SIZE)->x,
+      ApplicationPreference::windowSize.x / 2.f, 5.f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::SIZE)->y,
+      ApplicationPreference::windowSize.y / 4.f, 5.f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::POS)->x,
+      ApplicationPreference::windowSize.x / 4.f, 5.f);
+  goRect->ChangeValueWithAnimation(
+      &goRect->GetVectorPointer(VectorType::POS)->y,
+      ApplicationPreference::windowSize.y / 4.f, 5.f);
 }
 
 void Scene::TableTennisScene::Draw() {
