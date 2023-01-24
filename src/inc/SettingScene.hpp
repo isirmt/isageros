@@ -4,18 +4,14 @@
 #include "2DAssets.hpp"
 #include "Color255.hpp"
 #include "LightManager.hpp"
-#include "SceneManager.hpp"
 #include "SceneBase.hpp"
+#include "SceneManager.hpp"
 
 namespace Scene {
-class TitleScene : public SceneBase {
+class SettingScene : public SceneBase {
  public:
-  TitleScene();
-  ~TitleScene() {
-    delete background;
-    delete modeButton;
-    delete metaText;
-  }
+  SettingScene();
+  ~SettingScene() { delete saveStoryResetButton; }
 
   void Update() override;
   void Draw() override;
@@ -28,14 +24,12 @@ class TitleScene : public SceneBase {
  private:
   Obj::Image* background;
 
-  Obj::Image* modeButton;
-  Obj::Image* storyButton;
+  Obj::Button* saveStoryResetButton;
+  Obj::Text* saveStoryResetText;
 
-  Obj::Text* metaText;
+  Obj::Button* backButton;
 
-  Obj::Button* settingButton;
-
-  const std::string folderName = "title/";
+  const std::string selectFolderName = "select/";
 };
 
 }  // namespace Scene

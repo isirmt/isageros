@@ -1,6 +1,7 @@
 #include "TitleScene.hpp"
 
 #include "GameSelectorScene.hpp"
+#include "SettingScene.hpp"
 #include "StoryScene.hpp"
 #include "SumoScene.hpp"
 #include "TableTennisScene.hpp"
@@ -37,6 +38,14 @@ Scene::TitleScene::TitleScene() {
       ApplicationPreference::imgFilePath + folderName + "mini.ppm");
   modeButton->SetTag(std::to_string(bpos.y));
 
+  settingButton = new Obj::Button(
+      Obj::Object2DAnchor::AnchorUpperRight(PosVec(30 + 75, 30 + 25)),
+      PosVec(75, 25), true, true);
+  settingButton->SetInnerColor(buttonInnerColor, buttonInnerColor * 0.7,
+                               buttonInnerColor * 0.6, buttonInnerColor * 0.65);
+  settingButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
+  settingButton->SetInnerAnimation(.1f);
+
   metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
   metaText->SetInnerColor(Color255(0, 0, 0));
 
@@ -47,11 +56,18 @@ Scene::TitleScene::TitleScene() {
   layer2D.AddObject(background);
   layer2D.AddObject(modeButton);
   layer2D.AddObject(storyButton);
+  layer2D.AddObject(settingButton);
   layer2D.AddObject(metaText);
 }
 
 void Scene::TitleScene::Update() {
   layer2D.Collide();
+
+  if (settingButton->GetMouseSelected()) {
+    settingButton->SetMouseOff();
+    SceneManager::ChangeScene(new SettingScene());
+    return;
+  }
 
   if (modeButton->GetMouseSelected()) {
     modeButton->SetMouseOff();

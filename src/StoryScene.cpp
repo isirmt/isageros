@@ -29,21 +29,8 @@ Scene::StoryScene::StoryScene()
   button->SetOutlineColor(Color255(35, 57, 40), 5.f);
   button->SetInnerAnimation(.2f);
 
-  if (mkdir("./saves", S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP |
-                           S_IROTH | S_IWOTH) == 0) {
-    puts("Info: Created Directory \"./saves\"");
-  } else {
-    perror("mkdir");
-  }
-  if (mkdir("./saves/story", S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP |
-                                 S_IROTH | S_IWOTH) == 0) {
-    puts("Info: Created Directory \"./saves/story\"");
-  } else {
-    perror("mkdir");
-  }
-
   DataStore<Story::StoryProgress> progressStore(
-      ApplicationPreference::savesFilePath + storyProgressFilePath);
+      ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
 
   storyProgress = progressStore.Read();
 
@@ -348,7 +335,7 @@ void Scene::StoryScene::StorySet() {
     Story::StoryProgress prevStoryProgress = storyProgress;
 
     DataStore<Story::StoryProgress> progressStore(
-        ApplicationPreference::savesFilePath + storyProgressFilePath);
+        ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
 
     storyProgress = progressStore.Read();
 
@@ -459,14 +446,7 @@ void Scene::StoryScene::StoreChapter() {
 
     nowChapter->talks.emplace_back(conv);
   }
-
-  // std::cout << "nowChapterName: " << nowChapter->chapterName.c_str()
-  //           << std::endl;
-  // std::cout << "nowStageName: " << nowChapter->stageName.c_str() << std::endl;
-  // std::cout << "nowGotoScene: " << nowChapter->gotoScene.c_str() << std::endl;
-
-  // for (auto& item : nowChapter->talks) std::cout << item.text << std::endl;
-
+  
   if (nowStage != nullptr) delete nowStage;
 
   nowStage =
@@ -478,12 +458,6 @@ void Scene::StoryScene::StoreChapter() {
 
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
   PosVec lookAt = mapRelatives[nowChapter->stageName].cameraLookAt;
-
-  // std::cout << nowChapter->stageName << std::endl;
-  // std::cout << cameraPos.x << "," << cameraPos.y << "," << cameraPos.z << ","
-  //           << std::endl;
-  // std::cout << lookAt.x << "," << lookAt.y << "," << lookAt.z << ","
-  //           << std::endl;
 
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,

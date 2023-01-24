@@ -7,7 +7,7 @@ Obj::ObjFile::ObjFile() {}
 Obj::ObjFile::ObjFile(PosVec _r, PosVec _v, PosVec _a, std::string _fileName)
     : Object3D::Object3D(_r, _v, _a) {
   object.Load(_fileName.c_str());
-  object.PrintInformation();
+  // object.PrintInformation();
 }
 
 Obj::ObjFile::~ObjFile() {}

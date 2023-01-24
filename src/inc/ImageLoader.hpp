@@ -44,5 +44,5 @@ class ImageLoader {
     return 0;
   }
 
-  const bool canPrintInformation = true;
+  const bool canPrintInformation = false;
 };

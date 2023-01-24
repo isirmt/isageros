@@ -109,13 +109,13 @@ struct Color255 {
   }
 
   Color255 operator*(float v) {
-    Color255 res = Color255(r * v, g * v, b * v, a * v);
+    Color255 res = Color255(r * v, g * v, b * v, a);
     CalcInt();
     return res;
   }
   Color255 operator/(float v) {
     float vInv = 1.0f / v;
-    Color255 res = Color255(r * vInv, g * vInv, b * vInv, a * vInv);
+    Color255 res = Color255(r * vInv, g * vInv, b * vInv, a);
     CalcInt();
     return res;
   }

@@ -8,3 +8,4 @@ const std::string ApplicationPreference::imgFilePath = "./assets/img/";
 const std::string ApplicationPreference::modelFilePath = "./assets/model/";
 const std::string ApplicationPreference::jsonFilePath = "./assets/json/";
 const std::string ApplicationPreference::savesFilePath = "./saves/";
+const std::string ApplicationPreference::storySavePath = "story/progress.dat";

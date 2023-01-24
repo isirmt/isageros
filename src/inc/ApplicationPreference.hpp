@@ -17,4 +17,5 @@ class ApplicationPreference {
   static const std::string modelFilePath;
   static const std::string jsonFilePath;
   static const std::string savesFilePath;
+  static const std::string storySavePath;
 };
