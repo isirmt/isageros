@@ -32,12 +32,22 @@ namespace Scene{
             void SpecialFuncProc(int key, int x, int y) override{}
 
         private:
+            void KeeperPosition(); 
+            void threeMouseCondition(bool x);
+
+        private:
             Obj::Button* backbutton;
             Obj::ObjFile player;
             Obj::ObjFile enemy;
             Obj::Text* text;
             Obj::ObjFile stage;
+            Obj::Sphere ball;
+            Obj::Button* startButton;
+            Obj::Button* centerButton;
+            Obj::Button* rightButton;
+            Obj::Button* leftButton;
             const std::string folderName = "minigames/soccer/";
             int ransu;
+            bool gameStart;
     };
 }
