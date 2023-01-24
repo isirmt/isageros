@@ -20,7 +20,6 @@ class TableTennisScene : public SceneBase {
     delete backButton;
     delete rect;
     delete text;
-    delete image;
   }
 
   void Update() override;
@@ -36,6 +35,8 @@ class TableTennisScene : public SceneBase {
   void GameStart();
   void GameOver();
 
+  void SetupCurrentRuleDisplayingMode();
+
  private:
   Color255 boxAmbient;
   Obj::ObjFile worldMap;
@@ -48,9 +49,27 @@ class TableTennisScene : public SceneBase {
   Obj::Button* startButton;
   Obj::Rectangle* rect;
   Obj::Text* text;
-  Obj::Image* image;
 
   Obj::Null* null;
+
+  Obj::Image* miniuiImage;
+  Obj::Image* quotaImage;
+  Obj::Image* goRect;
+  Obj::Rectangle* textBack;
+  Obj::Button* ruleButton;
+
+  const PosVec ruleImageOffset =
+      PosVec(ApplicationPreference::windowSize.x / 8.f,
+             ApplicationPreference::windowSize.y / 8.f);
+  const PosVec ruleImageSize =
+      PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
+             ApplicationPreference::windowSize.y * 3.f / 4.f);
+
+  bool isShowingRule;
+  Obj::Image* nowRule;
+  std::vector<Obj::Image*> rulePics;
+  Obj::Rectangle* ruleBack;
+  Obj::Text* ruleText;
 
   bool isGameStart;
   bool isPlayerTurn;
