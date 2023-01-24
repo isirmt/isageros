@@ -33,6 +33,7 @@ namespace Scene{
 
         private:
             Obj::Button* backbutton;
+            Obj::ObjFile player;
             Obj::ObjFile enemy;
             Obj::Text* text;
             Obj::ObjFile stage;

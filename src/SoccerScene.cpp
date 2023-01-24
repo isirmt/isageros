@@ -7,22 +7,28 @@ Scene::SoccerScene::SoccerScene() {
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 100, 2500, PosVec(2500, 1000, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+        30, 1, 9999, PosVec(1700, 1700, 1700), PosVec(0, 0, 0), PosVec(0, 1, 0)
     );
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
 
-    stage = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
+    stage = Obj::ObjFile(PosVec(200.0, 0.0, 200.0), PosVec(), PosVec(),
             ApplicationPreference::modelFilePath + folderName + "soccer_field.obj");
     stage.SetScale(PosVec(100, 100, 100));
     stage.SetShininess(20);
-    stage.SetRotate(0, PosVec(0, 1, 0));
+    stage.SetRotate(-45.0, PosVec(0, 1, 0));
 
-    enemy = Obj::ObjFile(PosVec(400.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0), 
+    player = Obj::ObjFile(PosVec(400.0, 0.0, 400.0), PosVec(), PosVec(), 
+                ApplicationPreference::modelFilePath + "char/chara.obj");
+    player.SetScale(PosVec(10, 10, 10));
+    player.SetShininess(10);
+    player.SetRotate(225, PosVec(0, 1, 0));
+
+    enemy = Obj::ObjFile(PosVec(-200.0, 0.0, -200.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/chara.obj");
-    enemy.SetScale(PosVec(5, 5, 5));
+    enemy.SetScale(PosVec(10, 10, 10));
     enemy.SetShininess(10);
-    enemy.SetRotate(90, PosVec(0, 1, 0));
+    enemy.SetRotate(45, PosVec(0, 1, 0));
 
     Color255 innerCol;
     innerCol = Color255(255, 100, 50);
@@ -44,20 +50,21 @@ void Scene::SoccerScene::Update() {
     layer2D.Collide();
 
     stage.Update();
+    player.Update();
     enemy.Update();
 
     if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
         ransu = 0 + rand() % 3;
         if(ransu == 0){
-            enemy.SetPosition(PosVec(400.0, 0.0, 0.0));
+            enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
             text->SetString("Rumdum Number : " + std::to_string(ransu));
         }
         else if(ransu == 1){
-            enemy.SetPosition(PosVec(400.0, 0.0, 100.0));
+            enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
             text->SetString("Rumdum Number : " + std::to_string(ransu));
         }
         else if(ransu == 2){
-            enemy.SetPosition(PosVec(400.0, 0.0, -100.0));
+            enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
             text->SetString("Rumdum Number : " + std::to_string(ransu));
         }
     }
@@ -77,6 +84,7 @@ void Scene::SoccerScene::Draw() {
 
     glPushMatrix();
     stage.Draw();
+    player.Draw();
     enemy.Draw();
     glPopMatrix();
 
