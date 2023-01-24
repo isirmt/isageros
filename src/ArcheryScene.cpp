@@ -15,14 +15,11 @@ Scene::ArcheryScene::ArcheryScene(){
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
-    arrow = Obj::Cylinder(PosVec(15.0, 150, 1450.0), PosVec(0.0,0.0,-2000.0),
-                       PosVec(0.0, -15.0, 100.0));
-    arrow.SetAmbient(Color255(150, 235, 80));
-    arrow.SetDiffuse(Color255(.5f, .5f, .5f));
-    arrow.SetSpecular(Color255(255, 255, 255, 255));
+    arrow = Obj::ObjFile(PosVec(1000.0, 195.0, -5.0), PosVec(),
+                       PosVec(),ApplicationPreference::modelFilePath + folderName +
+                                "archery_arrow.obj");
     arrow.SetShininess(20);
-    arrow.SetScale(PosVec(2, 15, 2));
-    arrow.SetRotate(90,PosVec(1,0,0));
+    arrow.SetScale(PosVec(3, 5, 5));
 
     cube = Obj::Cube(PosVec(-40.0, 10., 0.0), PosVec(500, 7, 0.0),
                    PosVec(0, -300, 0.0));
@@ -66,6 +63,7 @@ void Scene::ArcheryScene::Update(){
     deg -= 1 * Time::DeltaTime();
     if (deg > 360) deg -= 360;
     //arrow.SetRotate(90, PosVec(0,0,1));
+    
     arrow.SetRotate(deg, PosVec(1,0,0));
     
     PosVec ends[4] = {
@@ -78,18 +76,29 @@ void Scene::ArcheryScene::Update(){
     	Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
        10, 1, 99999, PosVec(1000.0, 200.0, 0.0), PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,(((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
-       
+      arrow = Obj::ObjFile(PosVec(1000.0, 195.0, -5.0), PosVec(),
+                       PosVec(),ApplicationPreference::modelFilePath + folderName +
+                                "archery_arrow.obj");
       //Camera::SetAsPerspective(
        //ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
        //30, 1, 99999, PosVec(250.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
-		
+       arrow = Obj::ObjFile(PosVec(1000.0, 200.0, -5.0), PosVec(),
+                        PosVec(),ApplicationPreference::modelFilePath + folderName +
+                                 "archery_arrow.obj");
     	Camera::UpdateCamera();
     	printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
-    }else{
+    }else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::RELEASE){
+      arrow = Obj::ObjFile(PosVec(1000.0, 195.0, -5.0), PosVec(-100.0, 0.0, 0.0),
+                       PosVec(0.0, -15.0, 0.0),ApplicationPreference::modelFilePath + folderName +
+                                "archery_arrow.obj");
     	Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
        30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
-       
+      Camera::UpdateCamera();
+    }else{
+      Camera::SetAsPerspective(
+       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+       30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
       Camera::UpdateCamera();
     }
     
@@ -118,7 +127,7 @@ void Scene::ArcheryScene::Draw(){
   glPushMatrix(); // 3D描画
   {
     glPushMatrix();
-    glRotatef(90, 0,1,0);
+    glRotatef(90, 0,0,0);
     arrow.Draw();
     glPopMatrix();
   }
