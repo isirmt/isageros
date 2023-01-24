@@ -11,7 +11,7 @@ Scene::ArcheryScene::ArcheryScene(){
   	SceneBase::SetOrthoCameraWindow();
   	Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 200), PosVec(0, 1, 0));
+      30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
   	Camera::SetPerspectiveMode(true);
   	Camera::UpdateCamera();
     deg = 90.f;
@@ -33,7 +33,7 @@ Scene::ArcheryScene::ArcheryScene(){
     cube.SetShininess(20);
     cube.SetRotate(30, PosVec(.5, .7, 0));
 
-    centerCube = Obj::Cylinder(PosVec(-800.0, 50.0, 0.0), PosVec(), PosVec());
+    centerCube = Obj::Cylinder(PosVec(-1000.0, 150.0, 0.0), PosVec(), PosVec());
     centerCube.SetAmbient(Color255(114, 235, 209));
     centerCube.SetDiffuse(Color255(.3f, .3f, .3f));
     centerCube.SetSpecular(Color255(1.f, 1.f, 1.f, 1.f));
@@ -67,11 +67,32 @@ void Scene::ArcheryScene::Update(){
     if (deg > 360) deg -= 360;
     //arrow.SetRotate(90, PosVec(0,0,1));
     arrow.SetRotate(deg, PosVec(1,0,0));
-     Camera::SetAsPerspective(
+    
+    PosVec ends[4] = {
+    	PosVec(-1000.0, 300.0, 600.0),
+    	PosVec(-1000.0, 300.0, -600.0),
+    	PosVec(-1000.0,   0.0, -600.0),
+    	PosVec(-1000.0,   0.0, 600.0)};
+    
+    if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
+    	Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       30, 1, 99999, PosVec(1500.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+       10, 1, 99999, PosVec(1000.0, 200.0, 0.0), PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,(((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
+       
+      //Camera::SetAsPerspective(
+       //ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+       //30, 1, 99999, PosVec(250.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
 		
-    Camera::UpdateCamera();
+    	Camera::UpdateCamera();
+    	printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
+    }else{
+    	Camera::SetAsPerspective(
+       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+       30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+       
+      Camera::UpdateCamera();
+    }
+    
     arrow.Update();
     //cube.Update();
     centerCube.Update();
