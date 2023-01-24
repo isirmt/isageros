@@ -364,19 +364,21 @@ void Scene::TableTennisScene::GameStart() {
 void Scene::TableTennisScene::GameOver() {
   isGameStart = false;
 
+  startButton->SetEnabled(true);
+  ruleButton->SetEnabled(true);
+
   if (playerHitBall >= quotaScore && Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(true);
     Story::StoryModeManager::SavePlusStep();
     layer2D.DeleteObject(quotaImage);
     layer2D.AddObject(quotaImage);
+    startButton->SetEnabled(false);
+    ruleButton->SetEnabled(false);
     quotaImage->ChangeValueWithAnimation(
         &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
   } else if (Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(false);
   }
-
-  startButton->SetEnabled(true);
-  ruleButton->SetEnabled(true);
 
   layer2D.DeleteObject(goRect);
   layer2D.AddObject(goRect);

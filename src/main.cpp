@@ -6,11 +6,8 @@
 // 最初に呼び出すシーン
 #include "ApplicationBuilder.hpp"
 #include "ApplicationPreference.hpp"
-#include "ArcheryScene.hpp"
 #include "ObjectLoader.hpp"
-#include "TableTennisScene.hpp"
 #include "TitleScene.hpp"
-#include "BattingScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
@@ -23,7 +20,7 @@ int main(int argc, char **argv) {
                      (int)ApplicationPreference::windowSize.y);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-  glutCreateWindow("Mini Games");
+  glutCreateWindow("ISAGEROS");
 
   GLSYS::GLBuilder::GLSetup();
   GLSYS::GLBuilder::LightSetup();
@@ -37,12 +34,6 @@ int main(int argc, char **argv) {
   glutMotionFunc(MotionProc);
   glutPassiveMotionFunc(MotionProc);
 
-  Scene::ArcheryScene *archeryScene = new Scene::ArcheryScene();
-  Scene::SceneManager::ChangeScene(archeryScene);
-  Scene::BattingScene *battingScene = new Scene::BattingScene();
-  Scene::SceneManager::ChangeScene(battingScene);
-  Scene::TableTennisScene *tableTennisScene = new Scene::TableTennisScene();
-  Scene::SceneManager::ChangeScene(tableTennisScene);
   Scene::TitleScene *titleScene = new Scene::TitleScene();
   Scene::SceneManager::ChangeScene(titleScene);
 

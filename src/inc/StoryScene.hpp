@@ -1,6 +1,5 @@
 #pragma once
 #include <GL/glut.h>
-#include <sys/stat.h>
 
 #include <cmath>
 #include <iostream>
@@ -90,7 +89,7 @@ class StoryScene : public SceneBase {
   const std::string talksFilePath = "story/talks.json";
   const std::string routesFilePath = "story/routes.json";
   const std::string relativeStageFilePath = "relative/modelName.json";
-  const std::string storyProgressFilePath = "story/progress.dat";
+  // const std::string storyProgressFilePath = "story/progress.dat";
 
   const std::string stageFolderName = "story/";
 };

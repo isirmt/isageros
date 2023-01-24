@@ -29,21 +29,8 @@ Scene::StoryScene::StoryScene()
   button->SetOutlineColor(Color255(35, 57, 40), 5.f);
   button->SetInnerAnimation(.2f);
 
-  if (mkdir("./saves", S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP |
-                           S_IROTH | S_IWOTH) == 0) {
-    puts("Info: Created Directory \"./saves\"");
-  } else {
-    perror("mkdir");
-  }
-  if (mkdir("./saves/story", S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP |
-                                 S_IROTH | S_IWOTH) == 0) {
-    puts("Info: Created Directory \"./saves/story\"");
-  } else {
-    perror("mkdir");
-  }
-
   DataStore<Story::StoryProgress> progressStore(
-      ApplicationPreference::savesFilePath + storyProgressFilePath);
+      ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
 
   storyProgress = progressStore.Read();
 
@@ -348,7 +335,7 @@ void Scene::StoryScene::StorySet() {
     Story::StoryProgress prevStoryProgress = storyProgress;
 
     DataStore<Story::StoryProgress> progressStore(
-        ApplicationPreference::savesFilePath + storyProgressFilePath);
+        ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
 
     storyProgress = progressStore.Read();
 
