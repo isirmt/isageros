@@ -2,21 +2,21 @@
   "maps": [
     {
       "name": "kingdom",
-      "camerax": 1200.0,
-      "cameray": 350.0,
-      "cameraz": 200.0,
+      "camerax": 1600.0,
+      "cameray": 250.0,
+      "cameraz": 400.0,
       "lookx": -400.0,
-      "looky": 0.0,
+      "looky": 50.0,
       "lookz": 0.0,
-      "leftPosx": -330.0,
-      "leftPosy": 135.0,
+      "leftPosx": -450.0,
+      "leftPosy": 180.0,
       "leftPosz": 5.0,
       "leftRotatey": 90.0,
       "rightPosx": 50.0,
-      "rightPosy": -19.0,
+      "rightPosy": -50.0,
       "rightPosz": 5.0,
       "rightRotatey": -90.0,
-      "charScale": 5.0
+      "charScale": 10.0
     },
     {
       "name": "forest",
@@ -52,7 +52,61 @@
       "rightPosy": 0.0,
       "rightPosz": -20.0,
       "rightRotatey": -90.0,
-      "charScale": 5.0
+      "charScale": 7.0
+    },
+    {
+      "name": "cave",
+      "camerax": 1200.0,
+      "cameray": 200.0,
+      "cameraz": 0.0,
+      "lookx": -400.0,
+      "looky": 0.0,
+      "lookz": 0.0,
+      "leftPosx": 0.0,
+      "leftPosy": 150.0,
+      "leftPosz": 0.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 150.0,
+      "rightPosy": 150.0,
+      "rightPosz": 0.0,
+      "rightRotatey": -90.0,
+      "charScale": 7.0
+    },
+    {
+      "name": "cave2",
+      "camerax": 500.0,
+      "cameray": 75.0,
+      "cameraz": 150.0,
+      "lookx": -400.0,
+      "looky": 0.0,
+      "lookz": -200.0,
+      "leftPosx": 0.0,
+      "leftPosy": 150.0,
+      "leftPosz": 0.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 70.0,
+      "rightPosy": -20.0,
+      "rightPosz": 70.0,
+      "rightRotatey": -170.0,
+      "charScale": 8.0
+    },
+    {
+      "name": "kaisoustage",
+      "camerax": 1200.0,
+      "cameray": 200.0,
+      "cameraz": 0.0,
+      "lookx": -400.0,
+      "looky": 0.0,
+      "lookz": 0.0,
+      "leftPosx": 0.0,
+      "leftPosy": 150.0,
+      "leftPosz": 0.0,
+      "leftRotatey": 90.0,
+      "rightPosx": 150.0,
+      "rightPosy": 150.0,
+      "rightPosz": 0.0,
+      "rightRotatey": -90.0,
+      "charScale": 7.0
     }
   ]
 }

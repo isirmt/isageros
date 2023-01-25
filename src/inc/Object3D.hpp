@@ -42,6 +42,7 @@ class Object3D {
   }
 
   Color255 GetAmbient() { return ambient; }
+  Color255* GetAmbientPointer() { return &ambient; }
   Color255 GetDiffuse() { return diffuse; }
   Color255 GetSpecular() { return specular; }
   Color255 GetEmission() { return emission; }

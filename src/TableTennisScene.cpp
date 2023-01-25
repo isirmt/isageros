@@ -23,10 +23,19 @@ Scene::TableTennisScene::TableTennisScene() {
 
   player =
       Obj::ObjFile(PosVec(130, 0, 0.0), PosVec(), PosVec(),
-                   ApplicationPreference::modelFilePath + "char/chara.obj");
-  player.SetScale(PosVec(5, 5, 5));
+                   ApplicationPreference::modelFilePath + "char/subLeader.obj");
+  player.SetScale(PosVec(7, 7, 7));
   player.SetShininess(10);
   player.SetRotate(-90, PosVec(0, 1, 0));
+
+  rPlayer = Obj::ObjFile(
+      PosVec(player.GetPosition().x + 10, player.GetPosition().y + 60,
+             player.GetPosition().z - 35),
+      PosVec(), PosVec(),
+      ApplicationPreference::modelFilePath + folderName + "racket.obj");
+  rPlayer.SetScale(PosVec(1.5, 1.5, 1.5));
+  rPlayer.SetShininess(10);
+  rPlayer.SetRotate(-90, PosVec(0, 1, -1.2));
 
   enemy =
       Obj::ObjFile(PosVec(-130, 0, 0.0), PosVec(), PosVec(),
@@ -34,6 +43,15 @@ Scene::TableTennisScene::TableTennisScene() {
   enemy.SetScale(PosVec(7, 7, 7));
   enemy.SetShininess(10);
   enemy.SetRotate(90, PosVec(0, 1, 0));
+
+  rEnemy = Obj::ObjFile(
+      PosVec(enemy.GetPosition().x - 10, enemy.GetPosition().y + 60,
+             enemy.GetPosition().z + 40),
+      PosVec(), PosVec(),
+      ApplicationPreference::modelFilePath + folderName + "racket.obj");
+  rEnemy.SetScale(PosVec(1.5, 1.5, 1.5));
+  rEnemy.SetShininess(10);
+  rEnemy.SetRotate(-90, PosVec(-1.7, 1, -1.2));
 
   ball = Obj::Sphere(PosVec(0, 120, 0), PosVec(), PosVec());
   ball.SetScale(PosVec(1, 1, 1));
@@ -154,10 +172,32 @@ void Scene::TableTennisScene::Update() {
   worldMap.Update();
   player.Update();
   enemy.Update();
+  rPlayer.Update();
+  rEnemy.Update();
   ball.Update();
 
   PosVec cameraPos;
   PosVec cameraDirection;
+
+  //ラケットは常に追従
+  PosVec rDestination;
+  rDestination = PosVec(player.GetPosition().x + 10, player.GetPosition().y + 60,
+             player.GetPosition().z - 35);
+  null->ChangeValueWithAnimation(
+    &rPlayer.GetPositionPointer()->x, rDestination.x, 3.f);
+  null->ChangeValueWithAnimation(
+    &rPlayer.GetPositionPointer()->y, rDestination.y, 3.f);
+  null->ChangeValueWithAnimation(
+    &rPlayer.GetPositionPointer()->z, rDestination.z, 3.f);
+  
+  rDestination = PosVec(enemy.GetPosition().x - 10, enemy.GetPosition().y + 60,
+             enemy.GetPosition().z + 40);
+  null->ChangeValueWithAnimation(
+    &rEnemy.GetPositionPointer()->x, rDestination.x, 3.f);
+  null->ChangeValueWithAnimation(
+    &rEnemy.GetPositionPointer()->y, rDestination.y, 3.f);
+  null->ChangeValueWithAnimation(
+    &rEnemy.GetPositionPointer()->z, rDestination.z, 3.f);
 
   if (isGameStart) {
     /***************/
@@ -198,6 +238,9 @@ void Scene::TableTennisScene::Update() {
     // プレイヤーによる跳ね返り
     if (ball.GetPosition().x > canHitXstart &&
         ball.GetPosition().x < canHitXend) {
+      // ball.SetAmbient(Color255("#FF9B00"));
+      null->ChangeColorWithAnimation(ball.GetAmbientPointer(),
+                                     new Color255("#FF9B00"), .1f);
       if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST &&
           isPlayerTurn) {
         ball.SetPosition(
@@ -212,6 +255,9 @@ void Scene::TableTennisScene::Update() {
         playerHitBall++;
         text->SetString("ボールを返した回数: " + std::to_string(playerHitBall));
       }
+    } else {
+      null->ChangeColorWithAnimation(ball.GetAmbientPointer(),
+                                     new Color255(250), .1f);
     }
 
     if (std::fabs(ball.GetPosition().z) > stageEndAbs.z) {
@@ -340,7 +386,10 @@ void Scene::TableTennisScene::SetupCurrentRuleDisplayingMode() {
 void Scene::TableTennisScene::GameStart() {
   isGameStart = true;
   ball.SetPosition(PosVec(0, 120, 0));
-  ball.SetVelocity(PosVec(-350, 0, 350));
+  std::random_device rnd;
+  PosVec fv = PosVec(-1.f * (((int)(rnd()) % 100) + 275), 0,
+                     ((int)(rnd()) % 425) - 450);
+  ball.SetVelocity(fv);
   ball.SetAcceleration(PosVec(0, -paramG, 0));
   playerHitBall = 0;
 
@@ -406,6 +455,8 @@ void Scene::TableTennisScene::Draw() {
   worldMap.Draw();
   player.Draw();
   enemy.Draw();
+  rPlayer.Draw();
+  rEnemy.Draw();
   ball.Draw();
   glPopMatrix();
 

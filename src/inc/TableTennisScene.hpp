@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <random>
 
 #include "2DAssets.hpp"
 #include "3DAssets.hpp"
@@ -41,7 +42,9 @@ class TableTennisScene : public SceneBase {
   Color255 boxAmbient;
   Obj::ObjFile worldMap;
   Obj::ObjFile player;
+  Obj::ObjFile rPlayer;
   Obj::ObjFile enemy;
+  Obj::ObjFile rEnemy;
 
   Obj::Sphere ball;
 
