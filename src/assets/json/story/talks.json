@@ -127,7 +127,6 @@
       "stageName": "castle_street",
       "goto": "next",
       "talks": [
-        
         {
           "left": "Leader",
           "right": "drunken",
@@ -373,6 +372,32 @@
       ]
     },
     {
+      "chapterName": "ブルータスと戦う",
+      "stageName": "cave2",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "[ブルータスと戦う]"
+        }
+      ]
+    },
+    {
+      "chapterName": "ブルータスと戦う",
+      "stageName": "cave2",
+      "goto": "",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ブルータス元隊長",
+          "text": "...!"
+        }
+      ]
+    },
+    {
       "chapterName": "m[A]nslaughter and suicide",
       "stageName": "cave2",
       "goto": "",
@@ -394,6 +419,19 @@
           "right": "None",
           "speaker": "None",
           "text": "王の人類魔物化計画に気づいたブルータスは、これからも兵士たちを殺し続けることを恐れ、自害した。"
+        }
+      ]
+    },
+    {
+      "chapterName": "ブルータスと和解する",
+      "stageName": "cave2",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
+          "speaker": "ネイネス副隊長",
+          "text": "[ブルータスと和解する]"
         }
       ]
     },
