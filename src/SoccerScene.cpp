@@ -51,13 +51,19 @@ Scene::SoccerScene::SoccerScene() {
     startButton->SetInnerAnimation(.2f);
     layer2D.AddObject(startButton);
 
-    text = new Obj::Text(PosVec(100.0, 500.0), PosVec(),"Ramdum Number");
+    text = new Obj::Text(PosVec(100.0, 500.0), PosVec(),"Let's Play!");
     text->SetInnerColor(Color255(0, 0, 0));
     layer2D.AddObject(text);
+
+    text_2 = new Obj::Text(PosVec(100.0, 475.0), PosVec(),"");
+    text->SetInnerColor(Color255(0, 0, 0));
+    layer2D.AddObject(text_2);
 
     //乱数定義
     srand((unsigned int)time(NULL));
     gameStart = false;
+    point = 0;
+    shootCount = 0;
 }
 
 void Scene::SoccerScene::Update() {
@@ -73,7 +79,10 @@ void Scene::SoccerScene::Update() {
         gameStart = true;
         startButton->SetEnabled(false);
 
+        if(shootCount == 0) point = 0;
         ball.SetPosition(PosVec(400.0, 35.1, 400.0));
+        text->SetString("Where do you shoot?");
+        text_2->SetString("Point : " + std::to_string(point));
 
         Color255 innerCol;
         innerCol = Color255(70, 170, 230);
@@ -103,34 +112,53 @@ void Scene::SoccerScene::Update() {
     if(gameStart){
         if(centerButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-200.0, 0.0, -200.0));
-            ransu = 0;
+            ball.SetVelocity(PosVec(-400.0, 0.0, -400.0));
+            text->SetString("Shoot!!");
             KeeperPosition();
         }
         else if(rightButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-120.0, 0.0, -200.0));
+            ball.SetVelocity(PosVec(-240.0, 0.0, -400.0));
+            text->SetString("Shoot!!");
             KeeperPosition();
         }
         else if(leftButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-200.0, 0.0, -120.0));
+            ball.SetVelocity(PosVec(-400.0, 0.0, -240.0));
+            text->SetString("Shoot!!");
             KeeperPosition();
         }
 
-        if(ball.GetPosition().x <= (enemy.GetPosition().x + 10.0) && 
-            ball.GetPosition().z <= (enemy.GetPosition().z + 10.0)){
+        if((ball.GetPosition().x <= (enemy.GetPosition().x + 10.0) && 
+            ball.GetPosition().z <= (enemy.GetPosition().z + 10.0)) || 
+            ball.GetPosition().x <= -500.0 || ball.GetPosition().z <= -500.0){
                 ball.SetVelocity(PosVec(0.0, 0.0, 0.0));
+                if(ball.GetPosition().x <= enemy.GetPosition().x || 
+                    ball.GetPosition().z <= enemy.GetPosition().z){
+                    point++;
+                    text->SetString("Goal!!");
+                    text_2->SetString("Point : " + std::to_string(point));
+                }
+                else{
+                    text->SetString("Saved...");
+                    text_2->SetString("Point : " + std::to_string(point));
+                }
+
+                shootCount++;
+                if(shootCount >= 5){
+                    if(point >= 3){
+                        text->SetString("Winner!");
+                    }
+                    else{
+                        text->SetString("Lose...");
+                    }
+                    shootCount = 0;
+                }
+
                 gameStart = false;
                 startButton->SetEnabled(true);
-                //center ball stop is (-340.0, -340.0)
-                //text->SetString("" + std::to_string(ball.GetPosition().x) + std::to_string(ball.GetPosition().z));
             }
     }
-
-    // if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
-    //     KeeperPosition();
-    // }
 
     if (backbutton->GetMouseSelected()) {
         backbutton->SetMouseOff();
@@ -145,15 +173,12 @@ void Scene::SoccerScene::KeeperPosition(){
     ransu = 0 + rand() % 3;
     if(ransu == 0){
         enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
-        text->SetString("Ramdum Number : " + std::to_string(ransu));
     }
     else if(ransu == 1){
         enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
-        text->SetString("Ramdum Number : " + std::to_string(ransu));
     }
     else if(ransu == 2){
         enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
-        text->SetString("Ramdum Number : " + std::to_string(ransu));
     }
 }
 

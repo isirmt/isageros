@@ -40,6 +40,7 @@ namespace Scene{
             Obj::ObjFile player;
             Obj::ObjFile enemy;
             Obj::Text* text;
+            Obj::Text* text_2;
             Obj::ObjFile stage;
             Obj::Sphere ball;
             Obj::Button* startButton;
@@ -48,6 +49,8 @@ namespace Scene{
             Obj::Button* leftButton;
             const std::string folderName = "minigames/soccer/";
             int ransu;
+            int point;
+            int shootCount;
             bool gameStart;
     };
 }
