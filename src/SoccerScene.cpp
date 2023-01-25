@@ -12,6 +12,9 @@ Scene::SoccerScene::SoccerScene() {
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
 
+    null = new Obj::Null();
+    layer2D.AddObject(null);
+
     stage = Obj::ObjFile(PosVec(200.0, 0.0, 200.0), PosVec(), PosVec(),
             ApplicationPreference::modelFilePath + folderName + "soccer_field.obj");
     stage.SetScale(PosVec(100, 100, 100));
@@ -172,13 +175,19 @@ void Scene::SoccerScene::Update() {
 void Scene::SoccerScene::KeeperPosition(){
     ransu = 0 + rand() % 3;
     if(ransu == 0){
-        enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
+        // enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -200, 3.f);
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -200, 3.f);
     }
     else if(ransu == 1){
-        enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
+        // enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -50, 3.f);
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -350, 3.f);
     }
     else if(ransu == 2){
-        enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
+        // enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -350, 3.f);
+        null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -50, 3.f);
     }
 }
 
