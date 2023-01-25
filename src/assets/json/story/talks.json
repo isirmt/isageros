@@ -387,7 +387,7 @@
     {
       "chapterName": "ブルータスと戦う",
       "stageName": "cave2",
-      "goto": "",
+      "goto": "sumo",
       "talks": [
         {
           "left": "formerLeader",
