@@ -19,6 +19,24 @@
       "charScale": 10.0
     },
     {
+      "name": "kingdom_tana",
+      "camerax": 1500.0,
+      "cameray": 100.0,
+      "cameraz": 500.0,
+      "lookx": -400.0,
+      "looky": 50.0,
+      "lookz": 0.0,
+      "leftPosx": 450.0,
+      "leftPosy": -50.0,
+      "leftPosz": 550.0,
+      "leftRotatey": -15.0,
+      "rightPosx": 400.0,
+      "rightPosy": -50.0,
+      "rightPosz": 600.0,
+      "rightRotatey": -0.0,
+      "charScale": 10.0
+    },
+    {
       "name": "forest",
       "camerax": 1250.0,
       "cameray": 400.0,
