@@ -74,11 +74,11 @@ Scene::TableTennisScene::TableTennisScene() {
   // 必要分追加
   nImage = new Obj::Image(
       ruleImageOffset, ruleImageSize,
-      ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+      ApplicationPreference::imgFilePath + "minigames/tabletennis/rule1.ppm");
   rulePics.emplace_back(nImage);
   nImage = new Obj::Image(
       ruleImageOffset, ruleImageSize,
-      ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+      ApplicationPreference::imgFilePath + "minigames/tabletennis/rule2.ppm");
   rulePics.emplace_back(nImage);
 
   innerCol = Color255("7894DA");
