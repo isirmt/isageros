@@ -44,16 +44,22 @@ class Object3D {
   Color255 GetAmbient() { return ambient; }
   Color255* GetAmbientPointer() { return &ambient; }
   Color255 GetDiffuse() { return diffuse; }
+  Color255* GetDiffusePointer() { return &diffuse; }
   Color255 GetSpecular() { return specular; }
+  Color255* GetSpecularPointer() { return &specular; }
   Color255 GetEmission() { return emission; }
   float GetShininess() { return shininess[0]; }
   PosVec GetScale() { return scale; }
+  PosVec* GetScalePointer() { return &scale; }
   PosVec GetPosition() { return r; }
   PosVec* GetPositionPointer() { return &r; }
   PosVec GetVelocity() { return v; }
+  PosVec* GetVelocityPointer() { return &v; }
   PosVec GetAcceleration() { return a; }
+  PosVec* GetAccelerationPointer() { return &a; }
   float GetRotateDegree() { return deg; }
   PosVec GetRotateScale() { return rotScale; }
+  PosVec* GetRotateScalePointer() { return &rotScale; }
 
  protected:
   PosVec r;
