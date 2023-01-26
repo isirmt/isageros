@@ -19,6 +19,7 @@ namespace Scene{
             ~SumoScene(){
                 delete backbutton;
                 delete text;
+                delete rect;
             }
 
             void Update() override;
@@ -30,17 +31,38 @@ namespace Scene{
             void SpecialFuncProc(int key, int x, int y) override {}
 
         private:
+            void RuleMode();
+
+        private:
             Color255 boxAmbient;
             Obj::ObjFile stage;
             Obj::ObjFile player;
             Obj::ObjFile enemy;
             Obj::Button* backbutton;
             Obj::Button* startbutton;
+            Obj::Button* ruleButton;
             Obj::Text* text;
             Obj::Text* text_2;
+            Obj::Text* ruleText;
+            Obj::Image* nImage;
+            Obj::Image* goRect;
+            Obj::Image* quotaImage;
+            Obj::Image* miniuiImage;
+            Obj::Rectangle* ruleBack;
+            Obj::Rectangle* textBack;
+            Obj::Rectangle* rect;
             const std::string folderName = "minigames/sumo/";
             bool gamestart;
+            bool ruleView;
             float pushPower;
             int clickCount;
+
+            const PosVec ruleImageOffset =
+                PosVec(ApplicationPreference::windowSize.x / 8.f,
+                        ApplicationPreference::windowSize.y / 8.f);
+            const PosVec ruleImageSize =
+                PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
+                    ApplicationPreference::windowSize.y * 3.f / 4.f);
+            std::vector<Obj::Image*> rulePics;
     };
 }
