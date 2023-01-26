@@ -28,8 +28,8 @@ Scene::BattingScene::BattingScene(){
     bat.SetScale(PosVec(2, 10, 2));
 
     player = Obj::ObjFile(PosVec(800.0, 0.0, -50.0), PosVec(0.0, 0.0, 0.0), 
-            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/Leader.obj");
-    player.SetScale(PosVec(5, 5, 5));
+            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/subLeader.obj");
+    player.SetScale(PosVec(7, 7, 7));
     player.SetShininess(10);
 
     ball = Obj::Sphere(PosVec(450.0, -50.0, 0.0), PosVec(0.0, 0.0, 0.0), 
@@ -329,7 +329,7 @@ void Scene::BattingScene::Update(){
                                    0.f, 5.f);
     rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->y,
                                    0.f, 5.f);
-  }
+    }
 
     layer2D.Update();
 }
