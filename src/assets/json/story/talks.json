@@ -58,14 +58,21 @@
     {
       "chapterName": "酒乱パニック",
       "stageName": "castle_street",
-      "goto": "tabletennis",
+      "goto": "next",
       "talks": [
         {
           "left": "subLeader",
           "right": "Leader",
           "speaker": "ネイネス副隊長",
           "text": "元隊長の討伐なんて嫌ですねー。僕たちの仕事は城の外の魔物を倒すことなのに。"
-        },
+        }
+      ]
+    },
+    {
+      "chapterName": "酒乱パニック",
+      "stageName": "castle_street",
+      "goto": "tabletennis",
+      "talks": [
         {
           "left": "subLeader",
           "right": "Leader",
@@ -475,6 +482,19 @@
           "right": "None",
           "speaker": "None",
           "text": "真実を知ったネイネスも魔物となった。やがて、全ての兵士が魔物になり、国は潰れ、カエサルの計画通り魔物の王国となった。"
+        }
+      ]
+    },
+    {
+      "chapterName": "(最初から王国にいる)",
+      "stageName": "None",
+      "goto": "next",
+      "talks": [
+        {
+          "left": "None",
+          "right": "None",
+          "speaker": "None",
+          "text": "(最初から王国にいる)"
         }
       ]
     },

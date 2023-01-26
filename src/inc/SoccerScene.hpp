@@ -41,6 +41,7 @@ namespace Scene{
             Obj::ObjFile enemy;
             Obj::Text* text;
             Obj::Text* text_2;
+            Obj::Null* null;
             Obj::ObjFile stage;
             Obj::Sphere ball;
             Obj::Button* startButton;
