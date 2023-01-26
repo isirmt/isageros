@@ -46,6 +46,8 @@ class TableTennisScene : public SceneBase {
   Obj::ObjFile enemy;
   Obj::ObjFile rEnemy;
 
+  Obj::ObjFile crowd1;
+
   Obj::Sphere ball;
 
   Obj::Button* backButton;
@@ -77,9 +79,17 @@ class TableTennisScene : public SceneBase {
   bool isGameStart;
   bool isPlayerTurn;
 
+  const float timerMax = 2.f;
+  const float goTimerMax = 5.f;
+  float timer;
+  float goTimer;
+
+  const int turnMax = 3;
+  int turn;
+
   const PosVec stageEndAbs = PosVec(80, 80, 60);
   const float canHitXstart = 60;
-  const float canHitXend = 105;
+  const float canHitXend = 120;
 
   int playerHitBall;
 

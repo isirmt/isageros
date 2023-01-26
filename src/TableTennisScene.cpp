@@ -59,6 +59,13 @@ Scene::TableTennisScene::TableTennisScene() {
   ball.SetDiffuse(Color255(.3, .3, .3));
   ball.SetSpecular(Color255(0, 0, 0));
 
+  crowd1 =
+      Obj::ObjFile(PosVec(20, 0, 230), PosVec(), PosVec(),
+                   ApplicationPreference::modelFilePath + "char/Leader.obj");
+  crowd1.SetScale(PosVec(7, 7, 7));
+  crowd1.SetShininess(10);
+  crowd1.SetRotate(-180, PosVec(0, 1, 0));
+
   Color255 innerCol;
   innerCol = Color255(255, 100, 50);
 
@@ -164,6 +171,9 @@ Scene::TableTennisScene::TableTennisScene() {
   waitingCameraDeg = 0;
 
   isShowingRule = false;
+
+  timer = timerMax;
+  turn = 0;
 }
 
 void Scene::TableTennisScene::Update() {
@@ -175,29 +185,40 @@ void Scene::TableTennisScene::Update() {
   rPlayer.Update();
   rEnemy.Update();
   ball.Update();
+  crowd1.Update();
 
   PosVec cameraPos;
+  PosVec cameraLookat;
   PosVec cameraDirection;
 
-  //ラケットは常に追従
+  // 外野は常に床と接地判定
+  if (crowd1.GetPosition().y < 0) {
+    crowd1.SetPosition(
+        PosVec(crowd1.GetPosition().x, 0, crowd1.GetPosition().z));
+    crowd1.SetVelocity(PosVec());
+    crowd1.SetAcceleration(PosVec());
+  }
+
+  // ラケットは常に追従
   PosVec rDestination;
-  rDestination = PosVec(player.GetPosition().x + 10, player.GetPosition().y + 60,
+  rDestination =
+      PosVec(player.GetPosition().x + 10, player.GetPosition().y + 60,
              player.GetPosition().z - 35);
-  null->ChangeValueWithAnimation(
-    &rPlayer.GetPositionPointer()->x, rDestination.x, 3.f);
-  null->ChangeValueWithAnimation(
-    &rPlayer.GetPositionPointer()->y, rDestination.y, 3.f);
-  null->ChangeValueWithAnimation(
-    &rPlayer.GetPositionPointer()->z, rDestination.z, 3.f);
-  
+  null->ChangeValueWithAnimation(&rPlayer.GetPositionPointer()->x,
+                                 rDestination.x, 3.f);
+  null->ChangeValueWithAnimation(&rPlayer.GetPositionPointer()->y,
+                                 rDestination.y, 3.f);
+  null->ChangeValueWithAnimation(&rPlayer.GetPositionPointer()->z,
+                                 rDestination.z, 3.f);
+
   rDestination = PosVec(enemy.GetPosition().x - 10, enemy.GetPosition().y + 60,
-             enemy.GetPosition().z + 40);
-  null->ChangeValueWithAnimation(
-    &rEnemy.GetPositionPointer()->x, rDestination.x, 3.f);
-  null->ChangeValueWithAnimation(
-    &rEnemy.GetPositionPointer()->y, rDestination.y, 3.f);
-  null->ChangeValueWithAnimation(
-    &rEnemy.GetPositionPointer()->z, rDestination.z, 3.f);
+                        enemy.GetPosition().z + 40);
+  null->ChangeValueWithAnimation(&rEnemy.GetPositionPointer()->x,
+                                 rDestination.x, 3.f);
+  null->ChangeValueWithAnimation(&rEnemy.GetPositionPointer()->y,
+                                 rDestination.y, 3.f);
+  null->ChangeValueWithAnimation(&rEnemy.GetPositionPointer()->z,
+                                 rDestination.z, 3.f);
 
   if (isGameStart) {
     /***************/
@@ -210,12 +231,13 @@ void Scene::TableTennisScene::Update() {
     /* カメラ設定 */
     /***************/
     cameraPos = PosVec(400, 500, 0);
+    cameraLookat = PosVec();
     cameraDirection = PosVec(-1, 0, 0);
 
     /***************/
     /* 擬似物理演算 */
     /***************/
-    if (ball.GetPosition().y < groundLevel) {
+    if (ball.GetPosition().y < groundLevel && std::fabs(ball.GetPosition().x)) {
       ball.SetVelocity(PosVec(ball.GetVelocity().x,
                               -ball.GetVelocity().y * paramE,
                               ball.GetVelocity().z));
@@ -245,7 +267,7 @@ void Scene::TableTennisScene::Update() {
           isPlayerTurn) {
         ball.SetPosition(
             PosVec((std::signbit(ball.GetPosition().x) ? -1.f : 1.f) *
-                       stageEndAbs.x * 0.95f,
+                       ball.GetPosition().x,
                    ball.GetPosition().y, ball.GetPosition().z));
         ball.SetVelocity(PosVec(-ball.GetVelocity().x, ball.GetVelocity().y,
                                 ball.GetVelocity().z));
@@ -254,13 +276,19 @@ void Scene::TableTennisScene::Update() {
                                        ball.GetPosition().z, 3.f);
         playerHitBall++;
         text->SetString("ボールを返した回数: " + std::to_string(playerHitBall));
+
+        // 外野を飛ばす
+
+        crowd1.SetVelocity(PosVec(0, 100, 0));
+        crowd1.SetAcceleration(PosVec(0, -paramG, 0));
       }
     } else {
       null->ChangeColorWithAnimation(ball.GetAmbientPointer(),
                                      new Color255(250), .1f);
     }
 
-    if (std::fabs(ball.GetPosition().z) > stageEndAbs.z) {
+    if (std::fabs(ball.GetPosition().z) > stageEndAbs.z &&
+        std::fabs(ball.GetPosition().x) < stageEndAbs.x) {
       ball.SetPosition(
           PosVec(ball.GetPosition().x, ball.GetPosition().y,
                  (std::signbit(ball.GetPosition().z) ? -1.f : 1.f) *
@@ -278,6 +306,26 @@ void Scene::TableTennisScene::Update() {
     }
 
   } else {
+    /* 外野ぴょんぴょん */
+    if (crowd1.GetPosition().y == 0.0) {
+      crowd1.SetVelocity(PosVec(0, 100, 0));
+      crowd1.SetAcceleration(PosVec(0, -paramG, 0));
+    }
+
+    goTimer -= Time::DeltaTime();
+    if (goTimer < 0) {
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->x,
+          ApplicationPreference::windowSize.x / 2.f, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+      if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
+    }
+
     /***************/
     /* カメラ設定 */
     /***************/
@@ -289,6 +337,35 @@ void Scene::TableTennisScene::Update() {
     cameraPos =
         PosVec(500 * cosf(waitingCameraDeg), 600, 500 * sinf(waitingCameraDeg));
 
+    timer -= Time::DeltaTime();
+    if (timer < 0) {
+      timer = timerMax;
+      turn++;
+      if (turn >= turnMax) turn = 0;
+    }
+    switch (turn) {
+      case 0:
+        cameraPos = PosVec(500 * cosf(waitingCameraDeg), 600,
+                           500 * sinf(waitingCameraDeg));
+        cameraLookat = PosVec();
+        break;
+
+      case 1:
+        cameraPos =
+            PosVec(player.GetPosition().x + 175 * cosf(waitingCameraDeg), 150,
+                   175 * sinf(waitingCameraDeg));
+        cameraLookat = PosVec(player.GetPosition().x, 55, 0);
+        break;
+      case 2:
+        cameraPos = PosVec(enemy.GetPosition().x + 175 * cosf(waitingCameraDeg),
+                           150, 175 * sinf(waitingCameraDeg));
+        cameraLookat = PosVec(enemy.GetPosition().x, 55, 0);
+        break;
+
+      default:
+        break;
+    }
+
     /***************/
     /* ボール演算停止 */
     /***************/
@@ -299,7 +376,7 @@ void Scene::TableTennisScene::Update() {
 
   Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, cameraPos, PosVec(0, 0, 0), cameraDirection);
+      30, 1, 99999, cameraPos, cameraLookat, cameraDirection);
 
   if (backButton->GetMouseSelected()) {
     backButton->SetMouseOff();
@@ -429,6 +506,14 @@ void Scene::TableTennisScene::GameOver() {
     Story::StoryModeManager::SetGameClear(false);
   }
 
+  timer = timerMax;
+  goTimer = goTimerMax;
+
+  turn = 0;
+
+  null->ChangeValueWithAnimation(&player.GetPositionPointer()->z, 0.f, 8.f);
+  null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, 0.f, 8.f);
+
   layer2D.DeleteObject(goRect);
   layer2D.AddObject(goRect);
 
@@ -458,6 +543,7 @@ void Scene::TableTennisScene::Draw() {
   rPlayer.Draw();
   rEnemy.Draw();
   ball.Draw();
+  crowd1.Draw();
   glPopMatrix();
 
   SceneBase::Set2DDrawMode();
