@@ -39,20 +39,61 @@ Scene::SoccerScene::SoccerScene() {
     ball.SetDiffuse(Color255(.3, .3, .3));
     ball.SetSpecular(Color255(0, 0, 0));
 
+	miniuiImage = new Obj::Image(
+        PosVec(0, 30), PosVec(75, 190),
+        ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
+    layer2D.AddObject(miniuiImage);
+
     Color255 innerCol;
     innerCol = Color255(255, 100, 50);
-    backbutton = new Obj::Button(PosVec(30, 30), PosVec(150, 100), true, true);
+    backbutton = new Obj::Button(PosVec(30, 30), PosVec(50, 50), true, true);
     backbutton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65, innerCol * 0.75);
     backbutton->SetOutlineColor(Color255(35, 57, 40), 5.f);
     backbutton->SetInnerAnimation(.2f);
     layer2D.AddObject(backbutton);
 
     innerCol = Color255(70, 170, 230);
-    startButton = new Obj::Button(PosVec(30, 30 + 120), PosVec(150, 100), true, true);
+    startButton = new Obj::Button(PosVec(30, 100), PosVec(50, 50), true, true);
     startButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65, innerCol * 0.75);
     startButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
     startButton->SetInnerAnimation(.2f);
     layer2D.AddObject(startButton);
+
+	nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
+                ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+                rulePics.emplace_back(nImage);
+    nImage = new Obj::Image(
+        ruleImageOffset, ruleImageSize,
+        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+    rulePics.emplace_back(nImage);
+    nImage = new Obj::Image(
+        ruleImageOffset, ruleImageSize,
+        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+    rulePics.emplace_back(nImage);
+
+    innerCol = Color255("7894DA");
+    ruleBack =
+        new Obj::Rectangle(PosVec(ruleImageOffset.x - 5, ruleImageOffset.y - 5),
+                            PosVec(ruleImageSize.x + 10, ruleImageSize.y + 30));
+    ruleBack->SetInnerColor(innerCol);
+
+    ruleText = new Obj::Text(
+        PosVec(ruleImageOffset.x + 5.f, ruleImageOffset.y + ruleImageSize.y + 3),
+        PosVec(), "ルール説明：次へは画像をクリック！・戻る場合は「ルール」ボタン");
+    ruleText->SetInnerColor(Color255(250));
+
+    innerCol = Color255(70, 100, 230);
+    ruleButton = new Obj::Button(PosVec(30, 30 + (50 + 20) * 2), PosVec(50, 50), true, true);
+    ruleButton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65, innerCol * 0.75);
+    ruleButton->SetOutlineColor(Color255(35, 57, 40), 5.f);
+    ruleButton->SetInnerAnimation(.2f);
+    layer2D.AddObject(ruleButton);
+
+    innerCol = Color255(70, 170, 230);
+    textBack = new Obj::Rectangle(
+        PosVec(100, 30), PosVec(ApplicationPreference::windowSize.x - 150, 30));
+    textBack->SetInnerColor(innerCol);
+    layer2D.AddObject(textBack);
 
     text = new Obj::Text(PosVec(100.0, 500.0), PosVec(),"Let's Play!");
     text->SetInnerColor(Color255(0, 0, 0));
@@ -62,9 +103,25 @@ Scene::SoccerScene::SoccerScene() {
     text->SetInnerColor(Color255(0, 0, 0));
     layer2D.AddObject(text_2);
 
-    //乱数定義
+	innerCol = Color255("#57B7F3");
+    rect = new Obj::Rectangle(PosVec(0, 0), PosVec(50, 50), true, false);
+    rect->SetInnerColor(innerCol);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->x, 0.f, 10.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->y, 0.f, 10.f);
+    layer2D.AddObject(rect);
+
+    goRect = new Obj::Image(
+        PosVec(ApplicationPreference::windowSize.x / 2.f, -100), PosVec(0, 0),
+        ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+
+    innerCol = Color255("#57B7F3");
+    quotaImage = new Obj::Image(
+        PosVec(-500, 450), PosVec(150, 100),
+        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+
     srand((unsigned int)time(NULL));
     gameStart = false;
+	ruleView = false;
     point = 0;
     shootCount = 0;
 }
@@ -110,6 +167,41 @@ void Scene::SoccerScene::Update() {
         layer2D.AddObject(leftButton);
 
         threeMouseCondition(true);
+
+		ruleButton->SetEnabled(false);
+		ruleView = false;
+        RuleMode();
+
+        goRect->ChangeValueWithAnimation(
+            &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+        goRect->ChangeValueWithAnimation(
+            &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+        goRect->ChangeValueWithAnimation(
+            &goRect->GetVectorPointer(VectorType::POS)->x,
+            ApplicationPreference::windowSize.x / 2.f, .3f);
+        goRect->ChangeValueWithAnimation(
+            &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+    }
+
+	if(ruleButton->GetMouseSelected()){
+        ruleButton->SetMouseOff();
+        ruleView = !ruleView;   
+        RuleMode();
+    }
+    if (ruleView) {
+        int i = 0;
+        for (auto& item : rulePics) {
+            if (item->GetMouseSelected()) {
+                item->SetMouseOff();
+                layer2D.DeleteObject(item);
+                if (i == rulePics.size() - 1) {
+                layer2D.AddObject(rulePics[0]);
+                } else {
+                layer2D.AddObject(rulePics[i + 1]);
+                }
+            }
+            i++;
+        }
     }
 
     if(gameStart){
@@ -147,29 +239,110 @@ void Scene::SoccerScene::Update() {
                     text_2->SetString("Point : " + std::to_string(point));
                 }
 
+				gameStart = false;
+                startButton->SetEnabled(true);
+
                 shootCount++;
                 if(shootCount >= 5){
-                    if(point >= 3){
+                    if(point >= 3 && Story::StoryModeManager::GetGameActive()){
                         text->SetString("Winner!");
+						if(Story::StoryModeManager::GetGameActive()){
+							Story::StoryModeManager::SetGameClear(true);
+				            Story::StoryModeManager::SavePlusStep();
+				            layer2D.DeleteObject(quotaImage);
+				            layer2D.AddObject(quotaImage);
+				            startButton->SetEnabled(false);
+				            ruleButton->SetEnabled(false);
+				            quotaImage->ChangeValueWithAnimation(
+				                  &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
+						}
                     }
                     else{
                         text->SetString("Lose...");
+						if(Story::StoryModeManager::GetGameActive()){
+							Story::StoryModeManager::SetGameClear(false);
+						}
                     }
                     shootCount = 0;
-                }
+					ruleButton->SetEnabled(true);
 
-                gameStart = false;
-                startButton->SetEnabled(true);
-            }
+					layer2D.DeleteObject(goRect);
+		            layer2D.AddObject(goRect);
+
+		            goRect->ChangeValueWithAnimation(
+		                 &goRect->GetVectorPointer(VectorType::SIZE)->x,
+		                 ApplicationPreference::windowSize.x / 2.f, 5.f);
+		            goRect->ChangeValueWithAnimation(
+		                 &goRect->GetVectorPointer(VectorType::SIZE)->y,
+		                 ApplicationPreference::windowSize.y / 4.f, 5.f);
+		            goRect->ChangeValueWithAnimation(
+		                 &goRect->GetVectorPointer(VectorType::POS)->x,
+		                 ApplicationPreference::windowSize.x / 4.f, 5.f);
+		            goRect->ChangeValueWithAnimation(
+		                 &goRect->GetVectorPointer(VectorType::POS)->y,
+		                 ApplicationPreference::windowSize.y / 4.f, 5.f);
+                }
+        }
     }
 
     if (backbutton->GetMouseSelected()) {
         backbutton->SetMouseOff();
-        SceneManager::ChangeScene(new TitleScene());
+        if(!Story::StoryModeManager::GetGameActive()){
+            SceneManager::ChangeScene(new TitleScene());
+        }
+        else{
+            Story::StoryModeManager::SetGameActive(false);
+            SceneManager::ChangeScene(new StoryScene());
+        }
         return;
     }
 
+	if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
+    PosVec markSize(50, 50);
+    rect->SetPos(PosVec(Input::MouseInput::GetMouse().x - markSize.x / 2.f,
+                        Input::MouseInput::GetMouse().y - markSize.y / 2.f));
+    rect->SetSize(markSize);
+    rect->ChangeValueWithAnimation(
+        &rect->GetVectorPointer(VectorType::POS)->x,
+        Input::MouseInput::GetMouse().x - markSize.x / 2.f, 5.f);
+    rect->ChangeValueWithAnimation(
+        &rect->GetVectorPointer(VectorType::POS)->y,
+        Input::MouseInput::GetMouse().y - markSize.y / 2.f, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->x,
+                                   1.f, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->y,
+                                   1.f, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::POS)->x,
+                                   Input::MouseInput::GetMouse().x, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::POS)->y,
+                                   Input::MouseInput::GetMouse().y, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->x,
+                                   0.f, 5.f);
+    rect->ChangeValueWithAnimation(&rect->GetVectorPointer(VectorType::SIZE)->y,
+                                   0.f, 5.f);
+    }
+
     layer2D.Update();
+}
+
+void Scene::SoccerScene::RuleMode(){
+    if(ruleView){
+        if(rulePics.size() != 0){
+            layer2D.AddObject(ruleBack);
+            layer2D.AddObject(ruleText);
+            layer2D.AddObject(rulePics[0]);
+        }
+        else{
+            ruleView = false;
+        }
+    }
+    else{
+        for (auto& item : rulePics) {
+            layer2D.DeleteObject(item);
+        }
+        layer2D.DeleteObject(ruleBack);
+        layer2D.DeleteObject(ruleText);
+    }
 }
 
 void Scene::SoccerScene::KeeperPosition(){
