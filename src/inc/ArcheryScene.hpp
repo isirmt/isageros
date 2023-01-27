@@ -29,7 +29,8 @@ class ArcheryScene : public SceneBase {
   Obj::Cube cube;
   Obj::ObjFile stage;
   Obj::Cylinder centerCube;
-  Obj::Cylinder arrow;
+  Obj::ObjFile arrow;
+  Obj::ObjFile bow;
   Obj::Button* backbutton;
 
   const std::string folderName = "minigames/archery/";
