@@ -17,21 +17,6 @@ Scene::SumoScene::SumoScene(){
     stage.SetShininess(20);
     stage.SetRotate(45, PosVec(0, 1, 0));
 
-    player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
-                ApplicationPreference::modelFilePath + "char/subLeader.obj");
-    player.SetScale(PosVec(10, 10, 10));
-    player.SetShininess(10);
-    player.SetRotate(-45, PosVec(0, 1, 0));
-
-    enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
-                ApplicationPreference::modelFilePath + "char/chara.obj");
-    enemy.SetScale(PosVec(5, 5, 5));
-    enemy.SetShininess(10);
-    enemy.SetRotate(-225, PosVec(0, 1, 0));
-
-    // text = new Obj::Text(PosVec(100.0, 500.0), PosVec(), "Let's Play!");
-    // text->SetInnerColor(Color255(250, 250, 250));
-
     text_2 = new Obj::Text(PosVec(100.0, 475.0), PosVec(), "Are you Ready?");
     text_2->SetInnerColor(Color255(250, 250, 250));
 
@@ -126,6 +111,33 @@ void Scene::SumoScene::Update(){
     stage.Update();
     player.Update();
     enemy.Update();
+
+    if(Story::StoryModeManager::GetGameModeNum() == 1 && !gamestart){
+        player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/subLeader.obj");
+        player.SetScale(PosVec(10, 10, 10));
+        player.SetShininess(10);
+        player.SetRotate(-45, PosVec(0, 1, 0));
+
+        enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/chara.obj");
+        enemy.SetScale(PosVec(5, 5, 5));
+        enemy.SetShininess(10);
+        enemy.SetRotate(-225, PosVec(0, 1, 0));
+    }
+    else if(Story::StoryModeManager::GetGameModeNum() == 0 && !gamestart){
+        player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/chara.obj");
+        player.SetScale(PosVec(10, 10, 10));
+        player.SetShininess(10);
+        player.SetRotate(-45, PosVec(0, 1, 0));
+
+        enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/subLeader.obj");
+        enemy.SetScale(PosVec(5, 5, 5));
+        enemy.SetShininess(10);
+        enemy.SetRotate(-225, PosVec(0, 1, 0));
+    }
 
     if(startbutton->GetMouseSelected()){ 
         startbutton->SetMouseOff();
