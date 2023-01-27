@@ -21,6 +21,7 @@ namespace Scene{
             ~SoccerScene(){
                 delete backbutton;
                 delete text;
+					 delete rect;
             }
 
             void Update() override;
@@ -34,6 +35,7 @@ namespace Scene{
         private:
             void KeeperPosition(); 
             void threeMouseCondition(bool x);
+				void RuleMode();
 
         private:
             Obj::Button* backbutton;
@@ -41,6 +43,7 @@ namespace Scene{
             Obj::ObjFile enemy;
             Obj::Text* text;
             Obj::Text* text_2;
+			Obj::Text* ruleText;
             Obj::Null* null;
             Obj::ObjFile stage;
             Obj::Sphere ball;
@@ -48,10 +51,27 @@ namespace Scene{
             Obj::Button* centerButton;
             Obj::Button* rightButton;
             Obj::Button* leftButton;
+			Obj::Button* ruleButton;
+            Obj::Image* nImage;
+            Obj::Image* goRect;
+            Obj::Image* quotaImage;
+            Obj::Image* miniuiImage;
+            Obj::Rectangle* ruleBack;
+            Obj::Rectangle* textBack;
+            Obj::Rectangle* rect;
             const std::string folderName = "minigames/soccer/";
             int ransu;
             int point;
             int shootCount;
             bool gameStart;
+			bool ruleView;
+
+			const PosVec ruleImageOffset =
+                PosVec(ApplicationPreference::windowSize.x / 8.f,
+                    ApplicationPreference::windowSize.y / 8.f);
+            const PosVec ruleImageSize =
+                PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
+                    ApplicationPreference::windowSize.y * 3.f / 4.f);
+            std::vector<Obj::Image*> rulePics;
     };
 }
