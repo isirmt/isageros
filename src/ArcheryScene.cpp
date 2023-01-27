@@ -20,6 +20,7 @@ Scene::ArcheryScene::ArcheryScene(){
                                 "archery_arrow.obj");
     arrow.SetShininess(20);
     arrow.SetScale(PosVec(3, 1, 1));
+    arrow.SetMultiRotates(true);
     
     bow = Obj::ObjFile(PosVec(967.0, 195.0, -9.0), PosVec(),
                        PosVec(),ApplicationPreference::modelFilePath + folderName +
@@ -66,6 +67,7 @@ Scene::ArcheryScene::ArcheryScene(){
 }
 
 void Scene::ArcheryScene::Update(){
+  
   PosVec ends[4] = {
     PosVec(-1000.0, 300.0, 600.0),
     PosVec(-1000.0, 300.0, -600.0),
@@ -85,22 +87,26 @@ void Scene::ArcheryScene::Update(){
     printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
   }
   else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag == true ){
-    deg -= 1 * Time::DeltaTime();
+    deg -= 10 * Time::DeltaTime();
     if (deg > 360) deg -= 360;
     arrow.SetPosition(arrow.GetPosition());
-    arrow.SetVelocity(PosVec(-1000.0, 0.0, 0.0));
+    arrow.SetVelocity(PosVec(-100.0, 0.0, 0.0));
     arrow.SetAcceleration(PosVec(0.0, -1500.0, 0.0));
-    arrow.SetRotate(deg, PosVec(1,0,0));
+    //arrow.AddMultiRotates(RotX, PosVec(1,0,0));
+    //arrow.AddMultiRotates(RotY, PosVec(0,1,0));
+    //arrow.AddMultiRotates(RotZ, PosVec(0,0,1));
+    arrow.ClearRotates();
+    arrow.AddMultiRotates(deg, PosVec(0,0,1));
     Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(arrow.GetPosition().x+30,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
+      30, 1, 99999, PosVec(arrow.GetPosition().x+80,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
     Camera::UpdateCamera();
     printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
     if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(PosVec());
       arrow.SetAcceleration(PosVec());
-      arrow.SetRotate(0, PosVec());
+      arrow.ClearRotates();
       Mouseflag = false;
     }
   }else{
