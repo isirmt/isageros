@@ -21,7 +21,7 @@ template <class T>
 DataStore<T>::DataStore(std::string _filePath) : filePath(_filePath) {
   fs.open(_filePath, std::ios::binary | std::ios::in | std::ios::out);
   if (!fs) {
-    printf("Error: cannot open \"%s\"\n", _filePath.c_str());
+    // printf("Error: cannot open \"%s\"\n", _filePath.c_str());
     FILE* fp = fopen(_filePath.c_str(), "w+");
     fclose(fp);
     int res = truncate(_filePath.c_str(), sizeof(T));

@@ -30,7 +30,8 @@ Scene::StoryScene::StoryScene()
   button->SetInnerAnimation(.2f);
 
   DataStore<Story::StoryProgress> progressStore(
-      ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
+      ApplicationPreference::savesFilePath +
+      ApplicationPreference::storySavePath);
 
   storyProgress = progressStore.Read();
 
@@ -317,25 +318,31 @@ void Scene::StoryScene::StorySet() {
     speakerText->SetString(nowChapter->talks[storyIndex].speaker);
 
     nowLeft = charObjs[nowChapter->talks[storyIndex].left];
-    nowLeft->SetPosition(mapRelatives[nowChapter->stageName].leftPos);
-    nowLeft->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
-                             mapRelatives[nowChapter->stageName].charScale,
-                             mapRelatives[nowChapter->stageName].charScale));
-    nowLeft->SetRotate(mapRelatives[nowChapter->stageName].leftRotateY,
-                       PosVec(0, 1, 0));
+    if (nowLeft != nullptr) {
+      nowLeft->SetPosition(mapRelatives[nowChapter->stageName].leftPos);
+      nowLeft->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
+                               mapRelatives[nowChapter->stageName].charScale,
+                               mapRelatives[nowChapter->stageName].charScale));
+      nowLeft->SetRotate(mapRelatives[nowChapter->stageName].leftRotateY,
+                         PosVec(0, 1, 0));
+    }
+
     nowRight = charObjs[nowChapter->talks[storyIndex].right];
-    nowRight->SetPosition(mapRelatives[nowChapter->stageName].rightPos);
-    nowRight->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
-                              mapRelatives[nowChapter->stageName].charScale,
-                              mapRelatives[nowChapter->stageName].charScale));
-    nowRight->SetRotate(mapRelatives[nowChapter->stageName].rightRotateY,
-                        PosVec(0, 1, 0));
+    if (nowRight != nullptr) {
+      nowRight->SetPosition(mapRelatives[nowChapter->stageName].rightPos);
+      nowRight->SetScale(PosVec(mapRelatives[nowChapter->stageName].charScale,
+                                mapRelatives[nowChapter->stageName].charScale,
+                                mapRelatives[nowChapter->stageName].charScale));
+      nowRight->SetRotate(mapRelatives[nowChapter->stageName].rightRotateY,
+                          PosVec(0, 1, 0));
+    }
 
   } else {
     Story::StoryProgress prevStoryProgress = storyProgress;
 
     DataStore<Story::StoryProgress> progressStore(
-        ApplicationPreference::savesFilePath + ApplicationPreference::storySavePath);
+        ApplicationPreference::savesFilePath +
+        ApplicationPreference::storySavePath);
 
     storyProgress = progressStore.Read();
 
@@ -361,6 +368,7 @@ void Scene::StoryScene::StorySet() {
         } else {
           SceneManager::ChangeScene(
               SceneLauncher::LaunchSceneFromStory(nowChapter->gotoScene));
+          Story::StoryModeManager::SetGameModeNum(nowChapter->gameMode);
           mustEscape = true;
           return;
         }
@@ -431,29 +439,59 @@ void Scene::StoryScene::StoreChapter() {
   picojson::object& chapterJson =
       storyArray[storyProgress.nowChapter].get<picojson::object>();
 
-  nowChapter->chapterName = chapterJson["chapterName"].get<std::string>();
-  nowChapter->stageName = chapterJson["stageName"].get<std::string>();
-  nowChapter->gotoScene = chapterJson["goto"].get<std::string>();
+  if (chapterJson.count("chapterName") != 0)
+    nowChapter->chapterName = chapterJson["chapterName"].get<std::string>();
+  else
+    nowChapter->chapterName = "None";
+  if (chapterJson.count("stageName") != 0)
+    nowChapter->stageName = chapterJson["stageName"].get<std::string>();
+  else
+    nowChapter->stageName = "None";
+  if (chapterJson.count("goto") != 0)
+    nowChapter->gotoScene = chapterJson["goto"].get<std::string>();
+  else
+    nowChapter->gotoScene = "next";
+  if (chapterJson.count("gameMode") != 0)
+    nowChapter->gameMode =
+        static_cast<int>(chapterJson["gameMode"].get<double>());
+  else
+    nowChapter->gameMode = 0;
 
   for (auto& item : chapterJson["talks"].get<picojson::array>()) {
     picojson::object& convJson = item.get<picojson::object>();
 
     Story::Conversation conv;
-    conv.left = convJson["left"].get<std::string>();
-    conv.right = convJson["right"].get<std::string>();
-    conv.speaker = convJson["speaker"].get<std::string>();
-    conv.text = convJson["text"].get<std::string>();
+    if (convJson.count("left") != 0)
+      conv.left = convJson["left"].get<std::string>();
+    else
+      conv.left = "None";
+    if (convJson.count("right") != 0)
+      conv.right = convJson["right"].get<std::string>();
+    else
+      conv.right = "None";
+    if (convJson.count("speaker") != 0)
+      conv.speaker = convJson["speaker"].get<std::string>();
+    else
+      conv.speaker = "";
+    if (convJson.count("text") != 0)
+      conv.text = convJson["text"].get<std::string>();
+    else
+      conv.text = "";
 
     nowChapter->talks.emplace_back(conv);
   }
-  
+
   if (nowStage != nullptr) delete nowStage;
 
-  nowStage =
-      new Obj::ObjFile(PosVec(), PosVec(), PosVec(),
-                       ApplicationPreference::modelFilePath + stageFolderName +
-                           nowChapter->stageName + ".obj");
-  nowStage->SetScale(PosVec(100, 100, 100));
+  if (nowChapter->stageName == "None" || nowChapter->stageName == "none") {
+    nowStage = nullptr;
+  } else {
+    nowStage =
+        new Obj::ObjFile(PosVec(), PosVec(), PosVec(),
+                         ApplicationPreference::modelFilePath +
+                             stageFolderName + nowChapter->stageName + ".obj");
+    nowStage->SetScale(PosVec(100, 100, 100));
+  }
   chapterText->SetString(nowChapter->chapterName);
 
   PosVec cameraPos = mapRelatives[nowChapter->stageName].cameraPos;
@@ -478,10 +516,16 @@ void Scene::StoryScene::StoreChapter() {
   }
 
   for (auto& item : charSets) {
-    Obj::ObjFile* obj =
-        new Obj::ObjFile(PosVec(), PosVec(), PosVec(), item.second);
-
-    obj->SetScale(PosVec(10, 10, 10));
+    Obj::ObjFile* obj;
+    if (item.second ==
+            ApplicationPreference::modelFilePath + "char/" + "None" + ".obj" ||
+        item.second ==
+            ApplicationPreference::modelFilePath + "char/" + "none" + ".obj") {
+      obj = nullptr;
+    } else {
+      obj = new Obj::ObjFile(PosVec(), PosVec(), PosVec(), item.second);
+      obj->SetScale(PosVec(10, 10, 10));
+    }
     charObjs.insert({item.first, obj});
   }
 

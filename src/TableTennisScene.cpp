@@ -151,6 +151,10 @@ Scene::TableTennisScene::TableTennisScene() {
       ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
   // no layer add
 
+  cooldownBox =
+      new Obj::Rectangle(PosVec(300, 300), PosVec(20, 150), true, true);
+  cooldownBox->SetInnerColor(Color255("D879EA", 0));
+
   layer2D.AddObject(null);
   layer2D.AddObject(miniuiImage);
   layer2D.AddObject(backButton);
@@ -174,6 +178,8 @@ Scene::TableTennisScene::TableTennisScene() {
 
   timer = timerMax;
   turn = 0;
+
+  cooldown = cooldownMax;
 }
 
 void Scene::TableTennisScene::Update() {
@@ -221,6 +227,19 @@ void Scene::TableTennisScene::Update() {
                                  rDestination.z, 3.f);
 
   if (isGameStart) {
+    cooldown -= Time::DeltaTime();
+    cooldownBox->ChangeValueWithAnimation(
+        &cooldownBox->GetVectorPointer(VectorType::SIZE)->y,
+        150.f * (cooldown / cooldownMax), .1f);
+    cooldownBox->SetInnerColor(Color255("D879EA"));
+
+    if (cooldown <= 0.f) {
+      cooldownBox->ChangeValueWithAnimation(
+          &cooldownBox->GetVectorPointer(VectorType::SIZE)->y, 150.f, .1f);
+      cooldownBox->SetInnerColor(Color255("3AC886"));
+      cooldown = 0.f;
+    }
+
     /***************/
     /* UI管理 */
     /***************/
@@ -257,6 +276,10 @@ void Scene::TableTennisScene::Update() {
                                      ball.GetPosition().z, 3.f);
     }
 
+    if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST &&
+        cooldown == 0.f)
+      cooldown = cooldownMax;
+
     // プレイヤーによる跳ね返り
     if (ball.GetPosition().x > canHitXstart &&
         ball.GetPosition().x < canHitXend) {
@@ -264,7 +287,7 @@ void Scene::TableTennisScene::Update() {
       null->ChangeColorWithAnimation(ball.GetAmbientPointer(),
                                      new Color255("#FF9B00"), .1f);
       if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST &&
-          isPlayerTurn) {
+          isPlayerTurn && cooldown == cooldownMax) {
         ball.SetPosition(
             PosVec((std::signbit(ball.GetPosition().x) ? -1.f : 1.f) *
                        ball.GetPosition().x,
@@ -485,6 +508,12 @@ void Scene::TableTennisScene::GameStart() {
       ApplicationPreference::windowSize.x / 2.f, .3f);
   goRect->ChangeValueWithAnimation(
       &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+  cooldown = 0.f;
+
+  layer2D.AddObject(cooldownBox);
+
+  // cooldownBox->ChangeValueWithAnimation(&cooldownBox->GetColor(ColorType::INNER)->a,
+  // 1.f, 2.f);
 }
 
 void Scene::TableTennisScene::GameOver() {
@@ -505,6 +534,11 @@ void Scene::TableTennisScene::GameOver() {
   } else if (Story::StoryModeManager::GetGameActive()) {
     Story::StoryModeManager::SetGameClear(false);
   }
+
+  layer2D.DeleteObject(cooldownBox);
+
+  // cooldownBox->ChangeValueWithAnimation(&cooldownBox->GetColor(ColorType::INNER)->a,
+  // 0.f, 2.f);
 
   timer = timerMax;
   goTimer = goTimerMax;
