@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/glut.h>
+#include <vector>
 
 #include "Color255.hpp"
 #include "PositionVector.hpp"
@@ -17,12 +18,22 @@ class Object3D {
         dt(0),
         scale(1.f, 1.f, 1.f),
         deg(0.f),
-        rotScale(0.f, 0.f, 0.f){};
+        rotScale(0.f, 0.f, 0.f),
+        isMultiRotates(false){};
   ~Object3D(){};
 
   virtual void Update() = 0;
   virtual void Draw() = 0;
 
+  void SetMultiRotates(bool _flag) { isMultiRotates = _flag; }
+  void AddMultiRotates(float _deg = 0.f, PosVec _rotScale = PosVec()) {
+    degs.emplace_back(_deg);
+    rotScales.emplace_back(_rotScale);
+  }
+  void ClearRotates() {
+    degs.clear();
+    rotScales.clear();
+  }
   void SetAmbient(Color255 _ambient) { ambient = _ambient; }
   void SetDiffuse(Color255 _diffuse) { diffuse = _diffuse; }
   void SetSpecular(Color255 _specular) { specular = _specular; }
@@ -70,6 +81,9 @@ class Object3D {
   float deg;
   PosVec rotScale;
 
+  std::vector<float> degs;
+  std::vector<PosVec> rotScales;
+
   float t;
   double dt;  // need timedelta
 
@@ -79,6 +93,8 @@ class Object3D {
   Color255 emission;
 
   float shininess[1];
+
+  bool isMultiRotates;
 };
 
 }  // namespace Obj

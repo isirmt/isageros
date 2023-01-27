@@ -29,7 +29,13 @@ void Obj::Torus::Draw() {
   glMaterialfv(GL_FRONT, GL_SPECULAR, specular.set);
   glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
   glTranslated(r.x, r.y, r.z);
-  glRotatef(deg, rotScale.x, rotScale.y, rotScale.z);
+  if (!isMultiRotates) {
+    glRotatef(deg, rotScale.x, rotScale.y, rotScale.z);
+  } else {
+    for (int i = 0; i < rotScales.size(); i++) {
+      glRotatef(degs[i], rotScales[i].x, rotScales[i].y, rotScales[i].z);
+    }
+  }
   glScalef(scale.x, scale.y, scale.z);
   glEnable(GL_NORMALIZE);
   glutSolidTorus(2.0,6.0,20,20); 
