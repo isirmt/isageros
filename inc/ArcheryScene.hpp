@@ -32,6 +32,7 @@ class ArcheryScene : public SceneBase {
   Obj::ObjFile arrow;
   Obj::ObjFile bow;
   Obj::Button* backbutton;
+  bool Mouseflag;
 
   const std::string folderName = "minigames/archery/";
 };

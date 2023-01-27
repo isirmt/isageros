@@ -66,96 +66,84 @@ Scene::ArcheryScene::ArcheryScene(){
 }
 
 void Scene::ArcheryScene::Update(){
+  PosVec ends[4] = {
+    PosVec(-1000.0, 300.0, 600.0),
+    PosVec(-1000.0, 300.0, -600.0),
+    PosVec(-1000.0,   0.0, -600.0),
+    PosVec(-1000.0,   0.0, 600.0)};
     
-    //arrow.SetRotate(90, PosVec(0,0,1));
+  
     
-    
-    
-    PosVec ends[4] = {
-    	PosVec(-1000.0, 300.0, 600.0),
-    	PosVec(-1000.0, 300.0, -600.0),
-    	PosVec(-1000.0,   0.0, -600.0),
-    	PosVec(-1000.0,   0.0, 600.0)};
-    	
-    	bool Mouseflag;
-    
-    if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
-    	Mouseflag = true;
-    	Camera::SetAsPerspective(
-       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       10, 1, 99999, PosVec(1000.0, 200.0, 0.0), PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,(((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
-      //Camera::SetAsPerspective(
-       //ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       //30, 1, 99999, PosVec(250.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
-    	Camera::UpdateCamera();
-    	printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
+  if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
+    Mouseflag = true;
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      10, 1, 99999, PosVec(1000.0, 200.0, 0.0), 
+      PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,
+      (((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
+    Camera::UpdateCamera();
+    printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
+  }
+  else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag == true ){
+    deg -= 1 * Time::DeltaTime();
+    if (deg > 360) deg -= 360;
+    arrow.SetPosition(arrow.GetPosition());
+    arrow.SetVelocity(PosVec(-1000.0, 0.0, 0.0));
+    arrow.SetAcceleration(PosVec(0.0, -1500.0, 0.0));
+    arrow.SetRotate(deg, PosVec(1,0,0));
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(arrow.GetPosition().x+30,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
+    Camera::UpdateCamera();
+    printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
+    if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
+      arrow.SetPosition(arrow.GetPosition());
+      arrow.SetVelocity(PosVec());
+      arrow.SetAcceleration(PosVec());
+      arrow.SetRotate(0, PosVec());
+      Mouseflag = false;
     }
-    else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag == true ){
-    	deg -= 1 * Time::DeltaTime();
-    	if (deg > 360) deg -= 360;
-    	arrow.SetPosition(arrow.GetPosition());
-    	arrow.SetVelocity(PosVec(-1000.0, 0.0, 0.0));
-    	arrow.SetAcceleration(PosVec(0.0, -1500.0, 0.0));
-			arrow.SetRotate(deg, PosVec(1,0,0));
-    	Camera::SetAsPerspective(
-       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       30, 1, 99999, PosVec(arrow.GetPosition().x+30,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
-      Camera::UpdateCamera();
-      printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
-      if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
-        arrow.SetPosition(arrow.GetPosition());
-    	  arrow.SetVelocity(PosVec());
-    	  arrow.SetAcceleration(PosVec());
-			  arrow.SetRotate(0, PosVec());
-        Mouseflag = false;
-      }
-    }else{
-      Camera::SetAsPerspective(
-       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-       30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
-      Camera::UpdateCamera();
-    }
+  }else{
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+    Camera::UpdateCamera();
+  }
     
-    arrow.Update();
-    //cube.Update();
-    centerCube.Update();
-    stage.Update();
-    bow.Update();
+  arrow.Update();
+  //cube.Update();
+  centerCube.Update();
+  stage.Update();
+  bow.Update();
 
-    layer2D.Collide();
+  layer2D.Collide();
 
-    if (backbutton->GetMouseSelected()) {
-        backbutton->SetMouseOff();
-        SceneManager::ChangeScene(new TitleScene());
-        return;
-    }
+  if (backbutton->GetMouseSelected()) {
+    backbutton->SetMouseOff();
+    SceneManager::ChangeScene(new TitleScene());
+    return;
+  }
 
-    layer2D.Update();
+  layer2D.Update();
    
 }
 
 void Scene::ArcheryScene::Draw(){
-		SceneBase::Set3DDrawMode();
+	SceneBase::Set3DDrawMode();
   Camera::SetPerspectiveMode(true);
   Camera::UpdateCamera();
 
   glPushMatrix(); // 3D描画
   {
     glPushMatrix();
-    glRotatef(90, 0,0,0);
     arrow.Draw();
     glPopMatrix();
   }
-  arrow.Draw();
+  //arrow.Draw();
   bow.Draw();
   //cube.Draw();
   stage.Draw();
-  {
-    glPushMatrix();
-    centerCube.Draw();
-    glPopMatrix();
-  }
-  //character.Draw();
+  
   glPopMatrix();
 
   SceneBase::Set2DDrawMode();
