@@ -78,6 +78,10 @@ Scene::TableTennisScene::TableTennisScene() {
   rulePics.emplace_back(nImage);
   nImage = new Obj::Image(
       ruleImageOffset, ruleImageSize,
+      ApplicationPreference::imgFilePath + "minigames/tabletennis/rule3.ppm");
+  rulePics.emplace_back(nImage);
+  nImage = new Obj::Image(
+      ruleImageOffset, ruleImageSize,
       ApplicationPreference::imgFilePath + "minigames/tabletennis/rule2.ppm");
   rulePics.emplace_back(nImage);
 
