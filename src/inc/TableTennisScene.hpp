@@ -76,13 +76,17 @@ class TableTennisScene : public SceneBase {
   Obj::Rectangle* ruleBack;
   Obj::Text* ruleText;
 
+  Obj::Rectangle* cooldownBox;
+
   bool isGameStart;
   bool isPlayerTurn;
 
   const float timerMax = 2.f;
   const float goTimerMax = 5.f;
+  const float cooldownMax = .5f;
   float timer;
   float goTimer;
+  float cooldown;
 
   const int turnMax = 3;
   int turn;

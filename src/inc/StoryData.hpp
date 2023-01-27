@@ -14,6 +14,7 @@ struct Chapter {
   std::string chapterName;
   std::string stageName;
   std::string gotoScene;
+  int gameMode;
   std::vector<Conversation> talks;
 };
 }  // namespace Story

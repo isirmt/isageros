@@ -209,8 +209,8 @@
           "text": "ここの魔物はやはり強いな。...ん？"
         },
         {
-          "left": "subLeader",
-          "right": "monster",
+          "left": "monster",
+          "right": "subLeader",
           "speaker": "魔物",
           "text": "ぐぁおぉぉー！！"
         },
@@ -227,8 +227,8 @@
           "text": "隊長！！"
         },
         {
-          "left": "subLeader",
-          "right": "Leader",
+          "left": "Leader",
+          "right": "monster",
           "speaker": "魔物",
           "text": "（ボカーン！）"
         }
@@ -328,7 +328,6 @@
       "talks": [
         {
           "left": "formerLeader",
-          "right": "Leader",
           "speaker": "ブルータス元隊長",
           "text": "これは...イサゲロス王国の兵士の死体...？"
         }
@@ -341,7 +340,6 @@
       "talks": [
         {
           "left": "subLeader",
-          "right": "None",
           "speaker": "ネイネス副隊長",
           "text": "いてて。あれ、なんで僕は倒れてたんだ...？そうだ、僕が油断したせいで隊長が！"
         }
@@ -379,20 +377,19 @@
       ]
     },
     {
-      "chapterName": "ブルータスと戦う",
+      "chapterName": "ブルータスを操作する",
       "stageName": "cave2",
       "goto": "next",
       "talks": [
         {
           "left": "formerLeader",
           "right": "subLeader",
-          "speaker": "ネイネス副隊長",
-          "text": "[ブルータスと戦う]"
+          "text": "[ブルータスを操作する]"
         }
       ]
     },
     {
-      "chapterName": "ブルータスと戦う",
+      "chapterName": "ブルータスを操作する",
       "stageName": "cave2",
       "goto": "sumo",
       "talks": [
@@ -422,23 +419,33 @@
           "text": "はぁ。はぁ。どうやって兵士たちに真実を伝えられるんだ？俺はこのまま何も知らない兵士たちを殺し続けるのか。それじゃ魔物と変わらないじゃないか。"
         },
         {
-          "left": "None",
-          "right": "None",
-          "speaker": "None",
           "text": "王の人類魔物化計画に気づいたブルータスは、これからも兵士たちを殺し続けることを恐れ、自害した。"
         }
       ]
     },
     {
-      "chapterName": "ブルータスと和解する",
+      "chapterName": "ネイネスを操作する",
       "stageName": "cave2",
       "goto": "next",
       "talks": [
         {
           "left": "formerLeader",
           "right": "subLeader",
+          "text": "[ネイネスを操作する]"
+        }
+      ]
+    },
+    {
+      "chapterName": "ネイネスを操作する",
+      "stageName": "cave2",
+      "goto": "sumo",
+      "gameMode": 1,
+      "talks": [
+        {
+          "left": "formerLeader",
+          "right": "subLeader",
           "speaker": "ネイネス副隊長",
-          "text": "[ブルータスと和解する]"
+          "text": "...!!"
         }
       ]
     },
@@ -478,23 +485,17 @@
           "text": "兵士専用の食料は妙だと思ってたけど、まさか...僕の腕が...足が..."
         },
         {
-          "left": "None",
-          "right": "None",
-          "speaker": "None",
           "text": "真実を知ったネイネスも魔物となった。やがて、全ての兵士が魔物になり、国は潰れ、カエサルの計画通り魔物の王国となった。"
         }
       ]
     },
     {
-      "chapterName": "(最初から王国にいる)",
+      "chapterName": "はじめから",
       "stageName": "None",
       "goto": "next",
       "talks": [
         {
-          "left": "None",
-          "right": "None",
-          "speaker": "None",
-          "text": "(最初から王国にいる)"
+          "text": "はじめから"
         }
       ]
     },
