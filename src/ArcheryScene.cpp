@@ -102,6 +102,13 @@ void Scene::ArcheryScene::Update(){
        30, 1, 99999, PosVec(arrow.GetPosition().x+30,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
       Camera::UpdateCamera();
       printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
+      if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
+        arrow.SetPosition(arrow.GetPosition());
+    	  arrow.SetVelocity(PosVec());
+    	  arrow.SetAcceleration(PosVec());
+			  arrow.SetRotate(0, PosVec());
+        Mouseflag = false;
+      }
     }else{
       Camera::SetAsPerspective(
        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
