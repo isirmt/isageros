@@ -25,52 +25,52 @@ class Object3D {
   virtual void Update() = 0;
   virtual void Draw() = 0;
 
-  void SetMultiRotates(bool _flag) { isMultiRotates = _flag; }
-  void AddMultiRotates(float _deg = 0.f, PosVec _rotScale = PosVec()) {
+  inline void SetMultiRotates(bool _flag) { isMultiRotates = _flag; }
+  inline void AddMultiRotates(float _deg = 0.f, PosVec _rotScale = PosVec()) {
     degs.emplace_back(_deg);
     rotScales.emplace_back(_rotScale);
   }
-  void ClearRotates() {
+  inline void ClearRotates() {
     degs.clear();
     rotScales.clear();
   }
-  void SetAmbient(Color255 _ambient) { ambient = _ambient; }
-  void SetDiffuse(Color255 _diffuse) { diffuse = _diffuse; }
-  void SetSpecular(Color255 _specular) { specular = _specular; }
-  void SetEmission(Color255 _emission) { emission = _emission; }
+  inline void SetAmbient(Color255 _ambient) { ambient = _ambient; }
+  inline void SetDiffuse(Color255 _diffuse) { diffuse = _diffuse; }
+  inline void SetSpecular(Color255 _specular) { specular = _specular; }
+  inline void SetEmission(Color255 _emission) { emission = _emission; }
   // 0~127
-  void SetShininess(float _shininess) { shininess[0] = _shininess; }
-  void SetScale(PosVec _scale = PosVec(1.f, 1.f, 1.f)) { scale = _scale; }
+  inline void SetShininess(float _shininess) { shininess[0] = _shininess; }
+  inline void SetScale(PosVec _scale = PosVec(1.f, 1.f, 1.f)) { scale = _scale; }
   // 位置を変えるだけ
-  void SetPosition(PosVec _r) { r = _r; }
+  inline void SetPosition(PosVec _r) { r = _r; }
   // 速度を変えるだけ
-  void SetVelocity(PosVec _v) { v = _v; }
+  inline void SetVelocity(PosVec _v) { v = _v; }
   // 加速度を変えるだけ
-  void SetAcceleration(PosVec _a) { a = _a; }
-  void SetRotate(float _deg = 0.f, PosVec _rotScale = PosVec()) {
+  inline void SetAcceleration(PosVec _a) { a = _a; }
+  inline void SetRotate(float _deg = 0.f, PosVec _rotScale = PosVec()) {
     deg = _deg;
     rotScale = _rotScale;
   }
 
-  Color255 GetAmbient() { return ambient; }
-  Color255* GetAmbientPointer() { return &ambient; }
-  Color255 GetDiffuse() { return diffuse; }
-  Color255* GetDiffusePointer() { return &diffuse; }
-  Color255 GetSpecular() { return specular; }
-  Color255* GetSpecularPointer() { return &specular; }
-  Color255 GetEmission() { return emission; }
-  float GetShininess() { return shininess[0]; }
-  PosVec GetScale() { return scale; }
-  PosVec* GetScalePointer() { return &scale; }
-  PosVec GetPosition() { return r; }
-  PosVec* GetPositionPointer() { return &r; }
-  PosVec GetVelocity() { return v; }
-  PosVec* GetVelocityPointer() { return &v; }
-  PosVec GetAcceleration() { return a; }
-  PosVec* GetAccelerationPointer() { return &a; }
-  float GetRotateDegree() { return deg; }
-  PosVec GetRotateScale() { return rotScale; }
-  PosVec* GetRotateScalePointer() { return &rotScale; }
+  inline Color255 GetAmbient() { return ambient; }
+  inline Color255* GetAmbientPointer() { return &ambient; }
+  inline Color255 GetDiffuse() { return diffuse; }
+  inline Color255* GetDiffusePointer() { return &diffuse; }
+  inline Color255 GetSpecular() { return specular; }
+  inline Color255* GetSpecularPointer() { return &specular; }
+  inline Color255 GetEmission() { return emission; }
+  inline float GetShininess() { return shininess[0]; }
+  inline PosVec GetScale() { return scale; }
+  inline PosVec* GetScalePointer() { return &scale; }
+  inline PosVec GetPosition() { return r; }
+  inline PosVec* GetPositionPointer() { return &r; }
+  inline PosVec GetVelocity() { return v; }
+  inline PosVec* GetVelocityPointer() { return &v; }
+  inline PosVec GetAcceleration() { return a; }
+  inline PosVec* GetAccelerationPointer() { return &a; }
+  inline float GetRotateDegree() { return deg; }
+  inline PosVec GetRotateScale() { return rotScale; }
+  inline PosVec* GetRotateScalePointer() { return &rotScale; }
 
  protected:
   PosVec r;

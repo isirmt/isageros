@@ -18,42 +18,42 @@ struct Color255 {
     };
     float set[4];
   };
-  Color255() : rInt(0), gInt(0), bInt(0), aInt(255) { CalcFloat(); }
-  Color255(int _grayScale)  // グレースケール(0~255)
+  inline Color255() : rInt(0), gInt(0), bInt(0), aInt(255) { CalcFloat(); }
+  inline Color255(int _grayScale)  // グレースケール(0~255)
       : rInt(_grayScale), gInt(_grayScale), bInt(_grayScale), aInt(255) {
     CalcFloat();
   }
-  Color255(int _grayScale, int _a)  // グレースケール(0~255), アルファ(0~255)
+  inline Color255(int _grayScale, int _a)  // グレースケール(0~255), アルファ(0~255)
       : rInt(_grayScale), gInt(_grayScale), bInt(_grayScale), aInt(_a) {
     CalcFloat();
   }
-  Color255(int _r, int _g, int _b)  // (r, g, b) each (0~255)
+  inline Color255(int _r, int _g, int _b)  // (r, g, b) each (0~255)
       : rInt(_r), gInt(_g), bInt(_b), aInt(255) {
     CalcFloat();
   }
-  Color255(int _r, int _g, int _b, int _a)  // (r, g, b, alpha) each (0~255)
+  inline Color255(int _r, int _g, int _b, int _a)  // (r, g, b, alpha) each (0~255)
       : rInt(_r), gInt(_g), bInt(_b), aInt(_a) {
     CalcFloat();
   }
-  Color255(float _r, float _g, float _b)  // (r, g, b) each (0~255)
+  inline Color255(float _r, float _g, float _b)  // (r, g, b) each (0~255)
       : r(_r), g(_g), b(_b), a(1.f) {
     CalcInt();
   }
-  Color255(float _r, float _g, float _b,
+  inline Color255(float _r, float _g, float _b,
            float _a)  // (r, g, b, alpha) each (0~255)
       : r(_r), g(_g), b(_b), a(_a) {
     CalcInt();
   }
-  Color255(double _r, double _g, double _b)  // (r, g, b) each (0~255)
+  inline Color255(double _r, double _g, double _b)  // (r, g, b) each (0~255)
       : r(_r), g(_g), b(_b), a(1.f) {
     CalcInt();
   }
-  Color255(double _r, double _g, double _b,
+  inline Color255(double _r, double _g, double _b,
            float _a)  // (r, g, b, alpha) each (0~255)
       : r(_r), g(_g), b(_b), a(_a) {
     CalcInt();
   }
-  Color255(std::string code)  // ("#00ff00"{or "00ff00"})
+  inline Color255(std::string code)  // ("#00ff00"{or "00ff00"})
       : aInt(255) {
     std::string formalCode = code;
     formalCode = SplitSharp(formalCode);
@@ -72,7 +72,7 @@ struct Color255 {
 
     CalcFloat();
   }
-  Color255(std::string code,
+  inline Color255(std::string code,
            int _a)  // ("#00ff00"{or "00ff00"}, alpha) alpha:(0~255)
       : aInt(_a) {
     std::string formalCode = code;
@@ -94,36 +94,36 @@ struct Color255 {
   }
 
   // パラメータを再計算
-  void CalcFloat() {
+  inline void CalcFloat() {
     r = (double)rInt / 255.;
     g = (double)gInt / 255.;
     b = (double)bInt / 255.;
     a = (double)aInt / 255.;
   }
 
-  void CalcInt() {
+  inline void CalcInt() {
     rInt = (int)(r * 255.f);
     gInt = (int)(g * 255.f);
     bInt = (int)(b * 255.f);
     aInt = (int)(a * 255.f);
   }
 
-  Color255 operator*(float v) {
+  inline Color255 operator*(float v) {
     Color255 res = Color255(r * v, g * v, b * v, a);
     CalcInt();
     return res;
   }
-  Color255 operator/(float v) {
+  inline Color255 operator/(float v) {
     float vInv = 1.0f / v;
     Color255 res = Color255(r * vInv, g * vInv, b * vInv, a);
     CalcInt();
     return res;
   }
 
-  operator float *() { return (float *)&r; }
-  operator const float *() { return (const float *)&r; }
+  inline operator float *() { return (float *)&r; }
+  inline operator const float *() { return (const float *)&r; }
 
-  Color255 &operator=(const Color255 &color255) {
+  inline Color255 &operator=(const Color255 &color255) {
     r = color255.r;
     g = color255.g;
     b = color255.b;
@@ -137,7 +137,7 @@ struct Color255 {
   }
 
  private:
-  std::string SplitSharp(std::string code) {
+  inline std::string SplitSharp(std::string code) {
     std::string result = code;
     if (code.find("#") != std::string::npos) {
       result = code.substr(1);

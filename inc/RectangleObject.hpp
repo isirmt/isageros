@@ -6,7 +6,7 @@
 namespace Obj {
 class Rectangle : public Object2D {
  public:
-  Rectangle(PosVec _pos, PosVec _size, bool _enabledFill = true,
+  inline Rectangle(PosVec _pos, PosVec _size, bool _enabledFill = true,
                   bool _enabledOutline = false)
       : Object2D(_pos, _size),
         enabledFill(_enabledFill),
@@ -16,7 +16,7 @@ class Rectangle : public Object2D {
         outlineWidth(0),
         currentInnerColor(0) {}
 
-  Rectangle()
+  inline Rectangle()
       : Object2D(PosVec(), PosVec()),
         enabledFill(true),
         enabledOutline(false),
@@ -26,20 +26,20 @@ class Rectangle : public Object2D {
         currentInnerColor(0) {}
 
   // 色有効化無効化
-  bool SetEnabledFill(bool _enabled) {
+  inline bool SetEnabledFill(bool _enabled) {
     enabledFill = _enabled;
     return true;
   }
-  bool SetEnabledFill() { return enabledFill; }
-  bool SetEnabledOutline(bool _enabled, float _outlineWidth = 1) {
+  inline bool SetEnabledFill() { return enabledFill; }
+  inline bool SetEnabledOutline(bool _enabled, float _outlineWidth = 1) {
     enabledOutline = _enabled;
     outlineWidth = (enabledOutline) ? _outlineWidth : 0;
     return true;
   }
-  bool SetEnabledOutline() { return enabledOutline; }
+  inline bool SetEnabledOutline() { return enabledOutline; }
 
   // 色情報登録等
-  bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
+  inline bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
     innerColor = _innerColor;
     if (_defaultFill) {
       innerAnimation.current = innerColor;
@@ -48,7 +48,7 @@ class Rectangle : public Object2D {
     return true;
   }
   // アウトラインを表示する際はtrueになっているかをチェック
-  bool SetOutlineColor(Color255 _outerColor, float _outlineWidth,
+  inline bool SetOutlineColor(Color255 _outerColor, float _outlineWidth,
                        bool _defaultFill = true) {
     outerColor = _outerColor;
     if (_defaultFill) {
@@ -58,7 +58,7 @@ class Rectangle : public Object2D {
     return true;
   }
 
-  Color255* GetColor(ColorType type) {
+  inline Color255* GetColor(ColorType type) {
     switch (type) {
       case ColorType::INNER:
         return &innerColor;

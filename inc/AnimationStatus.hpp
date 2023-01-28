@@ -14,7 +14,7 @@ struct AnimationColorStatus {
   float elapsedTime;
   float currentlyRate;
 
-  AnimationColorStatus()
+  inline AnimationColorStatus()
       : animationEnabled(false),
         current(0),
         m({}),
@@ -37,7 +37,7 @@ struct AnimationStatus {
   float elapsedTime;
   float currentlyRate;
 
-  AnimationStatus()
+  inline AnimationStatus()
       : animationEnabled(false),
         current(0.f),
         m(0.f),
