@@ -17,9 +17,6 @@ Scene::SumoScene::SumoScene(){
     stage.SetShininess(20);
     stage.SetRotate(45, PosVec(0, 1, 0));
 
-    text_2 = new Obj::Text(PosVec(100.0, 475.0), PosVec(), "Are you Ready?");
-    text_2->SetInnerColor(Color255(250, 250, 250));
-
     miniuiImage = new Obj::Image(
         PosVec(0, 30), PosVec(75, 190),
         ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
@@ -37,15 +34,13 @@ Scene::SumoScene::SumoScene(){
     startbutton->SetInnerColor(innerCol, innerCol * 0.8, innerCol * 0.65, innerCol * 0.75);
     startbutton->SetOutlineColor(Color255(35, 57, 40), 5.f);
     startbutton->SetInnerAnimation(.2f);
-    layer2D.AddObject(startbutton);
 
-    //layer2D.AddObject(text);
-    layer2D.AddObject(text_2);
     layer2D.AddObject(backbutton);
     layer2D.AddObject(startbutton);
 
     gamestart = false;
     ruleView = false;
+    flag = false;
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
                 ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
@@ -113,28 +108,28 @@ void Scene::SumoScene::Update(){
     enemy.Update();
 
     if(Story::StoryModeManager::GetGameModeNum() == 1 && !gamestart){
-        player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
+        player = Obj::ObjFile(PosVec(470, 106.0, -70.0), PosVec(), PosVec(), 
                     ApplicationPreference::modelFilePath + "char/subLeader.obj");
         player.SetScale(PosVec(10, 10, 10));
         player.SetShininess(10);
         player.SetRotate(-45, PosVec(0, 1, 0));
 
-        enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
-                    ApplicationPreference::modelFilePath + "char/chara.obj");
-        enemy.SetScale(PosVec(5, 5, 5));
+        enemy = Obj::ObjFile(PosVec(-10.0, 105.0, 410.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/formerLeader.obj");
+        enemy.SetScale(PosVec(10, 10, 10));
         enemy.SetShininess(10);
         enemy.SetRotate(-225, PosVec(0, 1, 0));
     }
     else if(Story::StoryModeManager::GetGameModeNum() == 0 && !gamestart){
-        player = Obj::ObjFile(PosVec(465, 201.0, -65.0), PosVec(), PosVec(), 
-                    ApplicationPreference::modelFilePath + "char/chara.obj");
+        player = Obj::ObjFile(PosVec(470, 106.0, -70.0), PosVec(), PosVec(), 
+                    ApplicationPreference::modelFilePath + "char/formerLeader.obj");
         player.SetScale(PosVec(10, 10, 10));
         player.SetShininess(10);
         player.SetRotate(-45, PosVec(0, 1, 0));
 
-        enemy = Obj::ObjFile(PosVec(-10.0, 200.0, 410.0), PosVec(), PosVec(), 
+        enemy = Obj::ObjFile(PosVec(-10.0, 105.0, 410.0), PosVec(), PosVec(), 
                     ApplicationPreference::modelFilePath + "char/subLeader.obj");
-        enemy.SetScale(PosVec(5, 5, 5));
+        enemy.SetScale(PosVec(10, 10, 10));
         enemy.SetShininess(10);
         enemy.SetRotate(-225, PosVec(0, 1, 0));
     }
@@ -146,8 +141,7 @@ void Scene::SumoScene::Update(){
         clickCount = 0;
         startbutton->SetEnabled(false);
         ruleButton->SetEnabled(false);
-        text->SetString("Now Playing.");
-        text_2->SetString("");
+        text->SetString("Fight!!");
 
         ruleView = false;
         RuleMode();
@@ -187,52 +181,59 @@ void Scene::SumoScene::Update(){
     if(gamestart){
         if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
 
-        if(player.GetPosition().y > 200.0){
-            player.SetPosition(PosVec(265, 200.0, 135.0));
+        if(player.GetPosition().y > 105.0){
+            player.SetPosition(PosVec(220, 105.0, 90.0));
             player.SetVelocity(PosVec(-100.0, 0.0, 100.0));
-            enemy.SetPosition(PosVec(190.0, 200.0, 210.0));
+            enemy.SetPosition(PosVec(140.0, 105.0, 160.0));
             enemy.SetVelocity(PosVec(100.0, 0.0, -100.0));
         } 
         
-        if(player.GetPosition().x < enemy.GetPosition().x + 25.0){
+        if(player.GetPosition().x < enemy.GetPosition().x + 35.0){
             player.SetVelocity(PosVec(20.0, 0.0, -20.0));
             enemy.SetVelocity(PosVec(20.0, 0.0, -20.0));
+            flag = true;
         }
 
-        if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST){
+        if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && flag){
             pushPower += 10.0;
             clickCount++;
             player.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
             enemy.SetVelocity(PosVec(-pushPower, 0.0, pushPower));
         }
 
-        if(enemy.GetPosition().x <= 15.0 && enemy.GetPosition().z >= 385.0 || 
-            player.GetPosition().x >= 440.0 && player.GetPosition().z <= -40.0){
+        if(enemy.GetPosition().x <= 50.0 && enemy.GetPosition().z >= 350.0 || 
+            player.GetPosition().x >= 405.0 && player.GetPosition().z <= -5.0){
             gamestart = false;
+            flag = false;
             startbutton->SetEnabled(true);
             ruleButton->SetEnabled(true);
             
-            text_2->SetString("Click_count : " + std::to_string(clickCount));
-            if(enemy.GetPosition().x <= 15.0 && Story::StoryModeManager::GetGameActive()){
-                text->SetString("Winner!!!");
-                Story::StoryModeManager::SetGameClear(true);
-                Story::StoryModeManager::SavePlusStep();
-                layer2D.DeleteObject(quotaImage);
-                layer2D.AddObject(quotaImage);
-                startbutton->SetEnabled(false);
-                ruleButton->SetEnabled(false);
-                quotaImage->ChangeValueWithAnimation(
-                    &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
+            if(enemy.GetPosition().x <= 50.0){
+                text->SetString("Winner!!!  クリックした回数 : " + std::to_string(clickCount));
+                if(Story::StoryModeManager::GetGameActive()){
+                    Story::StoryModeManager::SetGameClear(true);
+                    Story::StoryModeManager::SavePlusStep();
+                    layer2D.DeleteObject(quotaImage);
+                    layer2D.AddObject(quotaImage);
+                    startbutton->SetEnabled(false);
+                    ruleButton->SetEnabled(false);
+                    quotaImage->ChangeValueWithAnimation(
+                        &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
+                }
             }
-            if(player.GetPosition().x >= 440.0 && Story::StoryModeManager::GetGameActive()){
-                text->SetString("Lose...");
-                Story::StoryModeManager::SetGameClear(false);
+            if(player.GetPosition().x >= 405.0){
+                text->SetString("Lose...    クリックした回数 : " + std::to_string(clickCount));
+                if(Story::StoryModeManager::GetGameActive()){
+                    Story::StoryModeManager::SetGameClear(false);
+                }
             }
 
-            player.SetPosition(PosVec(465, 201.0, -65.0));
-            enemy.SetPosition(PosVec(-10.0, 200.0, 410.0));
+            player.SetPosition(PosVec(470, 106.0, -70.0));
+            enemy.SetPosition(PosVec(-10.0, 105.0, 410.0));
             player.SetVelocity(PosVec(0.0, 0.0, 0.0));
             enemy.SetVelocity(PosVec(0.0, 0.0, 0.0));
+
+            goTimer = goTimerMax;
 
             layer2D.DeleteObject(goRect);
             layer2D.AddObject(goRect);
@@ -250,6 +251,20 @@ void Scene::SumoScene::Update(){
                 &goRect->GetVectorPointer(VectorType::POS)->y,
                 ApplicationPreference::windowSize.y / 4.f, 5.f);
         }
+    }
+
+    goTimer -= Time::DeltaTime();
+    if (goTimer < 0) {
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->x,
+          ApplicationPreference::windowSize.x / 2.f, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+      if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
     }
 
     if (backbutton->GetMouseSelected()) {
