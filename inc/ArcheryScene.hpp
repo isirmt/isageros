@@ -12,7 +12,7 @@ class ArcheryScene : public SceneBase {
  public:
   // GameScene() {}
   ArcheryScene();
-  ~ArcheryScene() {}
+  inline ~ArcheryScene() {}
 
   void Update() override;
   void Draw() override;

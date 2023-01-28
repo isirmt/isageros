@@ -83,7 +83,7 @@ class Object2D {
   virtual ~Object2D();
 
  protected:
-  void CheckGUID() { /*if (ObjectOverlapping::GetGUID() != guid)
+  inline void CheckGUID() { /*if (ObjectOverlapping::GetGUID() != guid)
                         SetNoMouseWithClick();*/
   }  // オブジェクト重なり判定において一番上ではなかった場合選択を解除する(推奨呼び出し)
   void UpdateEnforcedMouseCollision();
@@ -173,11 +173,11 @@ class Object2D {
   virtual void Draw() = 0;
   virtual void Collide() = 0;
 
-  PosVec GetPos() { return pos; }
+  inline PosVec GetPos() { return pos; }
   PosVec GetLocalPos();
-  PosVec GetSize() { return size; }
+  inline PosVec GetSize() { return size; }
 
-  PosVec* GetVectorPointer(VectorType type) {
+  inline PosVec* GetVectorPointer(VectorType type) {
     switch (type) {
       case VectorType::POS:
         return &pos;
@@ -192,41 +192,41 @@ class Object2D {
     }
   }
 
-  bool GetCanvasOwner() { return canvasOwner; }
-  int GetCanvasId() { return canvasId; }
+  inline bool GetCanvasOwner() { return canvasOwner; }
+  inline int GetCanvasId() { return canvasId; }
 
-  bool SetEnabled(bool _enabled) {
+  inline bool SetEnabled(bool _enabled) {
     enabled = _enabled;
     return true;
   }
-  bool SetEnabled() { return enabled; }
+  inline bool SetEnabled() { return enabled; }
 
   // 上にレイヤが重なっていた場合の解除処理
-  bool SetNoMouse() {
+  inline bool SetNoMouse() {
     mouseHit = false;
     return true;
   }
-  bool SetNoMouseWithClick() {
+  inline bool SetNoMouseWithClick() {
     mouseHit = false;
     mouseClicked = false; /*beCalledNoMouse = true;*/
     return true;
   }
 
   // マウス入力解除(Selectedなどの任意の分岐後に呼び出し等)
-  bool SetMouseOff() {
+  inline bool SetMouseOff() {
     mouseClicked = false;
     mouseSelected = false;
     return true;
   }
 
   // マウス判定系取得
-  bool GetMouseHit() { return mouseHit; }
-  bool GetMouseClicked() { return mouseClicked; }
-  bool GetMouseSelected() { return mouseSelected; }
+  inline bool GetMouseHit() { return mouseHit; }
+  inline bool GetMouseClicked() { return mouseClicked; }
+  inline bool GetMouseSelected() { return mouseSelected; }
 
-  void SetMouseHit(bool flag) { enforcedHovered = flag; }
-  void SetMouseClicked(bool flag) { enforcedClicked = flag; }
-  void SetMouseSelected(bool flag) { enforcedSelected = flag; }
+  inline void SetMouseHit(bool flag) { enforcedHovered = flag; }
+  inline void SetMouseClicked(bool flag) { enforcedClicked = flag; }
+  inline void SetMouseSelected(bool flag) { enforcedSelected = flag; }
 
   void ChangeColorWithAnimation(Color255* pColor, Color255* endColor,
                                 float duration);
@@ -235,24 +235,24 @@ class Object2D {
 
   void SetCanvasId(int id);
 
-  void SetImageHandle(int handle = -1) { imageHandle = handle; }
-  int GetImageHandle() { return imageHandle; }
+  inline void SetImageHandle(int handle = -1) { imageHandle = handle; }
+  inline int GetImageHandle() { return imageHandle; }
 
-  void SetImageOffset(PosVec offset) { imageOffset = offset; }
-  void SetImageSize(PosVec size) { imageSize = size; }
-  void SetImageAngle(double angle) { imageAngle = angle; }
-  void SetImageTurnFlag(bool turnX = false, bool turnY = false) {
+  inline void SetImageOffset(PosVec offset) { imageOffset = offset; }
+  inline void SetImageSize(PosVec size) { imageSize = size; }
+  inline void SetImageAngle(double angle) { imageAngle = angle; }
+  inline void SetImageTurnFlag(bool turnX = false, bool turnY = false) {
     imageTurnFlagX = turnX;
     imageTurnFlagY = turnY;
   }
-  void SetImageCenter(PosVec center) { imageCenter = center; }
+  inline void SetImageCenter(PosVec center) { imageCenter = center; }
 
-  void SetEnforcedCollision(int _enforcedCollision = 1) {
+  inline void SetEnforcedCollision(int _enforcedCollision = 1) {
     enforcedCollision = _enforcedCollision;
   }
 
   // アニメーション設定
-  bool SetInnerAnimation(float _duration) {
+  inline bool SetInnerAnimation(float _duration) {
     innerAnimation.animationEnabled = true;
     innerAnimation.duration = _duration;
     innerAnimation.durationRemain = _duration;
@@ -267,13 +267,13 @@ class Object2D {
     imageAlphaAnimation.elapsedTime = 0.f;
     return true;
   }
-  bool SetInnerAnimation() {
+  inline bool SetInnerAnimation() {
     innerAnimation.animationEnabled = false;
     innerAlphaAnimation.animationEnabled = false;
     return true;
   }
 
-  bool SetOuterAnimation(float _duration) {
+  inline bool SetOuterAnimation(float _duration) {
     outerAnimation.animationEnabled = true;
     outerAnimation.duration = _duration;
     outerAnimation.durationRemain = _duration;
@@ -284,14 +284,14 @@ class Object2D {
     outerAlphaAnimation.elapsedTime = 0.f;
     return true;
   }
-  bool SetOuterAnimation() {
+  inline bool SetOuterAnimation() {
     outerAnimation.animationEnabled = false;
     outerAlphaAnimation.animationEnabled = false;
     return true;
   }
 
   // alpha値のみ適用される
-  bool SetImageAlpha(Color255 _alpha) {
+  inline bool SetImageAlpha(Color255 _alpha) {
     defaultImageColor = _alpha;
     hoveredImageColor = _alpha;
     clickedImageColor = _alpha;
@@ -304,7 +304,7 @@ class Object2D {
   }
 
   // alpha値のみ適用される
-  bool SetImageAlpha(Color255 _alpha, Color255 _hoveredColor,
+  inline bool SetImageAlpha(Color255 _alpha, Color255 _hoveredColor,
                      Color255 _clickedColor, Color255 _selectedColor) {
     defaultImageColor = _alpha;
     hoveredImageColor = _hoveredColor;
@@ -318,13 +318,13 @@ class Object2D {
   }
 
   // 親(自分)のみ移動(絶対値)
-  bool SetPos(PosVec _pos) {
+  inline bool SetPos(PosVec _pos) {
     pos = _pos;
     return true;
   }
   void SetLocalPos(PosVec _localPos);
 
-  bool SetSize(PosVec _size) {
+  inline bool SetSize(PosVec _size) {
     size = _size;
     return true;
   }
@@ -334,7 +334,7 @@ class Object2D {
 
   // 子要素登録
   virtual bool RegisterChildren(Object2D* _object);
-  virtual bool DeleteAllChildren() {
+  inline virtual bool DeleteAllChildren() {
     children.clear();
     return true;
   }
@@ -342,7 +342,7 @@ class Object2D {
   // ※childrenの関数を呼ぶため予めRegisterChildrenが必要
   virtual bool RegisterParent(Object2D* _object);
 
-  void SetTag(std::string _tag) { tag = _tag; }
-  std::string GetTag() { return tag; }
+  inline void SetTag(std::string _tag) { tag = _tag; }
+  inline std::string GetTag() { return tag; }
 };
 }  // namespace Obj

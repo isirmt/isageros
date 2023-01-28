@@ -9,9 +9,9 @@ class Camera {
   Camera() {}
   ~Camera() {}
 
-  static void SetActive(bool _isActive = true) { isActive = _isActive; }
+  inline static void SetActive(bool _isActive = true) { isActive = _isActive; }
 
-  static void SetAsPerspective(float _wph, float _fov, float _near, float _far,
+  inline static void SetAsPerspective(float _wph, float _fov, float _near, float _far,
                                PosVec _pos = PosVec(),
                                PosVec _lookAt = PosVec(),
                                PosVec _vec = PosVec()) {
@@ -25,32 +25,32 @@ class Camera {
     isPerspective = true;
     UpdateCamera();
   }
-  static void SetAsOrtho(PosVec _from, PosVec _to) {
+  inline static void SetAsOrtho(PosVec _from, PosVec _to) {
     from = _from;
     to = _to;
     isPerspective = false;
   }
   // for perspective
-  static void SetCameraPos(PosVec _pos) {
+  inline static void SetCameraPos(PosVec _pos) {
     r = _pos;
     UpdateCamera();
   }
   // for perspective
-  static void SetCameraLookAt(PosVec _lookAt) {
+  inline static void SetCameraLookAt(PosVec _lookAt) {
     lookAt = _lookAt;
     UpdateCamera();
   }
   // for perspective
-  static void SetCameraVec(PosVec _vec) {
+  inline static void SetCameraVec(PosVec _vec) {
     vec = _vec;
     UpdateCamera();
   }
 
-  static void SetPerspectiveMode(bool _isPerspective) {
+  inline static void SetPerspectiveMode(bool _isPerspective) {
     isPerspective = _isPerspective;
   }
 
-  static void UpdateCamera() {
+  inline static void UpdateCamera() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (isPerspective) {

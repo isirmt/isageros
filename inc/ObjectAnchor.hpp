@@ -3,15 +3,15 @@
 namespace Obj {
 class Object2DAnchor {
  public:
-  static PosVec AnchorUpperLeft(PosVec _pos) {
+  inline static PosVec AnchorUpperLeft(PosVec _pos) {
     return PosVec(_pos.x, ApplicationPreference::windowSize.y - _pos.y);
   }
-  static PosVec AnchorUpperRight(PosVec _pos) {
+  inline static PosVec AnchorUpperRight(PosVec _pos) {
     return PosVec(ApplicationPreference::windowSize.x - _pos.x,
                   ApplicationPreference::windowSize.y - _pos.y);
   }
-  static PosVec AnchorLowerLeft(PosVec _pos) { return PosVec(_pos.x, _pos.y); }
-  static PosVec AnchorLowerRight(PosVec _pos) {
+  inline static PosVec AnchorLowerLeft(PosVec _pos) { return PosVec(_pos.x, _pos.y); }
+  inline static PosVec AnchorLowerRight(PosVec _pos) {
     return PosVec(ApplicationPreference::windowSize.x - _pos.x, _pos.y);
   }
 };

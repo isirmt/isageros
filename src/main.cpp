@@ -11,7 +11,7 @@
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
-    PassiveMotionProc(int x, int y);
+    PassiveMotionProc(int x, int y), WindowResizeProc(int width, int height);
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
 
   // 関数登録
   glutDisplayFunc(DisplayProc);
+  glutReshapeFunc(WindowResizeProc);
   glutKeyboardFunc(KeyboardProc);
   glutIdleFunc(IdleProc);
   glutMouseFunc(MouseProc);
