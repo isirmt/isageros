@@ -1,6 +1,7 @@
 #include "TitleScene.hpp"
 
 #include "GameSelectorScene.hpp"
+#include "CreditScene.hpp"
 #include "SettingScene.hpp"
 #include "StoryScene.hpp"
 #include "SumoScene.hpp"
@@ -46,6 +47,14 @@ Scene::TitleScene::TitleScene() {
   settingButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
   settingButton->SetInnerAnimation(.1f);
 
+  creditButton = new Obj::Button(
+      Obj::Object2DAnchor::AnchorUpperRight(PosVec(30 + 75, 30 + 75)),
+      PosVec(75, 25), true, true);
+  creditButton->SetInnerColor(buttonInnerColor, buttonInnerColor * 0.7,
+                               buttonInnerColor * 0.6, buttonInnerColor * 0.65);
+  creditButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
+  creditButton->SetInnerAnimation(.1f);
+
   metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
   metaText->SetInnerColor(Color255(0, 0, 0));
 
@@ -57,6 +66,7 @@ Scene::TitleScene::TitleScene() {
   layer2D.AddObject(modeButton);
   layer2D.AddObject(storyButton);
   layer2D.AddObject(settingButton);
+  layer2D.AddObject(creditButton);
   layer2D.AddObject(metaText);
 }
 
@@ -66,6 +76,12 @@ void Scene::TitleScene::Update() {
   if (settingButton->GetMouseSelected()) {
     settingButton->SetMouseOff();
     SceneManager::ChangeScene(new SettingScene());
+    return;
+  }
+
+  if (creditButton->GetMouseSelected()) {
+    creditButton->SetMouseOff();
+    SceneManager::ChangeScene(new CreditScene());
     return;
   }
 

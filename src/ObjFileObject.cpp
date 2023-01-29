@@ -35,12 +35,16 @@ void Obj::ObjFile::Draw() {
   if (!isMultiRotates) {
     glRotatef(deg, rotScale.x, rotScale.y, rotScale.z);
   } else {
-    for (int i = 0; i < rotScales.size(); i++ ) {
+    for (int i = 0; i < rotScales.size(); i++) {
+      glPushMatrix();
       glRotatef(degs[i], rotScales[i].x, rotScales[i].y, rotScales[i].z);
     }
   }
   glScalef(scale.x, scale.y, scale.z);
   glEnable(GL_NORMALIZE);
   object.Render(20);
+  if (isMultiRotates) {
+    for (int i = 0; i < rotScales.size(); i++) glPopMatrix();
+  }
   glPopMatrix();
 }

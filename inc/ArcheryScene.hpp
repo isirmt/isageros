@@ -6,13 +6,19 @@
 #include "Color255.hpp"
 #include "LightManager.hpp"
 #include "SceneBase.hpp"
+#include "SceneManager.hpp"
 
 namespace Scene {
 class ArcheryScene : public SceneBase {
  public:
   // GameScene() {}
   ArcheryScene();
-  inline ~ArcheryScene() {}
+  ~ArcheryScene() {
+    delete backButton;
+    delete rect;
+    delete text;
+  }
+
 
   void Update() override;
   void Draw() override;
@@ -21,6 +27,9 @@ class ArcheryScene : public SceneBase {
   void MotionProc(int x, int y) override {}
   void PassiveMotionProc(int x, int y) override {}
   void SpecialFuncProc(int key, int x, int y) override {}
+
+  private:
+    void RuleMode();
 
  private:
   float deg;
@@ -31,8 +40,41 @@ class ArcheryScene : public SceneBase {
   Obj::Cylinder centerCube;
   Obj::ObjFile arrow;
   Obj::ObjFile bow;
-  Obj::Button* backbutton;
+  Obj::Text* text;
+  Obj::Text* ruleText;
+  Obj::Button* backButton; 
+  Obj::Button* startButton;
+  Obj::Button* ruleButton;
+  Obj::Image* nImage;
+  Obj::Image* goRect;
+  Obj::Image* quotaImage;
+  Obj::Image* miniuiImage;
+  Obj::Rectangle* ruleBack;
+  Obj::Rectangle* textBack;
+  Obj::Rectangle* rect;
   bool Mouseflag = false;
+  bool isShooting;
+  bool flag;
+  bool gameStart;
+  bool ruleView;
+  float RotX = 0.0;
+  float RotY = 0.0;
+  float RotZ = 0.0;
+  int point = 0;
+  int strike = 0;
+  int high_point = 0;
+  int clearScore = 10;
+
+  const PosVec ruleImageOffset =
+      PosVec(ApplicationPreference::windowSize.x / 8.f,
+              ApplicationPreference::windowSize.y / 8.f);
+  const PosVec ruleImageSize =
+      PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
+          ApplicationPreference::windowSize.y * 3.f / 4.f);
+  std::vector<Obj::Image*> rulePics;
+
+  const float timerCountMax = 4.f;
+  float timerCount;
 
   const std::string folderName = "minigames/archery/";
 };
