@@ -1,5 +1,5 @@
 SUFFIX := .cpp
-PROGNAME := main
+PROGNAME := isageros
 COMPILER := g++
 CPPFLAGS := -std=c++11 -O2
 LIBFLAGS := -lglut -lGLU -lGL -lm
@@ -14,7 +14,7 @@ SOURCES := $(wildcard $(SOURCEDIR)*$(SUFFIX))
 OBJECTS := $(addprefix $(OUTDIR),$(notdir $(SOURCES:$(SUFFIX)=.o)))
 
 all: $(OBJECTS) $(LIBFLAGS)
-	$(COMPILER) -I$(INCLUDEDIR) -o $(TARGET) $^
+	$(COMPILER) $(INCLUDEDIR) -o $(TARGET) $^
 
 %.o:  $(addprefix $(SOURCEDIR),$(notdir $(%:.o=$(SUFFIX))))
 	$(COMPILER) $(INCLUDEDIR) $(LIBFLAGS) $(CPPFLAGS) -o $@ -c $(SOURCEDIR)$(basename $(notdir $@))$(SUFFIX)

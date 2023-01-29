@@ -42,7 +42,6 @@ namespace Scene{
             Obj::Button* startbutton;
             Obj::Button* ruleButton;
             Obj::Text* text;
-            Obj::Text* text_2;
             Obj::Text* ruleText;
             Obj::Image* nImage;
             Obj::Image* goRect;
@@ -54,8 +53,12 @@ namespace Scene{
             const std::string folderName = "minigames/sumo/";
             bool gamestart;
             bool ruleView;
+            bool flag;
             float pushPower;
             int clickCount;
+            float goTimer;
+            const float goTimerMax = 5.f;
+            float watchingCameraDeg;
 
             const PosVec ruleImageOffset =
                 PosVec(ApplicationPreference::windowSize.x / 8.f,

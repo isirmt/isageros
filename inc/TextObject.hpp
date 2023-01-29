@@ -7,33 +7,33 @@
 namespace Obj {
 class Text : public Object2D {
  public:
-  Text(PosVec _pos, PosVec _size, std::string _text, bool _enabledFill = true)
+  inline Text(PosVec _pos, PosVec _size, std::string _text, bool _enabledFill = true)
       : Object2D(_pos, _size),
         enabledFill(_enabledFill),
         innerColor(0),
         currentInnerColor(0),
         text(_text) {}
 
-  Text()
+  inline Text()
       : Object2D(PosVec(), PosVec()),
         enabledFill(true),
         innerColor(0),
         currentInnerColor(0),
         text() {}
 
-  void SetString(std::string _text) {
+  inline void SetString(std::string _text) {
     text = _text;
   }
 
   // 色有効化無効化
-  bool SetEnabledFill(bool _enabled) {
+  inline bool SetEnabledFill(bool _enabled) {
     enabledFill = _enabled;
     return true;
   }
-  bool SetEnabledFill() { return enabledFill; }
+  inline bool SetEnabledFill() { return enabledFill; }
 
   // 色情報登録等
-  bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
+  inline bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
     innerColor = _innerColor;
     if (_defaultFill) {
       innerAnimation.current = innerColor;
@@ -42,7 +42,7 @@ class Text : public Object2D {
     return true;
   }
 
-  Color255* GetColor(ColorType type) {
+  inline Color255* GetColor(ColorType type) {
     switch (type) {
       case ColorType::INNER:
         return &innerColor;

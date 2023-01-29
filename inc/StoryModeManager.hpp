@@ -13,13 +13,13 @@ class StoryModeManager {
       gameModeNum = 0;
     }
   }
-  static void SetGameClear(bool _active) { isGameClear = _active; }
-  static void SetGameModeNum(int _value = 0) { gameModeNum = _value; }
-  static bool GetGameActive() { return isActive; }
-  static bool GetGameClear() { return isActive; }
-  static int GetGameModeNum() { return gameModeNum; }
+  inline static void SetGameClear(bool _active) { isGameClear = _active; }
+  inline static void SetGameModeNum(int _value = 0) { gameModeNum = _value; }
+  inline static bool GetGameActive() { return isActive; }
+  inline static bool GetGameClear() { return isActive; }
+  inline static int GetGameModeNum() { return gameModeNum; }
 
-  static void SavePlusStep() {
+  inline static void SavePlusStep() {
     StoryProgress storyProgress;
 
     DataStore<StoryProgress> progressStore(

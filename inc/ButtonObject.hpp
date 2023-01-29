@@ -9,7 +9,7 @@
 namespace Obj {
 class Button : public Object2D {
  public:
-  Button(PosVec _pos, PosVec _size, bool _enabledFill = true,
+  inline Button(PosVec _pos, PosVec _size, bool _enabledFill = true,
                bool _enabledOutline = false)
       : Object2D(_pos, _size),
         enabledFill(_enabledFill),
@@ -24,7 +24,7 @@ class Button : public Object2D {
         clickedOuterColor(0),
         outlineWidth(0) {}
 
-  Button()
+  inline Button()
       : Object2D(PosVec(), PosVec()),
         enabledFill(true),
         enabledOutline(false),
@@ -39,21 +39,21 @@ class Button : public Object2D {
         outlineWidth(0) {}
 
   // 色有効化無効化
-  bool SetEnabledFill(bool _enabled) {
+  inline bool SetEnabledFill(bool _enabled) {
     enabledFill = _enabled;
     return true;
   }
-  bool SetEnabledFill() { return enabledFill; }
-  bool SetEnabledOutline(bool _enabled, float _outlineWidth = -1.f) {
+  inline bool SetEnabledFill() { return enabledFill; }
+  inline bool SetEnabledOutline(bool _enabled, float _outlineWidth = -1.f) {
     enabledOutline = _enabled;
     outlineWidth = _outlineWidth ? _outlineWidth <= 0.f : 0.f;
     return true;
   }
   // 判定用リターン
-  bool SetEnabledOutline() { return enabledOutline; }
+  inline bool SetEnabledOutline() { return enabledOutline; }
 
   // 色情報登録等
-  bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
+  inline bool SetInnerColor(Color255 _innerColor, bool _defaultFill = true) {
     innerColor = _innerColor;
     hoveredInnerColor = _innerColor;
     clickedInnerColor = _innerColor;
@@ -66,7 +66,7 @@ class Button : public Object2D {
         Color255(innerColor.r, innerColor.g, innerColor.b, innerColor.a / 5.);
     return true;
   }
-  bool SetInnerColor(Color255 _innerColor, Color255 _hoveredColor,
+  inline bool SetInnerColor(Color255 _innerColor, Color255 _hoveredColor,
                      Color255 _clickedColor, Color255 _selectedColor,
                      bool _defaultFill = true) {
     innerColor = _innerColor;
@@ -82,7 +82,7 @@ class Button : public Object2D {
     return true;
   }
   // アウトラインを表示する際はtrueになっているかをチェック
-  bool SetOutlineColor(Color255 _outerColor, float _outlineWidth,
+  inline bool SetOutlineColor(Color255 _outerColor, float _outlineWidth,
                        bool _defaultFill = true) {
     outerColor = _outerColor;
     hoveredOuterColor = _outerColor;
@@ -98,7 +98,7 @@ class Button : public Object2D {
     return true;
   }
   // アウトラインを表示する際はtrueになっているかをチェック
-  bool SetOutlineColor(Color255 _outerColor, Color255 _hoveredColor,
+  inline bool SetOutlineColor(Color255 _outerColor, Color255 _hoveredColor,
                        Color255 _clickedColor, Color255 _selectedColor,
                        float _outlineWidth, bool _defaultFill = true) {
     outerColor = _outerColor;
@@ -115,7 +115,7 @@ class Button : public Object2D {
     return true;
   }
 
-  Color255* GetColor(ColorType type) {
+  inline Color255* GetColor(ColorType type) {
     switch (type) {
       case ColorType::INNER:
         return &innerColor;

@@ -15,7 +15,7 @@ namespace Scene{
     class BattingScene : public SceneBase {
         public:
             BattingScene();
-            ~BattingScene(){
+            inline ~BattingScene(){
                 delete backButton;
                 delete rect;
                 delete text;

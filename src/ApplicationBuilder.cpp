@@ -16,10 +16,10 @@ void GLSYS::ApplicationBuilder::Initialize() {
   auto resi = readlink(link, path, PATH_MAX);
 //
   std::string sPath = path;
-  std::cout << sPath.c_str() << std::endl;
+  // std::cout << sPath.c_str() << std::endl;
   auto pos = sPath.rfind("/");
   sPath.erase(sPath.begin() + pos, sPath.end());
-  std::cout << sPath.c_str() << std::endl;
+  // std::cout << sPath.c_str() << std::endl;
 
   auto resc = chdir(sPath.c_str());
 

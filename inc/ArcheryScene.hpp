@@ -19,6 +19,7 @@ class ArcheryScene : public SceneBase {
     delete text;
   }
 
+
   void Update() override;
   void Draw() override;
   void KeyboardProc(unsigned char key, int x, int y) override {}
