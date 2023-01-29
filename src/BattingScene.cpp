@@ -8,7 +8,7 @@ Scene::BattingScene::BattingScene(){
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 100, 2500, PosVec(2000, 1000, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+        30, 100, 99999, PosVec(2000, 1000-200, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
     );
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
@@ -27,10 +27,11 @@ Scene::BattingScene::BattingScene(){
     bat.SetShininess(20);
     bat.SetScale(PosVec(2, 10, 2));
 
-    player = Obj::ObjFile(PosVec(800.0, 0.0, -50.0), PosVec(0.0, 0.0, 0.0), 
+    player = Obj::ObjFile(PosVec(770.0, -20.0, 30.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/subLeader.obj");
-    player.SetScale(PosVec(7, 7, 7));
+    player.SetScale(PosVec(8, 8, 8));
     player.SetShininess(10);
+    player.SetRotate(180, PosVec(0, 1, 0));
 
     ball = Obj::Sphere(PosVec(450.0, -50.0, 0.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0));
@@ -39,15 +40,17 @@ Scene::BattingScene::BattingScene(){
     ball.SetDiffuse(Color255(.3, .3, .3));
     ball.SetSpecular(Color255(0, 0, 0));
 
-    enemy = Obj::ObjFile(PosVec(400.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0), 
+    enemy = Obj::ObjFile(PosVec(330.0, -20.0, -5.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/Caesar.obj");
-    enemy.SetScale(PosVec(7, 7, 7));
+    enemy.SetScale(PosVec(8, 8, 8));
     enemy.SetShininess(10);
     enemy.SetRotate(90, PosVec(0, 1, 0));
 
     flag = false;
     gameStart = false;
     ruleView = false;
+    cameraFlag = true;
+    cameraFlag_2 = true;
 
     miniuiImage = new Obj::Image(
         PosVec(0, 30), PosVec(75, 190),
@@ -125,6 +128,8 @@ Scene::BattingScene::BattingScene(){
     quotaImage = new Obj::Image(
         PosVec(-500, 450), PosVec(150, 100),
         ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+
+    watchingCameraDeg = 0.0;
 }
 
 void Scene::BattingScene::Update(){
@@ -135,6 +140,52 @@ void Scene::BattingScene::Update(){
     player.Update();
     ball.Update();
     enemy.Update();
+
+    if(watchingCameraDeg <= 400.0 && !gameStart){
+        watchingCameraDeg += 1.0;
+        if(cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(2000-(watchingCameraDeg/2), 800, 1-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1800+(watchingCameraDeg/2), 800, -399+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(2000-(watchingCameraDeg/2), 800, 1+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1800+(watchingCameraDeg/2), 800, 401-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+    }
 
     if(startButton->GetMouseSelected()){
         startButton->SetMouseOff();
@@ -185,6 +236,11 @@ void Scene::BattingScene::Update(){
     if(gameStart)
     {
     if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
+
+    Camera::SetAsPerspective(
+        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+        30, 100, 99999, PosVec(2000, 1000, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+    );
 
     if(ball.GetPosition().y < 50.0){
         ball.SetPosition(PosVec(450.0, 50.0, 0.0));
@@ -260,6 +316,8 @@ void Scene::BattingScene::Update(){
                     Story::StoryModeManager::SetGameClear(false);
                 }
 
+                goTimer = goTimerMax;
+
                 layer2D.DeleteObject(goRect);
                 layer2D.AddObject(goRect);
 
@@ -292,6 +350,20 @@ void Scene::BattingScene::Update(){
             ball.SetSpecular(Color255(0, 0, 0));
         }
     }
+    }
+
+    goTimer -= Time::DeltaTime();
+    if (goTimer < 0) {
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->x,
+          ApplicationPreference::windowSize.x / 2.f, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+      if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
     }
 
     if (backButton->GetMouseSelected()) {

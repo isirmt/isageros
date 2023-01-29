@@ -58,6 +58,11 @@ namespace Scene{
             int strike = 0;
             int high_point = 0;
             int clearScore = 10;
+            float goTimer;
+            const float goTimerMax = 5.f;
+            float watchingCameraDeg;
+            bool cameraFlag;
+            bool cameraFlag_2;
 
             const PosVec ruleImageOffset =
                 PosVec(ApplicationPreference::windowSize.x / 8.f,

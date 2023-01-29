@@ -119,7 +119,6 @@ void Scene::SumoScene::Update(){
                 30, 1, 99999, PosVec(1000+watchingCameraDeg, 1000, 1000), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
             if(watchingCameraDeg > 500.0){
-                printf("できてる\n");
                 watchingCameraDeg = 0.0;
                 cameraFlag_2 = !cameraFlag_2;
             }
@@ -130,7 +129,6 @@ void Scene::SumoScene::Update(){
                 30, 1, 99999, PosVec(1500-watchingCameraDeg, 1000, 1000), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
             if(watchingCameraDeg > 500.0){
-                printf("できてる_2\n");
                 watchingCameraDeg = 0.0;
                 cameraFlag = !cameraFlag;
                 cameraFlag_2 = !cameraFlag_2;
@@ -142,7 +140,6 @@ void Scene::SumoScene::Update(){
                 30, 1, 99999, PosVec(1000, 1000, 1000+watchingCameraDeg), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
             if(watchingCameraDeg > 500.0){
-                printf("できてる_3\n");
                 watchingCameraDeg = 0.0;
                 cameraFlag_2 = !cameraFlag_2;
             }
@@ -153,7 +150,6 @@ void Scene::SumoScene::Update(){
                 30, 1, 99999, PosVec(1000, 1000, 1500-watchingCameraDeg), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
             if(watchingCameraDeg > 500.0){
-                printf("できてる_4\n");
                 watchingCameraDeg = 0.0;
                 cameraFlag = !cameraFlag;
                 cameraFlag_2 = !cameraFlag_2;
