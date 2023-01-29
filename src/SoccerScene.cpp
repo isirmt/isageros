@@ -22,14 +22,14 @@ Scene::SoccerScene::SoccerScene() {
     stage.SetRotate(-45.0, PosVec(0, 1, 0));
 
     player = Obj::ObjFile(PosVec(565.0, 0.0, 565.0), PosVec(), PosVec(), 
-                ApplicationPreference::modelFilePath + "char/chara.obj");
-    player.SetScale(PosVec(10, 10, 10));
+                ApplicationPreference::modelFilePath + "char/monster.obj");
+    player.SetScale(PosVec(15, 15, 15));
     player.SetShininess(10);
     player.SetRotate(225, PosVec(0, 1, 0));
 
     enemy = Obj::ObjFile(PosVec(-200.0, 0.0, -200.0), PosVec(0.0, 0.0, 0.0), 
-            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/chara.obj");
-    enemy.SetScale(PosVec(10, 10, 10));
+            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/formersubLeader.obj");
+    enemy.SetScale(PosVec(15, 15, 15));
     enemy.SetShininess(10);
     enemy.SetRotate(45, PosVec(0, 1, 0));
     
@@ -394,17 +394,14 @@ void Scene::SoccerScene::RuleMode(){
 void Scene::SoccerScene::KeeperPosition(){
     ransu = 0 + rand() % 3;
     if(ransu == 0){
-        // enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -200, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -200, 3.f);
     }
     else if(ransu == 1){
-        // enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -50, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -350, 3.f);
     }
     else if(ransu == 2){
-        // enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -350, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -50, 3.f);
     }
