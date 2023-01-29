@@ -87,19 +87,20 @@ void Scene::ArcheryScene::Update(){
     printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
   }
   else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag == true ){
-    deg -= 10 * Time::DeltaTime();
-    if (deg > 360) deg -= 360;
+    //deg -= 0 * Time::DeltaTime();
+    //if (deg > 360) deg -= 360;
+    deg = 1;
     arrow.SetPosition(arrow.GetPosition());
     arrow.SetVelocity(PosVec(-100.0, 0.0, 0.0));
     arrow.SetAcceleration(PosVec(0.0, -1500.0, 0.0));
     //arrow.AddMultiRotates(RotX, PosVec(1,0,0));
     //arrow.AddMultiRotates(RotY, PosVec(0,1,0));
     //arrow.AddMultiRotates(RotZ, PosVec(0,0,1));
-    arrow.ClearRotates();
+    //arrow.ClearRotates();
     arrow.AddMultiRotates(deg, PosVec(0,0,1));
     Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-      30, 1, 99999, PosVec(arrow.GetPosition().x+80,arrow.GetPosition().y+1,arrow.GetPosition().z+1), arrow.GetPosition(), PosVec(0,1,0));
+      30, 1, 99999, PosVec(arrow.GetPosition().x+100,arrow.GetPosition().y+1,arrow.GetPosition().z+50), arrow.GetPosition(), PosVec(0,1,0));
     Camera::UpdateCamera();
     printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
     if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
