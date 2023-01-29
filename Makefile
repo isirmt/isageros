@@ -1,5 +1,5 @@
 SUFFIX := .cpp
-PROGNAME := main
+PROGNAME := isageros
 COMPILER := g++
 CPPFLAGS := -std=c++11 -O2
 LIBFLAGS := -lglut -lGLU -lGL -lm
