@@ -7,7 +7,7 @@ Scene::SumoScene::SumoScene(){
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 1, 99999, PosVec(1000, 1000, 1000+500), PosVec(0, 0, 0), PosVec(0, 1, 0));
+        30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 0), PosVec(0, 1, 0));
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
 
@@ -41,6 +41,7 @@ Scene::SumoScene::SumoScene(){
     gamestart = false;
     ruleView = false;
     flag = false;
+    cameraFlag = true;
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
                 ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
@@ -110,11 +111,27 @@ void Scene::SumoScene::Update(){
     enemy.Update();
 
     if(watchingCameraDeg <= 500.0 && !gamestart){
-        watchingCameraDeg++;
-        Camera::SetAsPerspective(
-            ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-            30, 1, 99999, PosVec(1000+watchingCameraDeg, 1000, 1000), 
-            PosVec(0, 0, 0), PosVec(0, 1, 0));
+        watchingCameraDeg += 10.0;
+        if(cameraFlag){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1000+watchingCameraDeg, 1000, 1000), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+        }
+        else{
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1000, 1000, 1000+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+        }
+
+        if(watchingCameraDeg >= 500.0){
+            watchingCameraDeg = 0.0;
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 0), PosVec(0, 1, 0));
+            cameraFlag = !cameraFlag;
+        }
     }
 
     if(Story::StoryModeManager::GetGameModeNum() == 1 && !gamestart){
