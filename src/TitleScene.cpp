@@ -1,6 +1,7 @@
 #include "TitleScene.hpp"
 
 #include "GameSelectorScene.hpp"
+#include "CreditScene.hpp"
 #include "SettingScene.hpp"
 #include "StoryScene.hpp"
 #include "SumoScene.hpp"
@@ -65,7 +66,7 @@ void Scene::TitleScene::Update() {
 
   if (settingButton->GetMouseSelected()) {
     settingButton->SetMouseOff();
-    SceneManager::ChangeScene(new SettingScene());
+    SceneManager::ChangeScene(new CreditScene());
     return;
   }
 
