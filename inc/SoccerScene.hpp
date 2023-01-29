@@ -65,6 +65,10 @@ namespace Scene{
             int shootCount;
             bool gameStart;
 			bool ruleView;
+            float goTimer;
+            const float goTimerMax = 5.f;
+            float watchingCameraDeg;
+            bool cameraFlag;
 
 			const PosVec ruleImageOffset =
                 PosVec(ApplicationPreference::windowSize.x / 8.f,
