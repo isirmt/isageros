@@ -9,13 +9,12 @@ sudo apt-get install make g++
 ```
 
 ## 実行方法
-`src`内において，
 ```bash
-make
+make all
 ```
 と実行しよう(掃除は make clean)
 その後，
 ```bash
-./main
+make run
 ```
 で起動！

@@ -1,0 +1,12 @@
+#pragma once
+
+enum class ColorType {
+  INNER,
+  HOVERED,
+  CLICKED,
+  SELECTED,
+  OUTER_INNER,
+  OUTER_HOVERED,
+  OUTER_CLICKED,
+  OUTER_SELECTED
+};

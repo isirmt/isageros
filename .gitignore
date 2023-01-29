@@ -1,6 +1,6 @@
-src/*.o
-src/main
+*.o
+isageros
 .vscode
 *.out
 *.dat
-src/saves/*
+src/build/saves/*
