@@ -7,7 +7,7 @@ Scene::SumoScene::SumoScene(){
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 0), PosVec(0, 1, 0));
+        30, 1, 99999, PosVec(1000, 1000, 1000+500), PosVec(0, 0, 0), PosVec(0, 1, 0));
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
 
@@ -98,6 +98,8 @@ Scene::SumoScene::SumoScene(){
     quotaImage = new Obj::Image(
         PosVec(-500, 450), PosVec(150, 100),
         ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+
+    watchingCameraDeg = 0.0;
 }
 
 void Scene::SumoScene::Update(){
@@ -106,6 +108,14 @@ void Scene::SumoScene::Update(){
     stage.Update();
     player.Update();
     enemy.Update();
+
+    if(watchingCameraDeg <= 500.0 && !gamestart){
+        watchingCameraDeg++;
+        Camera::SetAsPerspective(
+            ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+            30, 1, 99999, PosVec(1000+watchingCameraDeg, 1000, 1000), 
+            PosVec(0, 0, 0), PosVec(0, 1, 0));
+    }
 
     if(Story::StoryModeManager::GetGameModeNum() == 1 && !gamestart){
         player = Obj::ObjFile(PosVec(470, 106.0, -70.0), PosVec(), PosVec(), 
@@ -180,6 +190,10 @@ void Scene::SumoScene::Update(){
 
     if(gamestart){
         if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
+
+        Camera::SetAsPerspective(
+            ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+            30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 0), PosVec(0, 1, 0));
 
         if(player.GetPosition().y > 105.0){
             player.SetPosition(PosVec(220, 105.0, 90.0));
