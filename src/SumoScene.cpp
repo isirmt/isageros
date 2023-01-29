@@ -42,6 +42,7 @@ Scene::SumoScene::SumoScene(){
     ruleView = false;
     flag = false;
     cameraFlag = true;
+    cameraFlag_2 = true;
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
                 ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
@@ -111,26 +112,52 @@ void Scene::SumoScene::Update(){
     enemy.Update();
 
     if(watchingCameraDeg <= 500.0 && !gamestart){
-        watchingCameraDeg += 10.0;
-        if(cameraFlag){
+        watchingCameraDeg += 5.0;
+        if(cameraFlag && cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
                 30, 1, 99999, PosVec(1000+watchingCameraDeg, 1000, 1000), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                printf("できてる\n");
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
-        else{
+        else if(cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1500-watchingCameraDeg, 1000, 1000), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                printf("できてる_2\n");
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
                 30, 1, 99999, PosVec(1000, 1000, 1000+watchingCameraDeg), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                printf("できてる_3\n");
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
-
-        if(watchingCameraDeg >= 500.0){
-            watchingCameraDeg = 0.0;
+        else if(!cameraFlag && !cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-                30, 1, 99999, PosVec(1000, 1000, 1000), PosVec(0, 0, 0), PosVec(0, 1, 0));
-            cameraFlag = !cameraFlag;
+                30, 1, 99999, PosVec(1000, 1000, 1500-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                printf("できてる_4\n");
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
     }
 

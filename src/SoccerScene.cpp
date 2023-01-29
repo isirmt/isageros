@@ -123,6 +123,7 @@ Scene::SoccerScene::SoccerScene() {
     gameStart = false;
 	ruleView = false;
     cameraFlag = true;
+    cameraFlag_2 = true;
     point = 0;
     shootCount = 0;
     watchingCameraDeg = 0.0;
@@ -137,26 +138,48 @@ void Scene::SoccerScene::Update() {
     ball.Update();
 
     if(watchingCameraDeg <= 500.0 && !gameStart){
-        watchingCameraDeg += 3.0;
-        if(cameraFlag){
+        watchingCameraDeg += 1.5;
+        if(cameraFlag && cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
                 30, 1, 99999, PosVec(1700-watchingCameraDeg, 1700, 1700), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
-        else{
+        else if(cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1200+watchingCameraDeg, 1700, 1700), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
                 30, 1, 99999, PosVec(1700, 1700, 1700-watchingCameraDeg), 
                 PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
-
-        if(watchingCameraDeg >= 500.0){
-            watchingCameraDeg = 0.0;
+        else if(!cameraFlag && !cameraFlag_2){
             Camera::SetAsPerspective(
                 ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-                30, 1, 99999, PosVec(1700, 1700, 1700), PosVec(0, 0, 0), PosVec(0, 1, 0));
-            cameraFlag = !cameraFlag;
+                30, 1, 99999, PosVec(1700, 1700, 1200+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
         }
     }
 
