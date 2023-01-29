@@ -14,7 +14,7 @@ SOURCES := $(wildcard $(SOURCEDIR)*$(SUFFIX))
 OBJECTS := $(addprefix $(OUTDIR),$(notdir $(SOURCES:$(SUFFIX)=.o)))
 
 all: $(OBJECTS) $(LIBFLAGS)
-	$(COMPILER) -I$(INCLUDEDIR) -o $(TARGET) $^
+	$(COMPILER) $(INCLUDEDIR) -o $(TARGET) $^
 
 %.o:  $(addprefix $(SOURCEDIR),$(notdir $(%:.o=$(SUFFIX))))
 	$(COMPILER) $(INCLUDEDIR) $(LIBFLAGS) $(CPPFLAGS) -o $@ -c $(SOURCEDIR)$(basename $(notdir $@))$(SUFFIX)
