@@ -52,6 +52,7 @@ class ArcheryScene : public SceneBase {
   Obj::Rectangle* textBack;
   Obj::Rectangle* rect;
   bool Mouseflag = false;
+  bool isShooting;
   bool flag;
   bool gameStart;
   bool ruleView;
@@ -70,6 +71,9 @@ class ArcheryScene : public SceneBase {
       PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
           ApplicationPreference::windowSize.y * 3.f / 4.f);
   std::vector<Obj::Image*> rulePics;
+
+  const float timerCountMax = 4.f;
+  float timerCount;
 
   const std::string folderName = "minigames/archery/";
 };

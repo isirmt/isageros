@@ -3,12 +3,9 @@
 #include "StoryScene.hpp"
 #include "TitleScene.hpp"
 #include <stdio.h>
+#include <cmath>
 
 Scene::ArcheryScene::ArcheryScene(){
-    // Scean::Camera::SetActive(true);
-    // Scean::Camera::SetAsPerspective(
-    //   ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-    //   70, 0, 100, PosVec(-250, 100, 1000), PosVec(), PosVec(0, 1, 0));
     Camera::SetActive(true);
   	SceneBase::SetOrthoCameraWindow();
   	Camera::SetAsPerspective(
@@ -62,6 +59,9 @@ Scene::ArcheryScene::ArcheryScene(){
     gameStart = false;
     ruleView = false;
 
+
+    isShooting = false;
+    timerCount = timerCountMax;
     miniuiImage = new Obj::Image(
         PosVec(0, 30), PosVec(75, 190),
         ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
@@ -214,50 +214,74 @@ void Scene::ArcheryScene::Update(){
     
   
     
-    if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
-      Mouseflag = true;
-      Camera::SetAsPerspective(
-        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        10, 1, 99999, PosVec(1000.0, 200.0, 0.0), 
-        PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,
-        (((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
-      Camera::UpdateCamera();
-      RotY = Input::MouseInput::GetMouse().x-(ApplicationPreference::windowSize.x*2);
-      //RotZ = ((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z;
-      printf("%f,%f\n",Input::MouseInput::GetMouse().x,Input::MouseInput::GetMouse().y);
-      arrow.ClearRotates(); 
-      arrow.AddMultiRotates(RotY, PosVec(0,1,0));
-      arrow.AddMultiRotates(RotZ, PosVec(0,0,1));
-    }
-    else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag == true ){
-      //deg++;
-      //if (deg > 360) deg = 0;
-      //deg = 1;
-      arrow.AddMultiRotates(0.1, PosVec(0,0,1));
+  if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST && !isShooting) {
+    Mouseflag = true;
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      10, 1, 99999, PosVec(1000.0, 200.0, 0.0), 
+      PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,
+      (((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
+    Camera::UpdateCamera();
+    RotY =  180.f - 90.f - 55.f - 70.f / ApplicationPreference::windowSize.x * Input::MouseInput::GetMouse().x;
+    RotZ =  20.f - 40.f / ApplicationPreference::windowSize.y * Input::MouseInput::GetMouse().y;
+    const float leftDeg = 10;
+    const float rightDeg = 10;
+    std:: cout << RotY << "," << rightDeg << std::endl;
+    arrow.ClearRotates(); 
+    arrow.AddMultiRotates(RotY, PosVec(0,1,0));
+    arrow.AddMultiRotates(RotZ, PosVec(0,0,1));
+  }
+  else if((Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag) || isShooting ){
+    arrow.AddMultiRotates(0.1, PosVec(0,0,1));
+    if (!isShooting) {
       arrow.SetPosition(arrow.GetPosition());
-      arrow.SetVelocity(PosVec(-100.0, 0.0, 0.0));
-      arrow.SetAcceleration(PosVec(0.0, -1500.0, 0.0));
-      //arrow.AddMultiRotates(RotX, PosVec(1,0,0));
-      //arrow.ClearRotates();
-      
-      Camera::SetAsPerspective(
-        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 1, 99999, PosVec(arrow.GetPosition().x+100,arrow.GetPosition().y+1,arrow.GetPosition().z+50), arrow.GetPosition(), PosVec(0,1,0));
-      Camera::UpdateCamera();
-      printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
-      if(arrow.GetPosition().x <= -1000 || arrow.GetPosition().y <= 0){
-        arrow.SetPosition(arrow.GetPosition());
-        arrow.SetVelocity(PosVec());
-        arrow.SetAcceleration(PosVec());
-        arrow.ClearRotates();
-        Mouseflag = false;
-      }
-    }else{
-      Camera::SetAsPerspective(
-        ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
-      Camera::UpdateCamera();
+      arrow.SetVelocity(
+        PosVec(
+          -1500.0 * cos(RotY * M_PI / 180.f),
+          -1500.0 * sin(RotZ * M_PI / 180.f),
+          1500.f * sin(RotY * M_PI / 180.f)));
+      arrow.SetAcceleration(PosVec(0.0, -200.0, 0.0));
+      isShooting = true;
     }
+
+    // z -100 ~ 100
+    // y -25 ~ 175
+    
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(
+        arrow.GetPosition().x+100,
+        arrow.GetPosition().y+1,arrow.GetPosition().z+1),
+        arrow.GetPosition(), PosVec(0,1,0));
+    Camera::UpdateCamera();
+    printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
+    if(arrow.GetPosition().x <= -850 || arrow.GetPosition().y <= 30){
+      // 的の座標内か
+      arrow.SetPosition(arrow.GetPosition());
+      arrow.SetVelocity(PosVec());
+      arrow.SetAcceleration(PosVec());
+      arrow.ClearRotates();
+      timerCount -= Time::DeltaTime();
+      if (timerCount <= 0.f) {
+        Mouseflag = false;
+        isShooting = false;
+        timerCount = timerCountMax;
+      }
+    }
+  }else{
+    Camera::SetAsPerspective(
+      ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+    Camera::UpdateCamera();
+  }
+    
+  arrow.Update();
+  centerCube.Update();
+  stage.Update();
+  bow.Update();
+
+  layer2D.Collide();
+
   }
 
   if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
@@ -345,21 +369,3 @@ void Scene::ArcheryScene::Draw(){
 
   layer2D.Draw(); // 2D描画
 }
-
-// void Scene::ArcheryScene::MouseProc(int button, int state, int x, int y) {}
-
-// void Scene::ArcheryScene::SpecialFuncProc(int key,int x,int y){
-//     printf("押された！\n");
-// }
-
-// void Scene::ArcheryScene::KeyboardProc(unsigned char key, int x, int y){
-//     switch (key){
-//         case 'x':
-//             printf("推してる\n");
-//             break;
-//         case 'y':
-//             printf("推してる?\n");
-//             break;
-//     }
-//     //printf("推してる\n");
-// }
