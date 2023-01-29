@@ -35,6 +35,8 @@ class TitleScene : public SceneBase {
 
   Obj::Button* settingButton;
 
+  Obj::Button* creditButton;
+
   const std::string folderName = "title/";
 };
 
