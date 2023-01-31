@@ -8,10 +8,14 @@ Scene::BattingScene::BattingScene(){
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 100, 99999, PosVec(2000, 1000-200, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+        30, 100, 99999, PosVec(2000, 800, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
     );
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
+
+    null = new Obj::Null();
+    layer2D.AddObject(null);
+
 
     stage = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
                             ApplicationPreference::modelFilePath + folderName +
@@ -20,12 +24,14 @@ Scene::BattingScene::BattingScene(){
     stage.SetShininess(20);
     stage.SetRotate(0, PosVec(0, 1, 0));
 
-    bat = Obj::Cylinder(PosVec(800.0, 80.0, -20.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
+    bat = Obj::ObjFile(PosVec(790.0, 70.0, 5.0), PosVec(), PosVec(), 
+            ApplicationPreference::modelFilePath + folderName + "bat.obj");
     bat.SetAmbient(Color255(100, 75, 80));
     bat.SetDiffuse(Color255(.3f, .3f, .3f));
     bat.SetSpecular(Color255(255, 255, 255, 255));
     bat.SetShininess(20);
-    bat.SetScale(PosVec(2, 10, 2));
+    bat.SetScale(PosVec(8, 4.3, 8));
+    bat.SetMultiRotates(true);
 
     player = Obj::ObjFile(PosVec(770.0, -20.0, 30.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/subLeader.obj");
@@ -141,6 +147,9 @@ void Scene::BattingScene::Update(){
     ball.Update();
     enemy.Update();
 
+    bat.ClearRotates();
+    bat.AddMultiRotates(180.f, PosVec(1, 0, 0));
+
     if(watchingCameraDeg <= 400.0 && !gameStart){
         watchingCameraDeg += 1.0;
         if(cameraFlag && cameraFlag_2){
@@ -248,39 +257,65 @@ void Scene::BattingScene::Update(){
     }
     
     if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && flag){
-        bat = Obj::Cylinder(PosVec(800.0, 80.0, -20.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
+        // bat = Obj::Cylinder(PosVec(800.0, 80.0, -20.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
+        // bat.SetAmbient(Color255(100, 75, 80));
+        // bat.SetDiffuse(Color255(.3f, .3f, .3f));
+        // bat.SetSpecular(Color255(255, 255, 255, 255));
+        // bat.SetShininess(20);
+        // bat.SetScale(PosVec(2, 10, 2));
+        //bat.SetPosition(PosVec())
+
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->x, 790, 10.f);
 
         flag = false;
     }
     else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && !flag){
-        bat = Obj::Cylinder(PosVec(800.0, 50.0, 5.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
-        bat.SetRotate(45, PosVec(1, 1, 0));
+        printf("%f\n", ball.GetPosition().x);
+        // bat = Obj::Cylinder(PosVec(800.0, 50.0, 5.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
+        // bat.SetAmbient(Color255(100, 75, 80));
+        // bat.SetDiffuse(Color255(.3f, .3f, .3f));
+        // bat.SetSpecular(Color255(255, 255, 255, 255));
+        // bat.SetShininess(20);
+        // bat.SetScale(PosVec(2, 10, 2));
+        // bat.SetRotate(45, PosVec(1, 1, 0));
 
-        bat = Obj::Cylinder(PosVec(800.0, 40.0, 10.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
-        bat.SetRotate(90, PosVec(1, 0, 0));
+        // bat = Obj::Cylinder(PosVec(800.0, 40.0, 10.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
+        // bat.SetAmbient(Color255(100, 75, 80));
+        // bat.SetDiffuse(Color255(.3f, .3f, .3f));
+        // bat.SetSpecular(Color255(255, 255, 255, 255));
+        // bat.SetShininess(20);
+        // bat.SetScale(PosVec(2, 10, 2));
+        // bat.SetRotate(90, PosVec(1, 0, 0));
+
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->x, 810.0, 5.f);
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -15.0, 5.f);
+        // bat.SetRotate(180-45, PosVec(1, -0.33, 0));
+
+        // batTimer = batTimerMax;
+        // batTimer -= Time::DeltaTime();
+        // if(batTimer < 0){
+        //     null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 30.0, 5.f);
+        //     null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -20.0, 5.f);
+        //     bat.SetRotate(90, PosVec(1, 0, 0));
+        // }
+
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 30.0, 5.f);
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -20.0, 5.f);
+        // bat.SetRotate(90, PosVec(1, 0, 0));
+
+        // null->ChangeValueWithAnimation(&bat.GetRotateScalePointer()->x, 1.f, 1.f);
+        // null->ChangeValueWithAnimation(&bat.GetRotateScalePointer()->x, 0.5f, 10.f);
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 30.0, 5.f);
+        // null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -20.0, 5.f);
 
         if(ball.GetPosition().x >= 750.0 && ball.GetPosition().x <= 800.0){
-            ball = Obj::Sphere(PosVec(ball.GetPosition()), PosVec(-400.0, 50.0, 0.0), 
-                PosVec(0.0, -5.0, 0.0));
-            ball.SetScale(PosVec(3, 3, 3));
-            ball.SetAmbient(Color255(250, 250, 250));
-            ball.SetDiffuse(Color255(.3, .3, .3));
-            ball.SetSpecular(Color255(0, 0, 0));
+            ball.SetVelocity(PosVec(-400.0, 50.0, 0.0));
+            // ball = Obj::Sphere(PosVec(ball.GetPosition()), PosVec(-400.0, 50.0, 0.0), 
+            //     PosVec(0.0, -5.0, 0.0));
+            // ball.SetScale(PosVec(3, 3, 3));
+            // ball.SetAmbient(Color255(250, 250, 250));
+            // ball.SetDiffuse(Color255(.3, .3, .3));
+            // ball.SetSpecular(Color255(0, 0, 0));
         }
 
         flag = true;
@@ -293,7 +328,7 @@ void Scene::BattingScene::Update(){
                                 "   ストライクカウント：" + std::to_string(strike));
             if(strike >= 3 ){
                 high_point = point;
-                text->SetString("OUT!   現在のハイスコア" + std::to_string(high_point));
+                text->SetString("OUT!   現在のハイスコア：" + std::to_string(high_point));
                 gameStart = false;
                 startButton->SetEnabled(true);
                 ruleButton->SetEnabled(true);
