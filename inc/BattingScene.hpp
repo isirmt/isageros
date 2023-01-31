@@ -50,9 +50,14 @@ namespace Scene{
             Obj::Rectangle* ruleBack;
             Obj::Rectangle* textBack;
             Obj::Rectangle* rect;
+            Obj::Rectangle* cooldownBox;
             Obj::Null* null;
             const std::string folderName = "minigames/baseball/";
-            bool flag;
+            bool batFlag;
+            bool timerFlag;
+            bool timerFlag_2;
+            bool ballFlag;
+            bool clickFlag;
             bool gameStart;
             bool ruleView;
             int point = 0;
@@ -62,7 +67,11 @@ namespace Scene{
             float goTimer;
             const float goTimerMax = 5.f;
             float batTimer;
-            const float batTimerMax = 10.f;
+            float batTimer_2;
+            float cooldown;
+            const float batTimerMax = 0.2f;
+            const float batTimerMax_2 = 0.5f;
+            const float cooldownMax = .7f;
             float watchingCameraDeg;
             bool cameraFlag;
             bool cameraFlag_2;
@@ -75,6 +84,7 @@ namespace Scene{
                     ApplicationPreference::windowSize.y * 3.f / 4.f);
             std::vector<Obj::Image*> rulePics;
 
-            PosVec batRatateScale = PosVec(0.5f, 0.f, 0.f);
+            float batDeg;
+            float batDeg_2;
     };
 }
