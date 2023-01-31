@@ -61,7 +61,7 @@ class ArcheryScene : public SceneBase {
   float RotY = 0.0;
   float RotZ = 0.0;
   int point = 0;
-  int strike = 0;
+  int turn = 0;
   int high_point = 0;
   int clearScore = 10;
 
