@@ -22,14 +22,14 @@ Scene::SoccerScene::SoccerScene() {
     stage.SetRotate(-45.0, PosVec(0, 1, 0));
 
     player = Obj::ObjFile(PosVec(565.0, 0.0, 565.0), PosVec(), PosVec(), 
-                ApplicationPreference::modelFilePath + "char/chara.obj");
-    player.SetScale(PosVec(10, 10, 10));
+                ApplicationPreference::modelFilePath + "char/monster.obj");
+    player.SetScale(PosVec(15, 15, 15));
     player.SetShininess(10);
     player.SetRotate(225, PosVec(0, 1, 0));
 
     enemy = Obj::ObjFile(PosVec(-200.0, 0.0, -200.0), PosVec(0.0, 0.0, 0.0), 
-            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/chara.obj");
-    enemy.SetScale(PosVec(10, 10, 10));
+            PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/formersubLeader.obj");
+    enemy.SetScale(PosVec(15, 15, 15));
     enemy.SetShininess(10);
     enemy.SetRotate(45, PosVec(0, 1, 0));
     
@@ -95,12 +95,12 @@ Scene::SoccerScene::SoccerScene() {
     textBack->SetInnerColor(innerCol);
     layer2D.AddObject(textBack);
 
-    text = new Obj::Text(PosVec(100.0, 500.0), PosVec(),"Let's Play!");
-    text->SetInnerColor(Color255(0, 0, 0));
+    text = new Obj::Text(PosVec(100.0, 35.0), PosVec(),"ボタンをクリックして開始：ストーリーノルマ(勝利)");
+    text->SetInnerColor(Color255(250, 250, 250));
     layer2D.AddObject(text);
 
-    text_2 = new Obj::Text(PosVec(100.0, 475.0), PosVec(),"");
-    text->SetInnerColor(Color255(0, 0, 0));
+    text_2 = new Obj::Text(PosVec(1000.0, 35.0), PosVec(),"");
+    text_2->SetInnerColor(Color255(250, 250, 250));
     layer2D.AddObject(text_2);
 
 	innerCol = Color255("#57B7F3");
@@ -122,8 +122,11 @@ Scene::SoccerScene::SoccerScene() {
     srand((unsigned int)time(NULL));
     gameStart = false;
 	ruleView = false;
+    cameraFlag = true;
+    cameraFlag_2 = true;
     point = 0;
     shootCount = 0;
+    watchingCameraDeg = 0.0;
 }
 
 void Scene::SoccerScene::Update() {
@@ -134,6 +137,52 @@ void Scene::SoccerScene::Update() {
     enemy.Update();
     ball.Update();
 
+    if(watchingCameraDeg <= 500.0 && !gameStart){
+        watchingCameraDeg += 1.5;
+        if(cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1700-watchingCameraDeg, 1700, 1700), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1200+watchingCameraDeg, 1700, 1700), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1700, 1700, 1700-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1700, 1700, 1200+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 500.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+    }
+
     if(startButton->GetMouseSelected()){
         startButton->SetMouseOff();
         gameStart = true;
@@ -141,8 +190,8 @@ void Scene::SoccerScene::Update() {
 
         if(shootCount == 0) point = 0;
         ball.SetPosition(PosVec(400.0, 35.1, 400.0));
-        text->SetString("Where do you shoot?");
-        text_2->SetString("Point : " + std::to_string(point));
+        text->SetString("どこにシュートを打つ？");
+        text_2->SetString("現在の得点 : " + std::to_string(point));
 
         Color255 innerCol;
         innerCol = Color255(70, 170, 230);
@@ -205,21 +254,25 @@ void Scene::SoccerScene::Update() {
     }
 
     if(gameStart){
+        Camera::SetAsPerspective(
+            ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+            30, 1, 9999, PosVec(1700, 1700, 1700), PosVec(0, 0, 0), PosVec(0, 1, 0));
+
         if(centerButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-400.0, 0.0, -400.0));
+            ball.SetVelocity(PosVec(-800.0, 0.0, -800.0));
             text->SetString("Shoot!!");
             KeeperPosition();
         }
         else if(rightButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-240.0, 0.0, -400.0));
+            ball.SetVelocity(PosVec(-480.0, 0.0, -800.0));
             text->SetString("Shoot!!");
             KeeperPosition();
         }
         else if(leftButton->GetMouseSelected()){
             threeMouseCondition(false);
-            ball.SetVelocity(PosVec(-400.0, 0.0, -240.0));
+            ball.SetVelocity(PosVec(-800.0, 0.0, -480.0));
             text->SetString("Shoot!!");
             KeeperPosition();
         }
@@ -232,11 +285,11 @@ void Scene::SoccerScene::Update() {
                     ball.GetPosition().z <= enemy.GetPosition().z){
                     point++;
                     text->SetString("Goal!!");
-                    text_2->SetString("Point : " + std::to_string(point));
+                    text_2->SetString("現在の得点 : " + std::to_string(point));
                 }
                 else{
                     text->SetString("Saved...");
-                    text_2->SetString("Point : " + std::to_string(point));
+                    text_2->SetString("現在の得点 : " + std::to_string(point));
                 }
 
 				gameStart = false;
@@ -244,7 +297,7 @@ void Scene::SoccerScene::Update() {
 
                 shootCount++;
                 if(shootCount >= 5){
-                    if(point >= 3 && Story::StoryModeManager::GetGameActive()){
+                    if(point >= 3){
                         text->SetString("Winner!");
 						if(Story::StoryModeManager::GetGameActive()){
 							Story::StoryModeManager::SetGameClear(true);
@@ -266,6 +319,8 @@ void Scene::SoccerScene::Update() {
                     shootCount = 0;
 					ruleButton->SetEnabled(true);
 
+                    goTimer = goTimerMax;
+
 					layer2D.DeleteObject(goRect);
 		            layer2D.AddObject(goRect);
 
@@ -283,6 +338,20 @@ void Scene::SoccerScene::Update() {
 		                 ApplicationPreference::windowSize.y / 4.f, 5.f);
                 }
         }
+    }
+
+    goTimer -= Time::DeltaTime();
+    if (goTimer < 0) {
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->x,
+          ApplicationPreference::windowSize.x / 2.f, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+      if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
     }
 
     if (backbutton->GetMouseSelected()) {
@@ -348,17 +417,14 @@ void Scene::SoccerScene::RuleMode(){
 void Scene::SoccerScene::KeeperPosition(){
     ransu = 0 + rand() % 3;
     if(ransu == 0){
-        // enemy.SetPosition(PosVec(-200.0, 0.0, -200.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -200, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -200, 3.f);
     }
     else if(ransu == 1){
-        // enemy.SetPosition(PosVec(-50.0, 0.0, -350.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -50, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -350, 3.f);
     }
     else if(ransu == 2){
-        // enemy.SetPosition(PosVec(-350.0, 0.0, -50.0));
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->x, -350, 3.f);
         null->ChangeValueWithAnimation(&enemy.GetPositionPointer()->z, -50, 3.f);
     }

@@ -8,10 +8,14 @@ Scene::BattingScene::BattingScene(){
     SceneBase::SetOrthoCameraWindow();
     Camera::SetAsPerspective(
         ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
-        30, 100, 2500, PosVec(2000, 1000, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+        30, 100, 99999, PosVec(2000, 800, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
     );
     Camera::SetPerspectiveMode(true);
     Camera::UpdateCamera();
+
+    null = new Obj::Null();
+    layer2D.AddObject(null);
+
 
     stage = Obj::ObjFile(PosVec(0.0, 5., 0.0), PosVec(), PosVec(),
                             ApplicationPreference::modelFilePath + folderName +
@@ -20,17 +24,20 @@ Scene::BattingScene::BattingScene(){
     stage.SetShininess(20);
     stage.SetRotate(0, PosVec(0, 1, 0));
 
-    bat = Obj::Cylinder(PosVec(800.0, 80.0, -20.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
+    bat = Obj::ObjFile(PosVec(790.0, 70.0, 5.0), PosVec(), PosVec(), 
+            ApplicationPreference::modelFilePath + folderName + "bat.obj");
     bat.SetAmbient(Color255(100, 75, 80));
     bat.SetDiffuse(Color255(.3f, .3f, .3f));
     bat.SetSpecular(Color255(255, 255, 255, 255));
     bat.SetShininess(20);
-    bat.SetScale(PosVec(2, 10, 2));
+    bat.SetScale(PosVec(8, 4.3, 8));
+    bat.SetMultiRotates(true);
 
-    player = Obj::ObjFile(PosVec(800.0, 0.0, -50.0), PosVec(0.0, 0.0, 0.0), 
+    player = Obj::ObjFile(PosVec(770.0, -20.0, 30.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/subLeader.obj");
-    player.SetScale(PosVec(7, 7, 7));
+    player.SetScale(PosVec(8, 8, 8));
     player.SetShininess(10);
+    player.SetRotate(180, PosVec(0, 1, 0));
 
     ball = Obj::Sphere(PosVec(450.0, -50.0, 0.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0));
@@ -39,15 +46,20 @@ Scene::BattingScene::BattingScene(){
     ball.SetDiffuse(Color255(.3, .3, .3));
     ball.SetSpecular(Color255(0, 0, 0));
 
-    enemy = Obj::ObjFile(PosVec(400.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0), 
+    enemy = Obj::ObjFile(PosVec(330.0, -20.0, -5.0), PosVec(0.0, 0.0, 0.0), 
             PosVec(0.0, 0.0, 0.0), ApplicationPreference::modelFilePath + "char/Caesar.obj");
-    enemy.SetScale(PosVec(7, 7, 7));
+    enemy.SetScale(PosVec(8, 8, 8));
     enemy.SetShininess(10);
     enemy.SetRotate(90, PosVec(0, 1, 0));
 
-    flag = false;
+    batFlag = false;
+    timerFlag = false;
+    timerFlag_2 = false;
+    ballFlag = true;
     gameStart = false;
     ruleView = false;
+    cameraFlag = true;
+    cameraFlag_2 = true;
 
     miniuiImage = new Obj::Image(
         PosVec(0, 30), PosVec(75, 190),
@@ -125,6 +137,15 @@ Scene::BattingScene::BattingScene(){
     quotaImage = new Obj::Image(
         PosVec(-500, 450), PosVec(150, 100),
         ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+
+    watchingCameraDeg = 0.0;
+    batDeg = 0.f;
+    batDeg_2 = 0.f;
+
+    cooldownBox =
+        new Obj::Rectangle(PosVec(300, 300), PosVec(20, 150), true, true);
+    cooldownBox->SetInnerColor(Color255("D879EA", 0));
+    cooldown = cooldownMax;
 }
 
 void Scene::BattingScene::Update(){
@@ -135,6 +156,57 @@ void Scene::BattingScene::Update(){
     player.Update();
     ball.Update();
     enemy.Update();
+
+    bat.ClearRotates();
+    bat.AddMultiRotates(180.f, PosVec(1, 0, 0));
+    bat.AddMultiRotates(batDeg, PosVec(1, 0, 0));
+    bat.AddMultiRotates(batDeg_2, PosVec(0, 1, 0));
+
+    if(watchingCameraDeg <= 400.0 && !gameStart){
+        watchingCameraDeg += 1.0;
+        if(cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(2000-(watchingCameraDeg/2), 800, 1-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1800+(watchingCameraDeg/2), 800, -399+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(2000-(watchingCameraDeg/2), 800, 1+watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+        else if(!cameraFlag && !cameraFlag_2){
+            Camera::SetAsPerspective(
+                ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+                30, 1, 99999, PosVec(1800+(watchingCameraDeg/2), 800, 401-watchingCameraDeg), 
+                PosVec(0, 0, 0), PosVec(0, 1, 0));
+            if(watchingCameraDeg > 400.0){
+                watchingCameraDeg = 0.0;
+                cameraFlag = !cameraFlag;
+                cameraFlag_2 = !cameraFlag_2;
+            }
+        }
+    }
 
     if(startButton->GetMouseSelected()){
         startButton->SetMouseOff();
@@ -159,6 +231,10 @@ void Scene::BattingScene::Update(){
             ApplicationPreference::windowSize.x / 2.f, .3f);
         goRect->ChangeValueWithAnimation(
             &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+
+        cooldown = 0.f;
+
+        layer2D.AddObject(cooldownBox);
     }
 
     if(ruleButton->GetMouseSelected()){
@@ -182,116 +258,171 @@ void Scene::BattingScene::Update(){
         }
     }
 
-    if(gameStart)
-    {
-    if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
+    if(gameStart){
+        cooldown -= Time::DeltaTime();
+        cooldownBox->ChangeValueWithAnimation(
+            &cooldownBox->GetVectorPointer(VectorType::SIZE)->y,
+            150.f * (cooldown / cooldownMax), .1f);
+        cooldownBox->SetInnerColor(Color255("D879EA"));
 
-    if(ball.GetPosition().y < 50.0){
-        ball.SetPosition(PosVec(450.0, 50.0, 0.0));
-        ball.SetVelocity(PosVec(300, 0, 0));
-    }
-    
-    if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && flag){
-        bat = Obj::Cylinder(PosVec(800.0, 80.0, -20.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
-
-        flag = false;
-    }
-    else if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && !flag){
-        bat = Obj::Cylinder(PosVec(800.0, 50.0, 5.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
-        bat.SetRotate(45, PosVec(1, 1, 0));
-
-        bat = Obj::Cylinder(PosVec(800.0, 40.0, 10.0), PosVec(0.0, 0.0, 0.0), PosVec(0.0, 0.0, 0.0));
-        bat.SetAmbient(Color255(100, 75, 80));
-        bat.SetDiffuse(Color255(.3f, .3f, .3f));
-        bat.SetSpecular(Color255(255, 255, 255, 255));
-        bat.SetShininess(20);
-        bat.SetScale(PosVec(2, 10, 2));
-        bat.SetRotate(90, PosVec(1, 0, 0));
-
-        if(ball.GetPosition().x >= 750.0 && ball.GetPosition().x <= 800.0){
-            ball = Obj::Sphere(PosVec(ball.GetPosition()), PosVec(-400.0, 50.0, 0.0), 
-                PosVec(0.0, -5.0, 0.0));
-            ball.SetScale(PosVec(3, 3, 3));
-            ball.SetAmbient(Color255(250, 250, 250));
-            ball.SetDiffuse(Color255(.3, .3, .3));
-            ball.SetSpecular(Color255(0, 0, 0));
+        if (cooldown <= 0.f) {
+            cooldownBox->ChangeValueWithAnimation(
+                &cooldownBox->GetVectorPointer(VectorType::SIZE)->y, 150.f, .1f);
+            cooldownBox->SetInnerColor(Color255("3AC886"));
+            cooldown = 0.f;
         }
 
-        flag = true;
-    }
-    
-    if(ball.GetPosition().x <= -350.0 || ball.GetPosition().x >= 1200.0){
-        if(ball.GetPosition().x >= 1200.0){
-            strike++;
-            text->SetString("得点：" + std::to_string(point) + 
-                                "   ストライクカウント：" + std::to_string(strike));
-            if(strike >= 3 ){
-                high_point = point;
-                text->SetString("OUT!   現在のハイスコア" + std::to_string(high_point));
-                gameStart = false;
-                startButton->SetEnabled(true);
-                ruleButton->SetEnabled(true);
+        if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
 
+        Camera::SetAsPerspective(
+            ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+            30, 100, 99999, PosVec(2000, 1000, 1), PosVec(500, 0, 0), PosVec(0, 1, 0)
+        );
 
-                ball.SetPosition(PosVec(450.0, -50.0, 0.0));
-                ball.SetVelocity(PosVec(0, 0, 0));
+        if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && cooldown == 0.f)
+            cooldown = cooldownMax;
 
-                if(point >= clearScore && Story::StoryModeManager::GetGameActive()){
-                    Story::StoryModeManager::SetGameClear(true);
-                    Story::StoryModeManager::SavePlusStep();
-                    layer2D.DeleteObject(quotaImage);
-                    layer2D.AddObject(quotaImage);
-                    startButton->SetEnabled(false);
-                    ruleButton->SetEnabled(false);
-                    quotaImage->ChangeValueWithAnimation(
-                        &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
-                }
-                else if(Story::StoryModeManager::GetGameActive()){
-                    Story::StoryModeManager::SetGameClear(false);
-                }
+        if(ball.GetPosition().y < 50.0){
+            ball.SetPosition(PosVec(450.0, 50.0, 0.0));
+            ball.SetVelocity(PosVec(300, 0, 0));
+        }
+        
+        if(Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::FIRST && cooldown == cooldownMax){
+            null->ChangeValueWithAnimation(&batDeg, -45.f, 1.f);
+            null->ChangeValueWithAnimation(&batDeg_2, -45.f, 1.f);
+            null->ChangeValueWithAnimation(&bat.GetPositionPointer()->x, 810.0, 1.f);
+            null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -15.0, 1.f);
 
-                layer2D.DeleteObject(goRect);
-                layer2D.AddObject(goRect);
+            batTimer = batTimerMax;
+            timerFlag = true;
+        }
+        if(timerFlag){
+            batTimer -= Time::DeltaTime();
+            if(batTimer < 0){
+                batFlag = true;
+                null->ChangeValueWithAnimation(&batDeg, -90.f, 1.f);
+                null->ChangeValueWithAnimation(&batDeg_2, 0.f, 1.f);
+                null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 40.0, 1.f);
+                null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, -20.0, 1.f);
 
-                goRect->ChangeValueWithAnimation(
-                    &goRect->GetVectorPointer(VectorType::SIZE)->x,
-                    ApplicationPreference::windowSize.x / 2.f, 5.f);
-                goRect->ChangeValueWithAnimation(
-                    &goRect->GetVectorPointer(VectorType::SIZE)->y,
-                    ApplicationPreference::windowSize.y / 4.f, 5.f);
-                goRect->ChangeValueWithAnimation(
-                    &goRect->GetVectorPointer(VectorType::POS)->x,
-                    ApplicationPreference::windowSize.x / 4.f, 5.f);
-                goRect->ChangeValueWithAnimation(
-                    &goRect->GetVectorPointer(VectorType::POS)->y,
-                    ApplicationPreference::windowSize.y / 4.f, 5.f);
+                timerFlag = false;
+                timerFlag_2 = true;
+                batTimer_2 = batTimerMax_2;
             }
         }
-        else if(ball.GetPosition().x <= -350.0){
-            point++;
-            text->SetString("得点：" + std::to_string(point) + 
-                                "   ストライクカウント：" + std::to_string(strike));
+        if(timerFlag_2){
+            batTimer_2 -= Time::DeltaTime();
+            if(batTimer_2 < 0){
+                batFlag = false;
+                null->ChangeValueWithAnimation(&batDeg, 0.f, 1.f);
+                null->ChangeValueWithAnimation(&bat.GetPositionPointer()->x, 790.0, 1.f);
+                null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 70.0, 1.f);
+                null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, 5.0, 1.f);
+
+                timerFlag_2 = false;
+            }
         }
 
-        if(strike < 3){
-            ball = Obj::Sphere(PosVec(450.0, 50.0, 0.0), PosVec(300.0, 0.0, 0.0), 
-                PosVec(0.0, 0.0, 0.0));
-            ball.SetScale(PosVec(3, 3, 3));
-            ball.SetAmbient(Color255(250, 250, 250));
-            ball.SetDiffuse(Color255(.3, .3, .3));
-            ball.SetSpecular(Color255(0, 0, 0));
+        if(ball.GetPosition().y >= bat.GetPosition().y && ballFlag && batFlag){
+            if(ball.GetPosition().x >= 770.0 && ball.GetPosition().x < 790.0){
+                ball.SetVelocity(PosVec(-400.0, 50.0, 200.0));
+                ballFlag = false;
+            }
+            else if(ball.GetPosition().x >= 790.0 && ball.GetPosition().x < 810.0){
+                ball.SetVelocity(PosVec(-400.0, 50.0, 0.0));
+                ballFlag = false;
+            }
+            else if(ball.GetPosition().x >= 810.0 && ball.GetPosition().x <= 830.0){
+                ball.SetVelocity(PosVec(-400.0, 50.0, -200.0));
+                ballFlag = false;
+            }
+        }
+        
+        if(ball.GetPosition().x <= -350.0 || ball.GetPosition().x >= 1200.0){
+            if(ball.GetPosition().x >= 1200.0){
+                strike++;
+                text->SetString("得点：" + std::to_string(point) + 
+                                    "   ストライクカウント：" + std::to_string(strike));
+                if(strike >= 3 ){
+                    high_point = point;
+                    text->SetString("OUT!   現在のハイスコア：" + std::to_string(high_point));
+                    gameStart = false;
+                    startButton->SetEnabled(true);
+                    ruleButton->SetEnabled(true);
+
+
+                    ball.SetPosition(PosVec(450.0, -50.0, 0.0));
+                    ball.SetVelocity(PosVec(0, 0, 0));
+                    ballFlag = true;
+
+                    null->ChangeValueWithAnimation(&batDeg, 0.f, 1.f);
+                    null->ChangeValueWithAnimation(&bat.GetPositionPointer()->x, 790.0, 1.f);
+                    null->ChangeValueWithAnimation(&bat.GetPositionPointer()->y, 70.0, 1.f);
+                    null->ChangeValueWithAnimation(&bat.GetPositionPointer()->z, 5.0, 1.f);
+
+                    if(point >= clearScore && Story::StoryModeManager::GetGameActive()){
+                        Story::StoryModeManager::SetGameClear(true);
+                        Story::StoryModeManager::SavePlusStep();
+                        layer2D.DeleteObject(quotaImage);
+                        layer2D.AddObject(quotaImage);
+                        startButton->SetEnabled(false);
+                        ruleButton->SetEnabled(false);
+                        quotaImage->ChangeValueWithAnimation(
+                            &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
+                    }
+                    else if(Story::StoryModeManager::GetGameActive()){
+                        Story::StoryModeManager::SetGameClear(false);
+                    }
+
+                    goTimer = goTimerMax;
+
+                    layer2D.DeleteObject(goRect);
+                    layer2D.AddObject(goRect);
+
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::SIZE)->x,
+                        ApplicationPreference::windowSize.x / 2.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::SIZE)->y,
+                        ApplicationPreference::windowSize.y / 4.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::POS)->x,
+                        ApplicationPreference::windowSize.x / 4.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::POS)->y,
+                        ApplicationPreference::windowSize.y / 4.f, 5.f);
+                }
+            }
+            else if(ball.GetPosition().x <= -350.0){
+                point++;
+                text->SetString("得点：" + std::to_string(point) + 
+                                    "   ストライクカウント：" + std::to_string(strike));
+            }
+
+            if(strike < 3){
+                ball = Obj::Sphere(PosVec(450.0, 50.0, 0.0), PosVec(300.0, 0.0, 0.0), 
+                    PosVec(0.0, 0.0, 0.0));
+                ball.SetScale(PosVec(3, 3, 3));
+                ball.SetAmbient(Color255(250, 250, 250));
+                ball.SetDiffuse(Color255(.3, .3, .3));
+                ball.SetSpecular(Color255(0, 0, 0));
+                ballFlag = true;
+            }
         }
     }
+
+    goTimer -= Time::DeltaTime();
+    if (goTimer < 0) {
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->x, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::SIZE)->y, 1, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->x,
+          ApplicationPreference::windowSize.x / 2.f, .3f);
+      goRect->ChangeValueWithAnimation(
+          &goRect->GetVectorPointer(VectorType::POS)->y, -100.f, .3f);
+      if (goRect->GetPos().y < -70) layer2D.DeleteObject(goRect);
     }
 
     if (backButton->GetMouseSelected()) {

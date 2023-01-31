@@ -34,7 +34,7 @@ namespace Scene{
 
         private:
             Obj::ObjFile stage;
-            Obj::Cylinder bat; 
+            Obj::ObjFile bat; 
             Obj::ObjFile player;
             Obj::Sphere ball;
             Obj::ObjFile enemy;
@@ -50,14 +50,31 @@ namespace Scene{
             Obj::Rectangle* ruleBack;
             Obj::Rectangle* textBack;
             Obj::Rectangle* rect;
+            Obj::Rectangle* cooldownBox;
+            Obj::Null* null;
             const std::string folderName = "minigames/baseball/";
-            bool flag;
+            bool batFlag;
+            bool timerFlag;
+            bool timerFlag_2;
+            bool ballFlag;
+            bool clickFlag;
             bool gameStart;
             bool ruleView;
             int point = 0;
             int strike = 0;
             int high_point = 0;
             int clearScore = 10;
+            float goTimer;
+            const float goTimerMax = 5.f;
+            float batTimer;
+            float batTimer_2;
+            float cooldown;
+            const float batTimerMax = 0.2f;
+            const float batTimerMax_2 = 0.5f;
+            const float cooldownMax = .7f;
+            float watchingCameraDeg;
+            bool cameraFlag;
+            bool cameraFlag_2;
 
             const PosVec ruleImageOffset =
                 PosVec(ApplicationPreference::windowSize.x / 8.f,
@@ -66,5 +83,8 @@ namespace Scene{
                 PosVec(ApplicationPreference::windowSize.x * 3.f / 4.f,
                     ApplicationPreference::windowSize.y * 3.f / 4.f);
             std::vector<Obj::Image*> rulePics;
+
+            float batDeg;
+            float batDeg_2;
     };
 }
