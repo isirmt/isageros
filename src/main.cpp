@@ -8,6 +8,7 @@
 #include "ApplicationPreference.hpp"
 #include "ObjectLoader.hpp"
 #include "TitleScene.hpp"
+#include "LaunchLogoScene.hpp"
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
@@ -35,8 +36,8 @@ int main(int argc, char **argv) {
   glutMotionFunc(MotionProc);
   glutPassiveMotionFunc(MotionProc);
 
-  Scene::TitleScene *titleScene = new Scene::TitleScene();
-  Scene::SceneManager::ChangeScene(titleScene);
+  Scene::LaunchLogoScene *launchLogoScene = new Scene::LaunchLogoScene();
+  Scene::SceneManager::ChangeScene(launchLogoScene);
 
   glutMainLoop();
 
