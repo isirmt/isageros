@@ -55,7 +55,7 @@ Scene::TitleScene::TitleScene() {
   creditButton->SetOutlineColor(buttonOutlineColor, buttonOutlineWidth);
   creditButton->SetInnerAnimation(.1f);
 
-  metaText = new Obj::Text(PosVec(), PosVec(), "Test Mode");
+  metaText = new Obj::Text(PosVec(), PosVec(), ApplicationPreference::versionName);
   metaText->SetInnerColor(Color255(0, 0, 0));
 
   LightManager::Set(GL_LIGHT0, PosVec(0, 500, 0), Color255(0.5, 0.5, 0.5, 1.f),

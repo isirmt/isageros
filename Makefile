@@ -1,7 +1,7 @@
 SUFFIX := .cpp
 PROGNAME := isageros
 COMPILER := g++
-CPPFLAGS := -std=c++11 -O2
+CPPFLAGS := -std=c++17 -O2
 LIBFLAGS := -lglut -lGLU -lGL -lm
 
 SOURCEDIR := ./src/
