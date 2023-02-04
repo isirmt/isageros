@@ -42,15 +42,15 @@ class CreditScene : public SceneBase {
 
   int n=0;
 
-  const std::array<std::string, 27> files{"Isageros Staff","Director\nisssss","Planner\nkkkkkk",
-  "Story Writer\nyyyyy","Environment Programming\nisssss","Story Programming\nyyyyy",
-  "UI Programming\nisssss\nkkkkkk\njaaaaaa","Programming - Sumo\njaaaaaa",
-  "Programming - Soccer\njaaaaaa","Programming - Tabletennis\nisssss",
-  "Programming - Archery\nkkkkkk\nisssss\njaaaaaa","Programming - Baseball\njaaaaaa",
-  "Programming - Credit\nkkkkkk","Logo Art\nitttt","Character Art\nitttt","Character Design\nitttt",
-  "Map Design\nyyyyy","Item Design\nyyyyy","UI Design\nisssss","Character Modelling\nitttt",
-  "Map Modelling\nyyyyy","Item Modelling\nyyyyy","Animation\nisssss","Testing\nisssss\njaaaaaa\nkkkkkk\n",
-  "Sounds\nkkkkkk","Producer\nisssss","Thank you for Playing!"};
+  const std::array<std::string, 27> files{{"Isageros Staff","Director\n井筒 ミリ","Planner\nkentos",
+  "Story Writer\nゆっけ","Environment Programming\n井筒 ミリ","Story Programming\nゆっけ",
+  "UI Programming\n井筒 ミリ\nkentos\nJakoP","Programming - Sumo\nJakoP",
+  "Programming - Soccer\nJakoP","Programming - Tabletennis\n井筒 ミリ",
+  "Programming - Archery\nkentos\n井筒 ミリ\nJakoP","Programming - Baseball\nJakoP",
+  "Programming - Credit\nkentos","Logo Art\nいとろ","Character Art\nいとろ","Character Design\nいとろ",
+  "Map Design\nゆっけ","Item Design\nゆっけ","UI Design\n井筒 ミリ","Character Modelling\nいとろ",
+  "Map Modelling\nゆっけ","Item Modelling\nゆっけ","Animation\n井筒 ミリ","Testing\n井筒 ミリ\nJakoP\nkentos\n",
+  "Sounds\nkentos","Producer\n井筒 ミリ","Thank you for Playing!"}};
 
   const std::string folderName = "credit/";
 };

@@ -162,11 +162,11 @@ void Scene::ArcheryScene::Update(){
         gameStart = true;
         
         point = 0;
-        strike = 0;
+        turn = 1;
         startButton->SetEnabled(false);
         ruleButton->SetEnabled(false);
-        text->SetString("得点：" + std::to_string(point) + 
-                                "   ストライクカウント：" + std::to_string(strike));
+        text->SetString("得点：" + std::to_string(point) + "  " + 
+                                 std::to_string(turn) + "射目");
 
         ruleView = false;
         RuleMode();
@@ -216,11 +216,14 @@ void Scene::ArcheryScene::Update(){
     
   if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST && !isShooting) {
     Mouseflag = true;
+    arrow.SetMultiRotates(true);
     Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
       10, 1, 99999, PosVec(1000.0, 200.0, 0.0), 
-      PosVec(centerCube.GetPosition().x,(Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,
-      (((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), PosVec(0,1,0));
+      PosVec(centerCube.GetPosition().x,
+      (Input::MouseInput::GetMouse().y/ApplicationPreference::windowSize.y)*ends[0].y,
+      (((Input::MouseInput::GetMouse().x/ApplicationPreference::windowSize.x)*ends[1].z*2)-ends[1].z)), 
+      PosVec(0,1,0));
     Camera::UpdateCamera();
     RotY =  180.f - 90.f - 55.f - 70.f / ApplicationPreference::windowSize.x * Input::MouseInput::GetMouse().x;
     RotZ =  20.f - 40.f / ApplicationPreference::windowSize.y * Input::MouseInput::GetMouse().y;
@@ -232,7 +235,6 @@ void Scene::ArcheryScene::Update(){
     arrow.AddMultiRotates(RotZ, PosVec(0,0,1));
   }
   else if((Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag) || isShooting ){
-    arrow.AddMultiRotates(0.1, PosVec(0,0,1));
     if (!isShooting) {
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(
@@ -241,6 +243,7 @@ void Scene::ArcheryScene::Update(){
           -1500.0 * sin(RotZ * M_PI / 180.f),
           1500.f * sin(RotY * M_PI / 180.f)));
       arrow.SetAcceleration(PosVec(0.0, -200.0, 0.0));
+      arrow.AddMultiRotates(0.1, PosVec(0,0,1));
       isShooting = true;
     }
 
@@ -255,17 +258,58 @@ void Scene::ArcheryScene::Update(){
         arrow.GetPosition(), PosVec(0,1,0));
     Camera::UpdateCamera();
     printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
-    if(arrow.GetPosition().x <= -850 || arrow.GetPosition().y <= 30){
+    if(arrow.GetPosition().x <= -800 || arrow.GetPosition().y <= 30){
       // 的の座標内か
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(PosVec());
       arrow.SetAcceleration(PosVec());
-      arrow.ClearRotates();
+      //arrow.AddMultiRotates(0, PosVec(0,0,1));
+      //arrow.ClearRotates();
       timerCount -= Time::DeltaTime();
       if (timerCount <= 0.f) {
+        timerCount = timerCountMax;
+        arrow = Obj::ObjFile(PosVec(948.0, 195.0, -8.0), PosVec(),
+                       PosVec(),ApplicationPreference::modelFilePath + folderName +
+                                "archery_arrow.obj");
+    		arrow.SetShininess(20);
+    		arrow.SetScale(PosVec(3, 1, 1));
+    		//arrow.ClearRotates();
+    		RotY = 0.f;
+    		RotZ = 0.f;
+        turn++;
+        text->SetString("得点：" + std::to_string(point) + "  " + 
+                                 std::to_string(turn) + "射目");
+        if(turn>3){
+        	gameStart = false;
+          startButton->SetEnabled(true);
+          ruleButton->SetEnabled(true);
+          Camera::SetAsPerspective(
+      			ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
+      			30, 1, 99999, PosVec(1000.0, 200.0, 0.0), centerCube.GetPosition(), PosVec(0,1,0));
+    			Camera::UpdateCamera();
+    			text->SetString("得点：" + std::to_string(point) + "  " + 
+                                 "お疲れ様でした。");
+        	if(point >= clearScore && Story::StoryModeManager::GetGameActive()){
+        						text->SetString("得点：" + std::to_string(point) + "  " + 
+                                 "クリア！");
+                    Story::StoryModeManager::SetGameClear(true);
+                    Story::StoryModeManager::SavePlusStep();
+                    layer2D.DeleteObject(quotaImage);
+                    layer2D.AddObject(quotaImage);
+                    startButton->SetEnabled(false);
+                    ruleButton->SetEnabled(false);
+                    quotaImage->ChangeValueWithAnimation(
+                        &quotaImage->GetVectorPointer(VectorType::POS)->x, 30, 3.f);
+                    
+                }
+                else if(Story::StoryModeManager::GetGameActive()){
+                		text->SetString("得点：" + std::to_string(point) + "  " + 
+                                 "ゲームオーバー");
+                    Story::StoryModeManager::SetGameClear(false);
+                }//終わる
+        }
         Mouseflag = false;
         isShooting = false;
-        timerCount = timerCountMax;
       }
     }
   }else{
