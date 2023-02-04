@@ -1,5 +1,9 @@
 #pragma once
 #include <GL/glut.h>
+#include <limits.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string>
 
 #include "2DAssets.hpp"
 #include "Color255.hpp"
@@ -15,6 +19,7 @@ class TitleScene : public SceneBase {
     delete background;
     delete modeButton;
     delete metaText;
+    
   }
 
   void Update() override;

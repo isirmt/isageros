@@ -62,7 +62,9 @@ Scene::TitleScene::TitleScene() {
                     Color255(1.f, 1.f, 1.f, 1.0f),
                     Color255(0.0f, 0.0f, 0.0f, 1.f));
 
-  system("vlc /bulid/assets/music/Isageros_Opening.ogg");
+  auto res = chdir("./assets/music");
+  auto yes = system("(cvlc --repeat Isageros_Opening.ogg)&");
+  auto chd = chdir("../../");
 
   layer2D.AddObject(background);
   layer2D.AddObject(modeButton);
@@ -77,24 +79,28 @@ void Scene::TitleScene::Update() {
 
   if (settingButton->GetMouseSelected()) {
     settingButton->SetMouseOff();
+    auto mes = system("pkill vlc");
     SceneManager::ChangeScene(new SettingScene());
     return;
   }
 
   if (creditButton->GetMouseSelected()) {
     creditButton->SetMouseOff();
+    auto mes = system("pkill vlc");
     SceneManager::ChangeScene(new CreditScene());
     return;
   }
 
   if (modeButton->GetMouseSelected()) {
     modeButton->SetMouseOff();
+    auto mes = system("pkill vlc");
     SceneManager::ChangeScene(new GameSelectorScene());
     return;
   }
 
   if (storyButton->GetMouseSelected()) {
     storyButton->SetMouseOff();
+    auto mes = system("pkill vlc");
     SceneManager::ChangeScene(new StoryScene());
     return;
   }
