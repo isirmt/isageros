@@ -248,6 +248,7 @@ void Scene::ArcheryScene::Update(){
     }
 
     // z -100 ~ 100
+    // (y,z) = (75,0)が中央
     // y -25 ~ 175
     
     Camera::SetAsPerspective(
@@ -259,6 +260,9 @@ void Scene::ArcheryScene::Update(){
     Camera::UpdateCamera();
     printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
     if(arrow.GetPosition().x <= -800 || arrow.GetPosition().y <= 30){
+      if(sqrt(pow((arrow.GetPosition().y-75),2)+pow((arrow.GetPosition().z),2))<=100){
+        point++;
+      }
       // 的の座標内か
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(PosVec());

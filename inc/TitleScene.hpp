@@ -19,7 +19,7 @@ class TitleScene : public SceneBase {
     delete background;
     delete modeButton;
     delete metaText;
-    
+    auto mes = system("pkill vlc");
   }
 
   void Update() override;
