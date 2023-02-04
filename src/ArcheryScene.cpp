@@ -247,9 +247,9 @@ void Scene::ArcheryScene::Update(){
       isShooting = true;
     }
 
-    // z -100 ~ 100
-    // (y,z) = (75,0)が中央
-    // y -25 ~ 175
+    // z -60 ~ 60
+    // (y,z) = (100,0)が中央
+    // y 60 ~ 160
     
     Camera::SetAsPerspective(
       ApplicationPreference::windowSize.x / ApplicationPreference::windowSize.y,
@@ -259,9 +259,27 @@ void Scene::ArcheryScene::Update(){
         arrow.GetPosition(), PosVec(0,1,0));
     Camera::UpdateCamera();
     printf("%f,%f,%f\n",arrow.GetPosition().x,arrow.GetPosition().y,arrow.GetPosition().z);
-    if(arrow.GetPosition().x <= -800 || arrow.GetPosition().y <= 30){
-      if(sqrt(pow((arrow.GetPosition().y-75),2)+pow((arrow.GetPosition().z),2))<=100){
-        point++;
+    if(arrow.GetPosition().x <= -750 || arrow.GetPosition().y <= 20){
+      if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=6.0){
+        point10=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=12.0){
+        point9=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=18.0){
+        point8=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=24.0){
+        point7=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=30.0){
+        point6=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=36.0){
+        point5=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=42.0){
+        point4=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=48.0){
+        point3=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=54.0){
+        point2=true;
+      }else if(sqrt(pow((arrow.GetPosition().y-100.0),2)+pow(arrow.GetPosition().z,2))<=60.0){
+        point1=true;
       }
       // 的の座標内か
       arrow.SetPosition(arrow.GetPosition());
@@ -271,6 +289,37 @@ void Scene::ArcheryScene::Update(){
       //arrow.ClearRotates();
       timerCount -= Time::DeltaTime();
       if (timerCount <= 0.f) {
+        if(point1){
+          point++;
+          point1 = !point1;
+        }else if(point2){
+          point = point + 2;
+          point2 = !point2;
+        }else if(point3){
+          point = point + 3;
+          point3 = !point3;
+        }else if(point4){
+          point = point + 4;
+          point4 = !point4;
+        }else if(point5){
+          point = point + 5;
+          point5 = !point5;
+        }else if(point6){
+          point = point + 6;
+          point6 = !point6;
+        }else if(point7){
+          point = point + 7;
+          point7 = !point7;
+        }else if(point8){
+          point = point + 8;
+          point8 = !point8;
+        }else if(point9){
+          point = point + 9;
+          point9 = !point9;
+        }else if(point10){
+          point = point + 10;
+          point10 = !point10;
+        }
         timerCount = timerCountMax;
         arrow = Obj::ObjFile(PosVec(948.0, 195.0, -8.0), PosVec(),
                        PosVec(),ApplicationPreference::modelFilePath + folderName +

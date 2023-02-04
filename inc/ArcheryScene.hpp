@@ -57,13 +57,23 @@ class ArcheryScene : public SceneBase {
   bool flag;
   bool gameStart;
   bool ruleView;
+  bool point1;
+  bool point2;
+  bool point3;
+  bool point4;
+  bool point5;
+  bool point6;
+  bool point7;
+  bool point8;
+  bool point9;
+  bool point10;
   float RotX = 0.0;
   float RotY = 0.0;
   float RotZ = 0.0;
   int point = 0;
   int turn = 0;
   int high_point = 0;
-  int clearScore = 10;
+  int clearScore = 20;
 
   const PosVec ruleImageOffset =
       PosVec(ApplicationPreference::windowSize.x / 8.f,
