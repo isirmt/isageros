@@ -62,6 +62,8 @@ Scene::TitleScene::TitleScene() {
                     Color255(1.f, 1.f, 1.f, 1.0f),
                     Color255(0.0f, 0.0f, 0.0f, 1.f));
 
+  system("vlc /bulid/assets/music/Isageros_Opening.ogg");
+
   layer2D.AddObject(background);
   layer2D.AddObject(modeButton);
   layer2D.AddObject(storyButton);
