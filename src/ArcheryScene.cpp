@@ -491,6 +491,20 @@ void Scene::ArcheryScene::Update(){
                 else if(Story::StoryModeManager::GetGameActive()){
                 		text->SetString("得点：" + std::to_string(point) + "  " + 
                                  "ゲームオーバー");
+
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::SIZE)->x,
+                        ApplicationPreference::windowSize.x / 2.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::SIZE)->y,
+                        ApplicationPreference::windowSize.y / 4.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::POS)->x,
+                        ApplicationPreference::windowSize.x / 4.f, 5.f);
+                    goRect->ChangeValueWithAnimation(
+                        &goRect->GetVectorPointer(VectorType::POS)->y,
+                        ApplicationPreference::windowSize.y / 4.f, 5.f);
+                    
                     Story::StoryModeManager::SetGameClear(false);
                 }//終わる
         }
