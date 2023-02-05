@@ -45,11 +45,11 @@ Scene::SumoScene::SumoScene(){
     cameraFlag_2 = true;
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
-                ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+                ApplicationPreference::imgFilePath + "minigames/sumo/sumo_rule.ppm");
                 rulePics.emplace_back(nImage);
     nImage = new Obj::Image(
         ruleImageOffset, ruleImageSize,
-        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+        ApplicationPreference::imgFilePath + "minigames/sumo/sumo_rule3.ppm");
     rulePics.emplace_back(nImage);
     nImage = new Obj::Image(
         ruleImageOffset, ruleImageSize,
