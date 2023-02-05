@@ -52,6 +52,8 @@ class ArcheryScene : public SceneBase {
   Obj::Rectangle* ruleBack;
   Obj::Rectangle* textBack;
   Obj::Rectangle* rect;
+  Obj::Line* line1;
+  Obj::Line* line2;
   bool Mouseflag = false;
   bool isShooting;
   bool flag;
