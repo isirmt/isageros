@@ -82,6 +82,18 @@ Scene::ArcheryScene::ArcheryScene(){
     backButton->SetInnerAnimation(.2f);
     layer2D.AddObject(backButton);
 
+    innerCol = Color255(0, 0, 0);
+    line1 = new Obj::Rectangle(PosVec((ApplicationPreference::windowSize.x/2)-15, (ApplicationPreference::windowSize.y/2)-2.5), 
+      PosVec(30,5), true, false);
+    line1->SetInnerColor(innerCol);
+    
+
+    innerCol = Color255(0, 0, 0);
+    line2 = new Obj::Rectangle(PosVec((ApplicationPreference::windowSize.x/2)-2.5, (ApplicationPreference::windowSize.y/2)-15), 
+      PosVec(5,30), true, false);
+    line2->SetInnerColor(innerCol);
+    
+
     innerCol = Color255("#57B7F3");
     rect = new Obj::Rectangle(PosVec(0, 0), PosVec(50, 50), true, false);
     rect->SetInnerColor(innerCol);
@@ -215,6 +227,8 @@ void Scene::ArcheryScene::Update(){
   
     
   if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST && !isShooting) {
+    layer2D.AddObject(line1);
+    layer2D.AddObject(line2);
     Mouseflag = true;
     arrow.SetMultiRotates(true);
     Camera::SetAsPerspective(
@@ -236,6 +250,8 @@ void Scene::ArcheryScene::Update(){
   }
   else if((Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) == PressFrame::ZERO && Mouseflag) || isShooting ){
     if (!isShooting) {
+    layer2D.DeleteObject(line1);
+    layer2D.DeleteObject(line2);
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(
         PosVec(
@@ -243,7 +259,7 @@ void Scene::ArcheryScene::Update(){
           -1500.0 * sin(RotZ * M_PI / 180.f),
           1500.f * sin(RotY * M_PI / 180.f)));
       arrow.SetAcceleration(PosVec(0.0, -200.0, 0.0));
-      arrow.AddMultiRotates(0.1, PosVec(0,0,1));
+      arrow.AddMultiRotates(5, PosVec(0,0,1));
       isShooting = true;
     }
     float center = 100.0;

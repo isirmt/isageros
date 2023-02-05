@@ -52,8 +52,8 @@ class ArcheryScene : public SceneBase {
   Obj::Rectangle* ruleBack;
   Obj::Rectangle* textBack;
   Obj::Rectangle* rect;
-  Obj::Line* line1;
-  Obj::Line* line2;
+  Obj::Rectangle* line1;
+  Obj::Rectangle* line2;
   bool Mouseflag = false;
   bool isShooting;
   bool flag;
@@ -72,6 +72,8 @@ class ArcheryScene : public SceneBase {
   float RotX = 0.0;
   float RotY = 0.0;
   float RotZ = 0.0;
+  float windX = 0.0;
+  float windZ = 0.0;
   int point = 0;
   int turn = 0;
   int high_point = 0;
