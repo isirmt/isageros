@@ -72,6 +72,8 @@ class ArcheryScene : public SceneBase {
   float RotX = 0.0;
   float RotY = 0.0;
   float RotZ = 0.0;
+  int windDeg = 0.0;
+  int windPow = 0.0;
   float windX = 0.0;
   float windZ = 0.0;
   int point = 0;

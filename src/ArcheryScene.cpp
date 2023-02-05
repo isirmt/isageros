@@ -4,6 +4,7 @@
 #include "TitleScene.hpp"
 #include <stdio.h>
 #include <cmath>
+#include <cstdlib>
 
 Scene::ArcheryScene::ArcheryScene(){
     Camera::SetActive(true);
@@ -172,13 +173,17 @@ void Scene::ArcheryScene::Update(){
   if(startButton->GetMouseSelected()){
         startButton->SetMouseOff();
         gameStart = true;
-        
+        windDeg = rand() % 37 *10;
+        windPow = rand() % 11;
+        windX = cos(windDeg * M_PI / 180) * windPow * 15;
+        windZ = sin(windDeg * M_PI / 180) * windPow *15;
         point = 0;
         turn = 1;
         startButton->SetEnabled(false);
         ruleButton->SetEnabled(false);
         text->SetString("得点：" + std::to_string(point) + "  " + 
-                                 std::to_string(turn) + "射目");
+                                 std::to_string(turn) + "射目" + "  風向:" + std::to_string(windDeg)
+                                  + "度  風速:" + std::to_string(windPow) + "m" );
 
         ruleView = false;
         RuleMode();
@@ -255,9 +260,9 @@ void Scene::ArcheryScene::Update(){
       arrow.SetPosition(arrow.GetPosition());
       arrow.SetVelocity(
         PosVec(
-          -1500.0 * cos(RotY * M_PI / 180.f),
+          -1500.0 * cos(RotY * M_PI / 180.f) + windX,
           -1500.0 * sin(RotZ * M_PI / 180.f),
-          1500.f * sin(RotY * M_PI / 180.f)));
+          1500.f * sin(RotY * M_PI / 180.f) + windZ));
       arrow.SetAcceleration(PosVec(0.0, -200.0, 0.0));
       arrow.AddMultiRotates(5, PosVec(0,0,1));
       isShooting = true;
@@ -436,9 +441,14 @@ void Scene::ArcheryScene::Update(){
     		//arrow.ClearRotates();
     		RotY = 0.f;
     		RotZ = 0.f;
+        windDeg = rand() % 37 *10;
+        windPow = rand() % 11;
+        windX = cos(windDeg * M_PI / 180) * windPow * 15;
+        windZ = sin(windDeg * M_PI / 180) * windPow * 15;
         turn++;
         text->SetString("得点：" + std::to_string(point) + "  " + 
-                                 std::to_string(turn) + "射目");
+                                 std::to_string(turn) + "射目" + "  風向:" + std::to_string(windDeg)
+                                  + "度  風速:" + std::to_string(windPow) + "m" );
         if(turn>3){
         	gameStart = false;
           startButton->SetEnabled(true);
