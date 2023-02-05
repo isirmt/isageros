@@ -81,6 +81,8 @@ class ArcheryScene : public SceneBase {
   int turn = 0;
   int high_point = 0;
   int clearScore = 15;
+  float goTimer;
+const float goTimerMax = 5.f;
 
   const PosVec ruleImageOffset =
       PosVec(ApplicationPreference::windowSize.x / 8.f,
