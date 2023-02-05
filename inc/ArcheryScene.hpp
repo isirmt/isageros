@@ -54,6 +54,7 @@ class ArcheryScene : public SceneBase {
   Obj::Rectangle* rect;
   Obj::Rectangle* line1;
   Obj::Rectangle* line2;
+  Obj::Image* windInfo;
   bool Mouseflag = false;
   bool isShooting;
   bool flag;
@@ -79,7 +80,7 @@ class ArcheryScene : public SceneBase {
   int point = 0;
   int turn = 0;
   int high_point = 0;
-  int clearScore = 20;
+  int clearScore = 15;
 
   const PosVec ruleImageOffset =
       PosVec(ApplicationPreference::windowSize.x / 8.f,

@@ -68,6 +68,10 @@ Scene::ArcheryScene::ArcheryScene(){
         ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
     layer2D.AddObject(miniuiImage);
 
+    // windInfo = new Obj::Image(
+    //     PosVec(0, 0, 0), PosVec(100, 100),
+    //     ApplicationPreference::imgFilePath + folderName + "wind.ppm");
+
     Color255 innerCol;
     innerCol = Color255(70, 170, 230);
     startButton = new Obj::Button(PosVec(30, 100), PosVec(50, 50), true, true);
@@ -168,15 +172,15 @@ void Scene::ArcheryScene::Update(){
   centerCube.Update();
   stage.Update();
   bow.Update();
-
+  //windInfo->Update();
 
   if(startButton->GetMouseSelected()){
         startButton->SetMouseOff();
         gameStart = true;
         windDeg = rand() % 37 *10;
         windPow = rand() % 11;
-        windX = cos(windDeg * M_PI / 180) * windPow * 15;
-        windZ = sin(windDeg * M_PI / 180) * windPow *15;
+        windX = cos(windDeg * M_PI / 180) * windPow * 10.0;
+        windZ = sin(windDeg * M_PI / 180) * windPow * 10.0;
         point = 0;
         turn = 1;
         startButton->SetEnabled(false);
@@ -392,6 +396,17 @@ void Scene::ArcheryScene::Update(){
         point3 = false;
         point2 = false;
         point1 = true;
+      }else{
+        point10= false;
+        point9 = false;
+        point8 = false;
+        point7 = false;
+        point6 = false;
+        point5 = false;
+        point4 = false;
+        point3 = false;
+        point2 = false;
+        point1 = false;
       }
       // 的の座標内か
       arrow.SetPosition(arrow.GetPosition());
@@ -431,6 +446,7 @@ void Scene::ArcheryScene::Update(){
         }else if(point1){
           point = point + 1;
           point1 = false;
+        }else{
         }
         timerCount = timerCountMax;
         arrow = Obj::ObjFile(PosVec(948.0, 195.0, -8.0), PosVec(),
@@ -443,8 +459,8 @@ void Scene::ArcheryScene::Update(){
     		RotZ = 0.f;
         windDeg = rand() % 37 *10;
         windPow = rand() % 11;
-        windX = cos(windDeg * M_PI / 180) * windPow * 15;
-        windZ = sin(windDeg * M_PI / 180) * windPow * 15;
+        windX = cos(windDeg * M_PI / 180) * windPow * 10.0;
+        windZ = sin(windDeg * M_PI / 180) * windPow * 10.0;
         turn++;
         text->SetString("得点：" + std::to_string(point) + "  " + 
                                  std::to_string(turn) + "射目" + "  風向:" + std::to_string(windDeg)
@@ -495,7 +511,7 @@ void Scene::ArcheryScene::Update(){
   bow.Update();
 
   layer2D.Collide();
-
+  //windInfo->Update();
   }
 
   if (Input::MouseInput::GetClick(GLUT_LEFT_BUTTON) >= PressFrame::FIRST) {
@@ -524,7 +540,7 @@ void Scene::ArcheryScene::Update(){
     }
 
     layer2D.Update();
-  
+    //windInfo->Update();
 
   if (backButton->GetMouseSelected()) {
         backButton->SetMouseOff();
@@ -574,7 +590,6 @@ void Scene::ArcheryScene::Draw(){
   bow.Draw();
   //cube.Draw();
   stage.Draw();
-  
   glPopMatrix();
 
   SceneBase::Set2DDrawMode();
@@ -582,4 +597,11 @@ void Scene::ArcheryScene::Draw(){
   Camera::UpdateCamera();
 
   layer2D.Draw(); // 2D描画
+  // {
+  //   glPushMatrix();
+  //   glRotatef(90.0, 0.0, 0.0, 1.0);
+  //   //glTranslatef(10, ApplicationPreference::windowSize.y-110, 0);
+  //   windInfo->Draw();
+  //   glPopMatrix();
+  // }
 }
