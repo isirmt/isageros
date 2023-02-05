@@ -151,7 +151,7 @@
     {
       "chapterName": "お仕事の時間",
       "stageName": "forest",
-      "goto": "next",
+      "goto": "archery",
       "talks": [
         {
           "left": "subLeader",

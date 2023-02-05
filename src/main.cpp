@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <stdio.h>
+#include <GL/freeglut.h>
 
 #include "GLBuilder.hpp"
 #include "SceneManager.hpp"
@@ -12,7 +13,7 @@
 
 void DisplayProc(), KeyboardProc(unsigned char key, int x, int y), IdleProc(),
     MouseProc(int button, int state, int x, int y), MotionProc(int x, int y),
-    PassiveMotionProc(int x, int y), WindowResizeProc(int width, int height);
+    PassiveMotionProc(int x, int y), WindowResizeProc(int width, int height), CloseFunc();
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -35,6 +36,7 @@ int main(int argc, char **argv) {
   glutMouseFunc(MouseProc);
   glutMotionFunc(MotionProc);
   glutPassiveMotionFunc(MotionProc);
+  glutCloseFunc(CloseFunc);
 
   Scene::LaunchLogoScene *launchLogoScene = new Scene::LaunchLogoScene();
   Scene::SceneManager::ChangeScene(launchLogoScene);

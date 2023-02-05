@@ -52,18 +52,37 @@ class ArcheryScene : public SceneBase {
   Obj::Rectangle* ruleBack;
   Obj::Rectangle* textBack;
   Obj::Rectangle* rect;
+  Obj::Rectangle* line1;
+  Obj::Rectangle* line2;
+  Obj::Image* windInfo;
   bool Mouseflag = false;
   bool isShooting;
   bool flag;
   bool gameStart;
   bool ruleView;
+  bool point1;
+  bool point2;
+  bool point3;
+  bool point4;
+  bool point5;
+  bool point6;
+  bool point7;
+  bool point8;
+  bool point9;
+  bool point10;
   float RotX = 0.0;
   float RotY = 0.0;
   float RotZ = 0.0;
+  int windDeg = 0.0;
+  int windPow = 0.0;
+  float windX = 0.0;
+  float windZ = 0.0;
   int point = 0;
   int turn = 0;
   int high_point = 0;
-  int clearScore = 10;
+  int clearScore = 15;
+  float goTimer;
+const float goTimerMax = 5.f;
 
   const PosVec ruleImageOffset =
       PosVec(ApplicationPreference::windowSize.x / 8.f,

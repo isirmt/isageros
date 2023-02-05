@@ -6,6 +6,10 @@
 #include "MouseInput.hpp"
 #include "SceneManager.hpp"
 
+void CloseFunc() {
+  auto res = system("pkill vlc");
+}
+
 void DisplayProc() {
   GLSYS::GLBuilder::DrawInitialize();
   glPushMatrix();
