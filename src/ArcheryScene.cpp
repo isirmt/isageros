@@ -70,9 +70,10 @@ Scene::ArcheryScene::ArcheryScene() {
       ApplicationPreference::imgFilePath + "minigames/miniui.ppm");
   layer2D.AddObject(miniuiImage);
 
-  // windInfo = new Obj::Image(
-  //     PosVec(0, 0, 0), PosVec(100, 100),
-  //     ApplicationPreference::imgFilePath + folderName + "wind.ppm");
+  windInfo = new Obj::Image(
+       PosVec(10, ApplicationPreference::windowSize.y-110, 0), PosVec(133, 100),
+       ApplicationPreference::imgFilePath + folderName + "wind.ppm");
+  layer2D.AddObject(windInfo);
 
   Color255 innerCol;
   innerCol = Color255(70, 170, 230);

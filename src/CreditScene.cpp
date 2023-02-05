@@ -28,8 +28,8 @@ Scene::CreditScene::CreditScene() {
                          ApplicationPreference::windowSize.y));
   rect->SetInnerColor(Color255(0, 0, 0));
 
-  text = new Obj::Text(PosVec(ApplicationPreference::windowSize.x/4-50, -5.0),PosVec(),
-                       "Isageros Staff");
+  text = new Obj::Text(PosVec(ApplicationPreference::windowSize.x/10, -5.0),PosVec(),
+                       "                Isageros Staff");
   text->SetInnerColor(Color255(255, 255, 255));
 
 
@@ -47,7 +47,7 @@ void Scene::CreditScene::Update() {
     layer2D.Collide();
     
     TextPosY += 200.0 * Time::DeltaTime();
-    text->SetPos(PosVec(ApplicationPreference::windowSize.x/4-50,TextPosY));
+    text->SetPos(PosVec(ApplicationPreference::windowSize.x/10,TextPosY));
 
     if(TextPosY >= ApplicationPreference::windowSize.y){
         n++;

@@ -42,15 +42,35 @@ class CreditScene : public SceneBase {
 
   int n=0;
 
-  const std::array<std::string, 27> files{{"Isageros Staff","Director\n井筒 ミリ","Planner\nkentos",
-  "Story Writer\nゆっけ","Environment Programming\n井筒 ミリ","Story Programming\nゆっけ",
-  "UI Programming\n井筒 ミリ\nkentos\nJakoP","Programming - Sumo\nJakoP",
-  "Programming - Soccer\nJakoP","Programming - Tabletennis\n井筒 ミリ",
-  "Programming - Archery\nkentos\n井筒 ミリ\nJakoP","Programming - Baseball\nJakoP",
-  "Programming - Credit\nkentos","Logo Art\nいとろ","Character Art\nいとろ","Character Design\nいとろ",
-  "Map Design\nゆっけ","Item Design\nゆっけ","UI Design\n井筒 ミリ","Character Modelling\nいとろ",
-  "Map Modelling\nゆっけ","Item Modelling\nゆっけ","Animation\n井筒 ミリ","Testing\n井筒 ミリ\nJakoP\nkentos\n",
-  "Sounds\nkentos","Producer\n井筒 ミリ","Thank you for Playing!"}};
+  const std::array<std::string, 28> files{{
+    "                Isageros Staff",
+    "              Director:井筒 ミリ",
+    "                Planner:kentos",
+    "              Story Writer:ゆっけ",
+    "       Environment Programming:井筒 ミリ",
+    "           Story Programming:ゆっけ",
+    "   UI Programming:井筒 ミリ・kentos・JakoP",
+    "           Programming - Sumo:JakoP",
+    "          Programming - Soccer:JakoP",
+    "      Programming - Tabletennis:井筒 ミリ",
+    "Programming - Archery:kentos・井筒 ミリ・JakoP",
+    "    Programming - Baseball:JakoP・井筒 ミリ",
+    "          Programming - Credit:kentos",
+    "                Logo Art:いとろ",
+    "             Character Art:いとろ",
+    "            Character Design:いとろ",
+    "               Map Design:ゆっけ",
+    "              Item Design:ゆっけ",
+    "              UI Design:井筒 ミリ",
+    "          Character Modelling:いとろ",
+    "             Map Modelling:ゆっけ",
+    "             Item Modelling:ゆっけ",
+    "              Animation:井筒 ミリ",
+    "       Testing:井筒 ミリ・JakoP・kentos",
+    "                 Sounds:kentos",
+    "              Producer:井筒 ミリ",
+    "                 Made by TeamH",
+    "            Thank you for Playing!"}};
 
   const std::string folderName = "credit/";
 };
