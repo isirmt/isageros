@@ -19,6 +19,8 @@ class TitleScene : public SceneBase {
     delete background;
     delete modeButton;
     delete metaText;
+    delete settingButton;
+    delete creditButton;
     auto mes = system("pkill vlc");
   }
 

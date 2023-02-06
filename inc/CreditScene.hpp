@@ -19,6 +19,8 @@ class CreditScene : public SceneBase {
   ~CreditScene() {
     delete background;
     delete text;
+    delete rect;
+    delete backButton;
   }
 
   void Update() override;

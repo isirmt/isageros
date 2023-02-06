@@ -13,7 +13,14 @@ namespace Scene {
 class GameSelectorScene : public SceneBase {
  public:
   GameSelectorScene();
-  ~GameSelectorScene() { delete background; }
+  ~GameSelectorScene() {
+    delete background;
+    delete button;
+
+    for (auto& item : gameThumbs) {
+      delete item.second;
+    }
+  }
 
   void Update() override;
   void Draw() override;
