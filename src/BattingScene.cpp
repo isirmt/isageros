@@ -88,10 +88,6 @@ Scene::BattingScene::BattingScene(){
         ruleImageOffset, ruleImageSize,
         ApplicationPreference::imgFilePath + "minigames/baseball/baseball_rule3.ppm");
     rulePics.emplace_back(nImage);
-    // nImage = new Obj::Image(
-    //     ruleImageOffset, ruleImageSize,
-    //     ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
-    // rulePics.emplace_back(nImage);
 
     innerCol = Color255("7894DA");
     ruleBack =
