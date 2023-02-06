@@ -45,15 +45,11 @@ Scene::SumoScene::SumoScene(){
     cameraFlag_2 = true;
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
-                ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+                ApplicationPreference::imgFilePath + "minigames/sumo/sumo_rule.ppm");
                 rulePics.emplace_back(nImage);
     nImage = new Obj::Image(
         ruleImageOffset, ruleImageSize,
-        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
-    rulePics.emplace_back(nImage);
-    nImage = new Obj::Image(
-        ruleImageOffset, ruleImageSize,
-        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+        ApplicationPreference::imgFilePath + "minigames/sumo/sumo_rule3.ppm");
     rulePics.emplace_back(nImage);
 
     innerCol = Color255("7894DA");
@@ -84,6 +80,14 @@ Scene::SumoScene::SumoScene(){
                 "ボタンをクリックして開始：ストーリーノルマ(勝利)");
     text->SetInnerColor(Color255(250.0, 250.0, 250.0));
     layer2D.AddObject(text);
+
+    text_2 = new Obj::Text(PosVec(1100, 600), PosVec(), "PlayerSide");
+    text_2->SetInnerColor(Color255(250.0, 250.0, 250.0));
+    layer2D.AddObject(text_2);
+
+    text_3 = new Obj::Text(PosVec(150, 600), PosVec(), "EnemySide");
+    text_3->SetInnerColor(Color255(250.0, 250.0, 250.0));
+    layer2D.AddObject(text_3);
 
     innerCol = Color255("#57B7F3");
     rect = new Obj::Rectangle(PosVec(0, 0), PosVec(50, 50), true, false);

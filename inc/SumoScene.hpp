@@ -42,6 +42,8 @@ namespace Scene{
             Obj::Button* startbutton;
             Obj::Button* ruleButton;
             Obj::Text* text;
+            Obj::Text* text_2;
+            Obj::Text* text_3;
             Obj::Text* ruleText;
             Obj::Image* nImage;
             Obj::Image* goRect;

@@ -82,15 +82,11 @@ Scene::BattingScene::BattingScene(){
     layer2D.AddObject(backButton);
 
     nImage = new Obj::Image(ruleImageOffset, ruleImageSize,
-                ApplicationPreference::imgFilePath + "minigames/gameover.ppm");
+                ApplicationPreference::imgFilePath + "minigames/baseball/baseball_rule.ppm");
                 rulePics.emplace_back(nImage);
     nImage = new Obj::Image(
         ruleImageOffset, ruleImageSize,
-        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
-    rulePics.emplace_back(nImage);
-    nImage = new Obj::Image(
-        ruleImageOffset, ruleImageSize,
-        ApplicationPreference::imgFilePath + "minigames/quotaAc.ppm");
+        ApplicationPreference::imgFilePath + "minigames/baseball/baseball_rule3.ppm");
     rulePics.emplace_back(nImage);
 
     innerCol = Color255("7894DA");
