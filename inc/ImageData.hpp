@@ -14,4 +14,5 @@ struct ImageData {
         height, std::vector<std::vector<unsigned char>>(
                     width, std::vector<unsigned char>(3)));
   }
+  ~ImageData() { data.clear(); }
 };

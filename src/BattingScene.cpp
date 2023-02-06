@@ -2,6 +2,7 @@
 
 #include "StoryScene.hpp"
 #include "TitleScene.hpp"
+#include "GameSelectorScene.hpp"
 
 Scene::BattingScene::BattingScene(){
     Camera::SetActive(true);
@@ -424,7 +425,7 @@ void Scene::BattingScene::Update(){
     if (backButton->GetMouseSelected()) {
         backButton->SetMouseOff();
         if(!Story::StoryModeManager::GetGameActive()){
-            SceneManager::ChangeScene(new TitleScene());
+            SceneManager::ChangeScene(new GameSelectorScene());
         }
         else{
             Story::StoryModeManager::SetGameActive(false);

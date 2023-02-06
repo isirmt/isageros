@@ -1,6 +1,7 @@
 #include "SoccerScene.hpp"
 #include "StoryScene.hpp"
 #include "TitleScene.hpp"
+#include "GameSelectorScene.hpp"
 
 Scene::SoccerScene::SoccerScene() {
     Camera::SetActive(true);
@@ -353,7 +354,7 @@ void Scene::SoccerScene::Update() {
     if (backbutton->GetMouseSelected()) {
         backbutton->SetMouseOff();
         if(!Story::StoryModeManager::GetGameActive()){
-            SceneManager::ChangeScene(new TitleScene());
+            SceneManager::ChangeScene(new GameSelectorScene());
         }
         else{
             Story::StoryModeManager::SetGameActive(false);

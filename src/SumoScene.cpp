@@ -1,6 +1,7 @@
 #include "SumoScene.hpp"
 #include "TitleScene.hpp"
 #include "StoryScene.hpp"
+#include "GameSelectorScene.hpp"
 
 Scene::SumoScene::SumoScene(){
     Camera::SetActive(true);
@@ -328,7 +329,7 @@ void Scene::SumoScene::Update(){
     if (backbutton->GetMouseSelected()) {
         backbutton->SetMouseOff();
         if (!Story::StoryModeManager::GetGameActive())
-            SceneManager::ChangeScene(new TitleScene());
+            SceneManager::ChangeScene(new GameSelectorScene());
         else {
             Story::StoryModeManager::SetGameActive(false);
             SceneManager::ChangeScene(new StoryScene());

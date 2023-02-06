@@ -7,6 +7,7 @@
 
 #include "StoryScene.hpp"
 #include "TitleScene.hpp"
+#include "GameSelectorScene.hpp"
 
 Scene::ArcheryScene::ArcheryScene() {
   Camera::SetActive(true);
@@ -612,7 +613,7 @@ void Scene::ArcheryScene::Update() {
   if (backButton->GetMouseSelected()) {
     backButton->SetMouseOff();
     if (!Story::StoryModeManager::GetGameActive()) {
-      SceneManager::ChangeScene(new TitleScene());
+      SceneManager::ChangeScene(new GameSelectorScene());
     } else {
       Story::StoryModeManager::SetGameActive(false);
       SceneManager::ChangeScene(new StoryScene());
