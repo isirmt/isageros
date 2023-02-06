@@ -273,7 +273,7 @@ void Scene::ArcheryScene::Update() {
                         Input::MouseInput::GetMouse().y;
       const float leftDeg = 10;
       const float rightDeg = 10;
-      std::cout << RotY << "," << rightDeg << std::endl;
+      //std::cout << RotY << "," << rightDeg << std::endl;
       arrow.ClearRotates();
       arrow.AddMultiRotates(RotY, PosVec(0, 1, 0));
       arrow.AddMultiRotates(RotZ, PosVec(0, 0, 1));
@@ -305,11 +305,11 @@ void Scene::ArcheryScene::Update() {
                  arrow.GetPosition().z + 3),
           arrow.GetPosition(), PosVec(0, 1, 0));
       Camera::UpdateCamera();
-      printf("%f,%f,%f\n", arrow.GetPosition().x, arrow.GetPosition().y,
-             arrow.GetPosition().z);
+      // printf("%f,%f,%f\n", arrow.GetPosition().x, arrow.GetPosition().y,
+      //        arrow.GetPosition().z);
       if (arrow.GetPosition().x <= -750 || arrow.GetPosition().y <= 20) {
-        printf("%f\n", sqrt(pow((arrow.GetPosition().y - 100.0), 2) +
-                            pow(arrow.GetPosition().z, 2)));
+        // printf("%f\n", sqrt(pow((arrow.GetPosition().y - 100.0), 2) +
+        //                     pow(arrow.GetPosition().z, 2)));
         if (sqrt(pow((arrow.GetPosition().y - 100.0), 2) +
                  pow(arrow.GetPosition().z, 2)) <= 5.0) {
           point10 = true;
