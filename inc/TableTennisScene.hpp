@@ -19,8 +19,24 @@ class TableTennisScene : public SceneBase {
   TableTennisScene();
   ~TableTennisScene() {
     delete backButton;
+    delete startButton;
     delete rect;
     delete text;
+
+    delete nowRule;
+    delete ruleBack;
+    delete ruleText;
+    delete cooldownBox;
+    delete miniuiImage;
+    delete quotaImage;
+    delete null;
+    delete goRect;
+    delete textBack;
+    delete ruleButton;
+
+    for (auto& item : rulePics) {
+      delete item;
+    }
   }
 
   void Update() override;

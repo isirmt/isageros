@@ -17,6 +17,22 @@ class ArcheryScene : public SceneBase {
     delete backButton;
     delete rect;
     delete text;
+    delete ruleText;
+    delete startButton;
+    delete ruleButton;
+    delete nImage;
+    delete goRect;
+    delete quotaImage;
+    delete miniuiImage;
+    delete ruleBack;
+    delete textBack;
+    delete line1;
+    delete line2;
+    delete windInfo;
+
+    for (auto& item : rulePics) {
+      delete item;
+    }
   }
 
 

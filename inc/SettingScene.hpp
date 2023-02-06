@@ -11,7 +11,12 @@ namespace Scene {
 class SettingScene : public SceneBase {
  public:
   SettingScene();
-  ~SettingScene() { delete saveStoryResetButton; }
+  ~SettingScene() {
+    delete background;
+    delete saveStoryResetButton;
+    delete saveStoryResetText;
+    delete backButton;
+  }
 
   void Update() override;
   void Draw() override;
