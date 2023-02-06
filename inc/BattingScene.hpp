@@ -19,6 +19,20 @@ namespace Scene{
                 delete backButton;
                 delete rect;
                 delete text;
+                delete ruleText;
+                delete startButton;
+                delete ruleButton;
+                delete nImage;
+                delete goRect;
+                delete quotaImage;
+                delete miniuiImage;
+                delete ruleBack;
+                delete textBack;
+                delete cooldownBox;
+                delete null; 
+                for (auto& item : rulePics) {
+                    delete item;
+                }
             }
 
             void Update() override;

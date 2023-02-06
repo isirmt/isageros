@@ -21,7 +21,24 @@ namespace Scene{
             ~SoccerScene(){
                 delete backbutton;
                 delete text;
-					 delete rect;
+				delete rect;
+                delete text_2;
+                delete ruleText;
+                delete null;
+                delete startButton;
+                delete centerButton;
+                delete rightButton;
+                delete leftButton;
+                delete ruleButton;
+                delete nImage;
+                delete goRect;
+                delete quotaImage;
+                delete miniuiImage;
+                delete ruleBack;
+                delete textBack;
+                for (auto& item : rulePics) {
+                    delete item;
+                }
             }
 
             void Update() override;
